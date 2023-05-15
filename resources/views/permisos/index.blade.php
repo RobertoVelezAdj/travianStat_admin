@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'dashboard')
+@section('title', 'Admin Permisos')
 
 @section('content_header')
     <h1 class="abs-center" > </h1>
@@ -11,24 +11,50 @@
         <div class="card">
           <div class="card-body">
             <div class="container">
-             
-              <div class="col">
+              <div class="col margin">
                 <div class="text-center mb-7"> 
-                <h2>Crear permisos</h2>
-                <form action="/AdminPermisos/Crear" action="{{'submit'}}" method="post">
-                    @method('PUT')
-                    @csrf
-                     <input type="text" name="nombrePermiso" class="form-control" id ="nombrePermiso"> 
-                    <div>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  <div class= "m-3">
+                    <h1>Crear permisos</h1>
+                  </div>
+                <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#exampleModalCenter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg> 
+                Nuevo permiso
+                </button>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Nuevo permiso</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                  </form>
+                    <div class="modal-body">
+                        <div class="form-group m-3">
+                            <form action="/AdminPermisos/Crear" action="{{'submit'}}" method="post">
+                            @method('PUT')
+                             @csrf
+                                <label for="nombreAldea">Nombre del permiso</libel>
+                                <input type="text" name="nombrePermiso" class="form-control" id ="nombrePermiso"> 
+                                <div  class="m-3">
+                                  <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>   
+
               </div>
               <div class="col">
-                <div class="text-center"> 
-                  <h2>Permisos disponibles</h2>
+                <div class="text-center m-5"> 
+                  <h1>Permisos disponibles</h1>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive m-3">
                   <table id="example1" class="table table-bordered table-striped ">
                     <thead>
                       <tr>
@@ -46,8 +72,8 @@
                 </div>
               </div>
               <div class="col">
-                <div class="text-center"> 
-                  <h2>USUARIOS:</h2>
+                <div class="text-center m-5"> 
+                  <h1>USUARIOS:</h1>
                 </div>
                 <div class="table-responsive">
                   <table id="topciones" class="table table-bordered table-striped table-responsivelg">
@@ -60,6 +86,7 @@
                         <th>Permisos</th>
                         <th>Opciones</th>
                         
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -71,13 +98,20 @@
                             <th>{{$usuario['login']}}</th>
                             <th>{{$usuario->getPermissionNames()}}</th>
                             <th>
-                                <button type="button" class="btn btn-warning float-right" data-toggle="modal" data-target="#anadirP-{{$usuario['id']}}" >
-                                    Añadir Permiso
+                              <div class="margin">
+                                <div class="btn-group  ">
+                                  <button type="button" class="btn   btn-info btn-info">Acciones</button>
+                                  <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
+                                  <span class="sr-only">Toggle Dropdown</span>
                                 </button>
-                                <button type="button" class="btn btn-warning float-right" data-toggle="modal" data-target="#EliminarP-{{$usuario['id']}}" >
-                                    Eliminar Permiso
-                                </button>
-                                
+                                <div class="dropdown-menu" role="menu">
+                                  <button class="dropdown-item btn-info" data-toggle="modal" data-target="#anadirP-{{$usuario['id']}}">Añadir permisos</button>
+                                  <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EliminarP-{{$usuario['id']}}">Eliminar permisos</button>
+                                </div>
+                              </div>
+                              <button type="button" class="btn-app bg-danger" data-toggle="modal" data-target="#EliminarP-{{$usuario['id']}}" >
+                                Eliminar Usuario
+                              </button>    
                             </th>
                             <div class="modal fade" id="anadirP-{{$usuario['id']}}" tabindex="-1" role="dialog" aria-labelledby="#anadirP-{{$usuario['id']}}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -143,6 +177,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
                                                         <button type="submit" class="btn btn-danger">Eliminar permiso</button>
+
                                                     </div>
                                                 </form>
                                             </div>
