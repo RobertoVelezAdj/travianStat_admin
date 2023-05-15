@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'travianSTAT.es')
+@section('title', 'dashboard')
 
 @section('content_header')
     <h1 class="abs-center" >Apuestas en vivo</h1>
