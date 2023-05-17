@@ -39,9 +39,7 @@
                              @csrf
                                 <label for="nombreAldea">Nombre del permiso</libel>
                                 <input type="text" name="nombrePermiso" class="form-control" id ="nombrePermiso"> 
-                                <div  class="m-3">
-                                  <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
+                                <button type="submit" class="btn btn-outline-ligh bg-black m-3">Crear permiso</button>
                         </form>
                         </div>
                     </div>
@@ -54,18 +52,50 @@
                 <div class="text-center m-5"> 
                   <h1>Permisos disponibles</h1>
                 </div>
-                <div class="table-responsive m-3">
+                <div class="table-responsive m-3" width="20">
                   <table id="example1" class="table table-bordered table-striped ">
-                    <thead>
+                    <thead class="table-dark">
                       <tr>
-                        <th>Permisos</th>  
+                        <th>Permisos</th>
+                        <th>Acciones</th>    
                        </tr>
                     </thead>
                     <tbody>
                       @foreach($permisos as $permiso)
                         <tr>
                           <th> {{$permiso}}</th>
-                        </tr>   
+                          <th> 
+                            <button type="button" class="btn-app bg-danger" data-toggle="modal" data-target="#EliminarPermiso-{{$permiso}}" >
+                                Eliminar Permiso
+                            </button>    
+                          </th>
+                        </tr>
+                        <div class="modal fade" id="EliminarPermiso-{{$permiso}}" tabindex="-1" role="dialog" aria-labelledby="#EliminarPermiso-{{$permiso}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar permiso</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <form action="/AdminPermisos/EliminarPermisoTabla" method="POST">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                      <label>¿Estas segur@ de eliminar el permiso {{$permiso}}?.</label>
+                                                      <input  name="permiso" type="hidden" value="{{$permiso}}">
+                                                    </div>
+                                                    <button type="button"class="btn btn-outline-light bg-danger" data-dismiss="modal" aria-label="Close">Eliminar permiso</button>
+                                                    <button type="submit" class="btn btn-outline-ligh bg-black">Eliminar permiso</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
                       @endforeach
                     </tbody>
                   </table>
@@ -77,7 +107,7 @@
                 </div>
                 <div class="table-responsive">
                   <table id="topciones" class="table table-bordered table-striped table-responsivelg">
-                    <thead>
+                    <thead  class="table-dark">
                       <tr>
                         <th>ID</th>
                         <th>email</th>
@@ -85,8 +115,6 @@
                         <th>login</th>
                         <th>Permisos</th>
                         <th>Opciones</th>
-                        
-                        
                       </tr>
                     </thead>
                     <tbody>
@@ -136,10 +164,8 @@
                                                         </select>
                                                     </div>
                                                     <input  name="idUsu" type="hidden" value="{{$usuario['id']}}">
-                                                    <div class="modal-footer">
-                                                        <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                                                        <button type="submit" class="btn btn-danger">Añadir permiso</button>
-                                                    </div>
+                                                    <button type="button"class="btn btn-outline-light bg-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+                                                    <button type="submit" class="btn btn-outline-ligh bg-black">Añadir permiso</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -150,14 +176,14 @@
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar permiso</h5>
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar permiso usuario</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <form action="/AdminPermisos/Eliminar" method="POST">
+                                                <form action="/AdminPermisos/EliminarPermisoUsuario" method="POST">
                                                     @method('PUT')
                                                     @csrf
                                                     <div class="modal-body">
@@ -174,11 +200,8 @@
                                                         </select>
                                                     </div>
                                                     <input  name="idUsu" type="hidden" value="{{$usuario['id']}}">
-                                                    <div class="modal-footer">
-                                                        <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                                                        <button type="submit" class="btn btn-danger">Eliminar permiso</button>
-
-                                                    </div>
+                                                    <button type="button"class="btn btn-outline-light bg-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+                                                    <button type="submit" class="btn btn-outline-ligh bg-black">Eliminar permiso</button>
                                                 </form>
                                             </div>
                                         </div>

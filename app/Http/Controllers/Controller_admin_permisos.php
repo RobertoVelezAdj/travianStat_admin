@@ -36,10 +36,16 @@ class Controller_admin_permisos extends Controller
         $userpermiso->givePermissionTo($info->permiso);
         return redirect()->action('App\Http\Controllers\Controller_admin_permisos@index');
     }
-    public function EliminarPermiso(request $info)
+    public function EliminarPermisoUsuario(request $info)
     {
         $userpermiso = User::whereId($info->idUsu)->first(); 
         $userpermiso->revokePermissionTo($info->permiso);
+        return redirect()->action('App\Http\Controllers\Controller_admin_permisos@index');
+    }
+    public function EliminarPermisoTabla(request $info)
+    {
+        $query = "DELETE FROM permissions WHERE name = '".$info->permiso."'";
+        $tropas=DB::select($query);
         return redirect()->action('App\Http\Controllers\Controller_admin_permisos@index');
     }
 }
