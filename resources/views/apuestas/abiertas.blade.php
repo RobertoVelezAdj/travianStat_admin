@@ -110,7 +110,7 @@
                                                         </select>
                                                         </div>
                                                         @php 
-                                                          $cierre =round(1+($apuesta->porcentaje/100))*$apuesta->dineroApostado,2,PHP_ROUND_HALF_UP);
+                                                          $cierre =round(($apuesta->porcentaje*$apuesta->dineroApostado),2,PHP_ROUND_HALF_UP);
                                                         @endphp
                                                         <label for="nombreAldea">Cierre</label>
                                                             <input type="text" name="cierre" class="form-control" id ="cierre" value="{{$cierre}}"> 

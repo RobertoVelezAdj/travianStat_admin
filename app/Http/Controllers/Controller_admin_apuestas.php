@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\DB;
             $total =  $a->dineroEnApuestas;
             $Pdte = $a->dineroStack;
         }
-
+        $paux =str_replace(",",".",$info->porcentaje);
         $porcentaje = round(100/str_replace(",",".",$info->porcentaje),2);
 
         if($porcentaje<25){
@@ -65,7 +65,7 @@ use Illuminate\Support\Facades\DB;
         $Pdte = $Pdte+$apuesta;
       
         //insert
-        $query = "INSERT INTO apuestas(ID_USUARIO,PORCENTAJE,dineroApostado,DESCRIPCION,created_at,DEPORTE,resultadoDinero,STACK,PROBABILIDAD,resultado) VALUES(".$idUsu.",'".$porcentaje."','".$apuesta."','".$info->descripcion."',current_date(),'".$info->deporte."','".$apuesta."',".$stack.",".$porcentaje.",'0')";
+        $query = "INSERT INTO apuestas(ID_USUARIO,PORCENTAJE,dineroApostado,DESCRIPCION,created_at,DEPORTE,resultadoDinero,STACK,PROBABILIDAD,resultado) VALUES(".$idUsu.",'".$paux."','".$apuesta."','".$info->descripcion."',current_date(),'".$info->deporte."','".$apuesta."',".$stack.",".$porcentaje.",'0')";
         $sa=DB::select($query);
         //resto dinero
         $query = "UPDATE historico_apuestas SET dineroStack = ".$total.",  dineroEnApuestas = ".$Pdte." WHERE USUARIO = ".$idUsu;
