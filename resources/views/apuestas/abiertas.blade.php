@@ -68,8 +68,7 @@
                         <th>Deporte</th>
                         <th>Descripción</th>
                         <th>Fecha</th>
-                        <th>Porcentaje</th>
-                        <th>Apuesta</th>
+                         <th>Apuesta</th>
                         <th>Probabilidad</th>
                         <th>Opciones</th>
                        </tr>
@@ -111,7 +110,7 @@
                                                         </select>
                                                         </div>
                                                         @php 
-                                                          $cierre =round(($apuesta->porcentaje/100)*$apuesta->dineroApostado,2,PHP_ROUND_HALF_UP);
+                                                          $cierre =round(1+($apuesta->porcentaje/100))*$apuesta->dineroApostado,2,PHP_ROUND_HALF_UP);
                                                         @endphp
                                                         <label for="nombreAldea">Cierre</label>
                                                             <input type="text" name="cierre" class="form-control" id ="cierre" value="{{$cierre}}"> 

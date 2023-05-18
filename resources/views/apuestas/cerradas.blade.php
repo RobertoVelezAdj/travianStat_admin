@@ -28,7 +28,6 @@
                         <th>Deporte</th>
                         <th>Descripción</th>
                         <th>Fecha</th>
-                        <th>Porcentaje</th>
                         <th>Apuesta</th>
                         <th>Probabilidad</th>
                        </tr>
