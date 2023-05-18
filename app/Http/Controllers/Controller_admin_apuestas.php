@@ -63,11 +63,7 @@ use Illuminate\Support\Facades\DB;
         //$apuesta = round((0.01*$info->stack)*$total,2);
         $total= $total-$apuesta;
         $Pdte = $Pdte+$apuesta;
-        //1 MENOS o igual  DEL 30%, 
-        //2 entre 30 y 55
-        //3 entre 55 y 70
-        //4 entre 70-90
-        //5  más de 90
+      
         //insert
         $query = "INSERT INTO apuestas(ID_USUARIO,PORCENTAJE,dineroApostado,DESCRIPCION,created_at,DEPORTE,resultadoDinero,STACK,PROBABILIDAD,resultado) VALUES(".$idUsu.",'".$porcentaje."','".$apuesta."','".$info->descripcion."',current_date(),'".$info->deporte."','".$apuesta."',".$stack.",".$porcentaje.",'0')";
         $sa=DB::select($query);

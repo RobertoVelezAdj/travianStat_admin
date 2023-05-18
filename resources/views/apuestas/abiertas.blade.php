@@ -81,11 +81,8 @@
                           <th>{{$apuesta->deporte}}</th>
                           <th>{{$apuesta->descripcion}}</th>
                           <th>{{$apuesta->created_at}}</th>
-                          <th>{{$apuesta->porcentaje}}</th>
-                          <th>{{$apuesta->dineroApostado}}</th>
-                        
-                          <th>{{$apuesta->probabilidad}}</th>
-                        
+                           <th>{{$apuesta->dineroApostado}}€</th>
+                          <th>{{$apuesta->probabilidad}}%</th>
                           <th> 
                             <button type="button" class="btn   btn-info btn-info" data-toggle="modal" data-target="#Resultado-{{$apuesta->id}}">Resultado</button>  
                           </th>
@@ -114,7 +111,7 @@
                                                         </select>
                                                         </div>
                                                         @php 
-                                                          $cierre =round($apuesta->porcentaje*$apuesta->dineroApostado,2,PHP_ROUND_HALF_UP);
+                                                          $cierre =round(($apuesta->porcentaje/100)*$apuesta->dineroApostado,2,PHP_ROUND_HALF_UP);
                                                         @endphp
                                                         <label for="nombreAldea">Cierre</label>
                                                             <input type="text" name="cierre" class="form-control" id ="cierre" value="{{$cierre}}"> 
