@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\DB;
         //4 entre 70-90
         //5  más de 90
         //insert
-        $query = "INSERT INTO apuestas(ID_USUARIO,PORCENTAJE,dineroApostado,DESCRIPCION,created_at,DEPORTE,resultadoDinero,STACK,PROBABILIDAD,resultado) VALUES(".$idUsu.",'".$porcentaje."','".$apuesta."','".$info->descripcion."',current_date(),'".$info->deporte."','0',".$stack.",".$porcentaje.",'0')";
+        $query = "INSERT INTO apuestas(ID_USUARIO,PORCENTAJE,dineroApostado,DESCRIPCION,created_at,DEPORTE,resultadoDinero,STACK,PROBABILIDAD,resultado) VALUES(".$idUsu.",'".$porcentaje."','".$apuesta."','".$info->descripcion."',current_date(),'".$info->deporte."','".$apuesta."',".$stack.",".$porcentaje.",'0')";
         $sa=DB::select($query);
         //resto dinero
         $query = "UPDATE historico_apuestas SET dineroStack = ".$total.",  dineroEnApuestas = ".$Pdte." WHERE USUARIO = ".$idUsu;
