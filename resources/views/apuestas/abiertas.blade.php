@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Admin parametrizaciones')
+@section('title', 'Apuestas')
 
 @section('content_header')
     <h1 class="abs-center" > </h1>
@@ -14,33 +14,40 @@
               <div class="col margin">
                 <div class="text-center mb-7"> 
                   <div class= "m-3">
-                    <h1>Listado parametrizaciones</h1>
+                    <h1>Apuestas abiertas</h1>
                   </div>
                 <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#exampleModalCenter">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg> 
-                Nueva parametrizacion
+                Nueva apuesta
                 </button>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Nueva lista</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Nueva apuesta</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group m-3">
-                            <form action="/AdminParametrizaciones/Crear" action="{{'submit'}}" method="post">
+                            <form action="/Apuestas/Crear" action="{{'submit'}}" method="post">
                             @method('PUT')
                              @csrf
-                                <label for="nombreParam">Nombre de la nueva parametrizacion</label>
-                                <input type="text" name="nombreParam" class="form-control" id ="nombreParam"> 
-                                <label for="nombreParam">Descripción de la nueva parametrizacion</label>
+                                <label for="nombreParam">Porcentaje apuesta</label>
+                                <input type="text" name="porcentaje" class="form-control" id ="porcentaje">
+                                <label for="nombreParam">Descripción</label>
                                 <input type="text" name="descripcion" class="form-control" id ="descripcion">
+                                <label for="nombreParam">Deporte</label>
+                                <select  name="deporte" class="form-control" id ="deporte">
+                                    @foreach($deportes as $deporte){
+                                         <option value='{{$deporte->valor}}'>{{$deporte->nombre}}</option>
+                                    @endforeach
+                                    
+                                </select>
                                 <button type="submit" class="btn btn-outline-ligh bg-black m-3">Crear Parametrizacion</button>
                         </form>
                         </div>
@@ -57,58 +64,67 @@
                   <table id="example1" class="table table-bordered table-striped ">
                     <thead class="table-dark">
                       <tr>
-                        <th>Parametrización</th>
-                        <th>Acciones</th>    
-                        <th>Descripcion</th>    
+                        <th>Stack</th>
+                        <th>Deporte</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Porcentaje</th>
+                        <th>Apuesta</th>
+                        <th>Probabilidad</th>
+                        <th>Opciones</th>
                        </tr>
                     </thead>
                     <tbody>
-                      @foreach($parametrizaciones as $param)
+                      @foreach($apuestas as $apuesta)
                         <tr>
-                          <th> {{$param->lista}}  </th>
-                          <th> {{$param->descripcion}}  </th>
+                          <th>{{$apuesta->stack}}</th>
+                          <th>{{$apuesta->deporte}}</th>
+                          <th>{{$apuesta->descripcion}}</th>
+                          <th>{{$apuesta->created_at}}</th>
+                          <th>{{$apuesta->porcentaje}}</th>
+                          <th>{{$apuesta->dineroApostado}}</th>
+                        
+                          <th>{{$apuesta->probabilidad}}</th>
+                        
                           <th> 
-
-                          <div class="margin">
-                                <div class="btn-group  ">
-                                  <button type="button" class="btn   btn-info btn-info">Acciones</button>
-                                  <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
-                                  <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" role="menu">
-                                  <form action="/AdminParametrizaciones/MostrarRegistro" method="POST">
-                                    @method('get')
-                                    @csrf
-                                    <input  name="parametrizacion" type="hidden" value="{{$param->lista}}">   
-                                    <button  type="submit" class="dropdown-item btn-info" ">Modificar lista</button>
-                                  </form> 
-                                  <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EliminarPermiso-{{$param->lista}}">Eliminar lista</button>
-                                </div>
-                              </div>
-                            </form> 
-                            
-                           
+                            <button type="button" class="btn   btn-info btn-info" data-toggle="modal" data-target="#Resultado-{{$apuesta->id}}">Resultado</button>  
                           </th>
                         </tr>
-                        <div class="modal fade" id="EliminarPermiso-{{$param->lista}}" tabindex="-1" role="dialog" aria-labelledby="#EliminarPermiso-{{$param->lista}}" aria-hidden="true">
+                           <div class="modal fade" id="Resultado-{{$apuesta->id}}" tabindex="-1" role="dialog" aria-labelledby="#Resultado-{{$apuesta->id}}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar permiso</h5>
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Fianlizar apuesta</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <form action="/AdminParametrizaciones/Eliminar" method="POST">
+                                                <form action="/Apuestas/FinalizarApuesta" method="POST">
                                                     @method('PUT')
                                                     @csrf
-                                                    <div class="modal-body">
-                                                    <label>¿Estas segur@ de eliminar la lista de parametrización {{$param->lista}}?.</label>
-                                                    <input  name="parametrizacion" type="hidden" value="{{$param->lista}}">  
-                                                    </div>
-                                                     <button type="submit" class="btn btn-outline-ligh bg-black">Eliminar lista</button>
+                                                    @method('PUT')
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                        <select  name="resultado" class="form-control" id ="resultado">
+                                                            <option value="1">Ganada</option>
+                                                            <option value="2">Cierre</option> 
+                                                            <option value="3">Perdida</option> 
+                                                        </select>
+                                                        </div>
+                                                        @php 
+                                                          $cierre =round($apuesta->porcentaje*$apuesta->dineroApostado,2,PHP_ROUND_HALF_UP);
+                                                        @endphp
+                                                        <label for="nombreAldea">Cierre</label>
+                                                            <input type="text" name="cierre" class="form-control" id ="cierre" value="{{$cierre}}"> 
+                                                        <input  name="idapuesta" type="hidden" value="{{$apuesta->id}}">
+                                                        <input  name="porcentaje" type="hidden" value="{{$apuesta->porcentaje}}">
+                                                        <input  name="apuesta" type="hidden" value="{{$apuesta->dineroApostado}}">
+                                                        <div class="modal-footer">
+                                                            <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                                            <button type="submit" class="btn btn-danger">Finalizar apuesta</button>
+                                                        </div>
                                                 </form>
                                             </div>
                                         </div>

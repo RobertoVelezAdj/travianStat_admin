@@ -48,3 +48,12 @@ Route::put('/AdminParametrizaciones/Eliminar', [App\Http\Controllers\Controller_
 Route::get('/AdminParametrizaciones/MostrarRegistro', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'MostrarLista'])->middleware('can:Administrador')->name('Parametrizaciones.MostrarLista'); 
 Route::put('/AdminParametrizaciones/CrearRegistro', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'crearRegistro'])->middleware('can:Administrador')->name('Parametrizaciones.crearRegistro'); 
 Route::put('/AdminParametrizaciones/EliminarRegistro', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'EliminarRegistro'])->middleware('can:Administrador')->name('Parametrizaciones.EliminarRegistro'); 
+
+
+//Admin apuestas
+Route::get('/Apuestas/Estado', [App\Http\Controllers\Controller_admin_apuestas::class, 'Abiertas'])->middleware('can:Apuestas')->name('Apuestas'); 
+Route::put('/Apuestas/Crear', [App\Http\Controllers\Controller_admin_apuestas::class, 'Crear'])->middleware('can:Administrador')->name('Apuestas.Crear'); 
+Route::put('/Apuestas/FinalizarApuesta', [App\Http\Controllers\Controller_admin_apuestas::class, 'FinalizarApuesta'])->middleware('can:Administrador')->name('Apuestas.FinalizarApuesta'); 
+
+Route::get('/Apuestas/Cerradas', [App\Http\Controllers\Controller_admin_apuestas::class, 'cerradas'])->middleware('can:Apuestas')->name('cerradas'); 
+Route::get('/Apuestas/Historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'index'])->middleware('can:Apuestas')->name('Apuestas'); 

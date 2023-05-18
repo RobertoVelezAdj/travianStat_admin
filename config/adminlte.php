@@ -297,12 +297,17 @@ return [
             'submenu' => [
                 [
                     'text' => 'Estado apuestas',
-                    'url'  => '#',
+                    'url'  => '/Apuestas/Estado',
                     'can' => 'Apuestas',
                 ],
                 [
                     'text' => 'Apuestas cerradas',
-                    'url'  => '#',
+                    'url'  => '/Apuestas/Cerradas',
+                    'can' => 'Apuestas',
+                ],
+                [
+                    'text' => 'Apuestas histórico',
+                    'url'  => '/Apuestas/Historico',
                     'can' => 'Apuestas',
                 ],
             ],
