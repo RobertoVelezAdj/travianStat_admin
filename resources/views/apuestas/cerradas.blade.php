@@ -28,6 +28,7 @@
                         <th>Deporte</th>
                         <th>Descripción</th>
                         <th>Fecha</th>
+                        <th>Porcentaje</th>
                         <th>Apuesta</th>
                         <th>Probabilidad</th>
                        </tr>
@@ -39,6 +40,7 @@
                           <th>{{$apuesta->deporte}}</th>
                           <th>{{$apuesta->descripcion}}</th>
                           <th>{{$apuesta->created_at}}</th>
+                          <th>{{$apuesta->porcentaje}}</th>
                            <th>{{$apuesta->dineroApostado}}€</th>
                           <th>{{$apuesta->probabilidad}}%</th>
                         </tr>
