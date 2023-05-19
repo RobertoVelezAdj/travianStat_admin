@@ -136,7 +136,7 @@ use Illuminate\Support\Facades\DB;
     {
         $idUsu =auth()->id();
     
-        $query = "select created_at as fecha, sum(resultadodinero) as resultadodinero , (select count(*)from apuestas a where resultado > 0 and apuestas.created_at = a.created_at and id_usuario =".$idUsu.") as contador from apuestas where resultado> 0 and id_usuario =".$idUsu." group by fecha order by fecha desc";
+        $query = "select created_at as fecha, cast(apuestas.created_at as date)  as fecha2, sum(resultadodinero) as resultadodinero , (select count(*)from apuestas a where resultado > 0 and apuestas.created_at = a.created_at and id_usuario =".$idUsu.") as contador from apuestas where resultado> 0 and id_usuario =".$idUsu." group by fecha order by fecha desc";
         $cerradas=DB::select($query);
         $query = "select parametrizaciones.nombre as  deporte, sum(resultadodinero) as resultadodinero, (select count(*)from apuestas a where resultado > 0 and apuestas.deporte = a.deporte and apuestas.deporte = parametrizaciones.valor and parametrizaciones.lista =  'deporteApuestas' and id_usuario =".$idUsu.")  as contador from apuestas, parametrizaciones where apuestas.deporte = parametrizaciones.valor and parametrizaciones.lista =  'ListaDeportesApuestas' and resultado> 0 and id_usuario =".$idUsu." group by parametrizaciones.nombre,apuestas.deporte,parametrizaciones.valor,parametrizaciones.lista ";
         $tabla_deportes=DB::select($query);

@@ -38,7 +38,7 @@
                                 echo " <tr>";
                               }
                             @endphp
-                            <th>{{$a->fecha}}</th>
+                            <th>{{$a->fecha2}}</th>
                             <th>{{$a->contador}}</th>
                             <th>@php echo round($a->resultadodinero,2); @endphp€</th>
                         </tr>   
