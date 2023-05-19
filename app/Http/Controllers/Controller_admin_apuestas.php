@@ -150,5 +150,15 @@ use Illuminate\Support\Facades\DB;
         $mensaje=$this->obtener_mensaje( $idUsu);
         return  view('apuestas.historico')->with('apuestas',$cerradas)->with('historico',$historico)->with('tabla_deportes',$tabla_deportes)->with('deportes',$deportes)->with('mensaje',$mensaje);
     }
+    public function historificacion(request $info)
+    {    
+        $query = "SELECT * FROM historico_apuestas ";
+        $historico=DB::select($query);
+        
+        foreach ($historico as $a){
+            $query = "INSERT INTO historico_apuestas_diario (USUARIO,DINEROENAPUESTAS,DINEROSTACK,CREATED_AT,UPDATED_AT) VALUES('".$a->usuario."','".$a->dineroEnApuestas."','".$a->dineroStack."',current_date(),current_date()) ";
+            $cerradas=DB::select($query);
+        }
+     }
     
 }
