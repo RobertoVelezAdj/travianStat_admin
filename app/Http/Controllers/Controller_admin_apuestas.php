@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'ListaDeportesApuestas'  and nombre not in ('TITULO') order by valor";
         $deportes= DB::select($query);
 
-        $query = "SELECT  apuestas.id,    CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,apuestas.created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado= 0  and ID_USUARIO =".$idUsu;
+        $query = "SELECT  apuestas.id,    CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,cast(apuestas.created_at as date) as created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado= 0  and ID_USUARIO =".$idUsu;
         $apuestas= DB::select($query);
 
         $query = "SELECT dineroEnApuestas, dineroStack FROM historico_apuestas WHERE usuario =".$idUsu;
@@ -72,7 +72,7 @@ use Illuminate\Support\Facades\DB;
         $Pdte = $Pdte+$apuesta;
       
         //insert
-        $query = "INSERT INTO apuestas(ID_USUARIO,PORCENTAJE,dineroApostado,DESCRIPCION,created_at,DEPORTE,resultadoDinero,STACK,PROBABILIDAD,resultado) VALUES(".$idUsu.",'".$paux."','".$apuesta."','".$info->descripcion."',current_date(),'".$info->deporte."','".$apuesta."',".$stack.",".$porcentaje.",'0')";
+        $query = "INSERT INTO apuestas(ID_USUARIO,PORCENTAJE,dineroApostado,DESCRIPCION,cast(apuestas.created_at as date) as created_at,DEPORTE,resultadoDinero,STACK,PROBABILIDAD,resultado) VALUES(".$idUsu.",'".$paux."','".$apuesta."','".$info->descripcion."',current_date(),'".$info->deporte."','".$apuesta."',".$stack.",".$porcentaje.",'0')";
         $sa=DB::select($query);
         //resto dinero
         $query = "UPDATE historico_apuestas SET dineroStack = ".$total.",  dineroEnApuestas = ".$Pdte." WHERE USUARIO = ".$idUsu;
@@ -121,7 +121,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'ListaDeportesApuestas'  and nombre not in ('TITULO') order by valor";
         $deportes= DB::select($query);
 
-        $query = "SELECT  apuestas.id, resultadodinero,   CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,apuestas.created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado> 0  and ID_USUARIO =".$idUsu;
+        $query = "SELECT  apuestas.id, resultadodinero,   CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,cast(apuestas.created_at as date) as created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado> 0  and ID_USUARIO =".$idUsu;
         $apuestas= DB::select($query);
 
       
@@ -144,7 +144,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM `parametrizaciones` WHERE `lista` = 'deporteApuestas' order by valor";
         $deportes= DB::select($query);
 
-        $query = "SELECT * FROM `historico_apuestas_diario` order by created_at";
+        $query = "SELECT id,usuario,dineroEnApuestas,dineroStack,cast(created_At as date) as created_at FROM `historico_apuestas_diario` order by created_at";
         $historico= DB::select($query);
  
         $mensaje=$this->obtener_mensaje( $idUsu);
