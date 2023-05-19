@@ -19,15 +19,22 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'ListaDeportesApuestas'  and nombre not in ('TITULO') order by valor";
         $deportes= DB::select($query);
 
-        $query = "SELECT  * FROM apuestas where resultado= 0  and ID_USUARIO =".$idUsu;
+        $query = "SELECT  apuestas.id,    CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,apuestas.created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado= 0  and ID_USUARIO =".$idUsu;
         $apuestas= DB::select($query);
 
+        $query = "SELECT dineroEnApuestas, dineroStack FROM historico_apuestas WHERE usuario =".$idUsu;
+        
+        $sa=DB::select($query);
+        foreach ($sa as $a){
+            $Pdte =  $a->dineroEnApuestas;
+            $total = $a->dineroStack;
+        }
       
 
         $mensaje=$this->obtener_mensaje( $idUsu);
 
         
-        return view('apuestas.abiertas')->with('mensaje',$mensaje)->with('deportes',$deportes)->with('apuestas',$apuestas);
+        return view('apuestas.abiertas')->with('mensaje',$mensaje)->with('pdte',$Pdte)->with('total',$total)->with('deportes',$deportes)->with('apuestas',$apuestas);
     }
     
     public function Crear(request $info){
@@ -38,8 +45,8 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT dineroEnApuestas, dineroStack FROM historico_apuestas WHERE usuario =".$idUsu;
         $sa=DB::select($query);
         foreach ($sa as $a){
-            $total =  $a->dineroEnApuestas;
-            $Pdte = $a->dineroStack;
+            $Pdte =  $a->dineroEnApuestas;
+            $total = $a->dineroStack;
         }
         $paux =str_replace(",",".",$info->porcentaje);
         $porcentaje = round(100/str_replace(",",".",$info->porcentaje),2);
@@ -79,10 +86,12 @@ use Illuminate\Support\Facades\DB;
     public function FinalizarApuesta(request $info)
     {
         $idUsu =auth()->id();
-        $query = "SELECT dineroEnApuestas FROM historico_apuestas WHERE usuario =".$idUsu;
+        $query = "SELECT dineroEnApuestas, dineroStack FROM historico_apuestas WHERE usuario =".$idUsu;
         $sa=DB::select($query);
+        
         foreach ($sa as $a){
-            $total =  $a->dineroEnApuestas;
+            $Pdte =  $a->dineroEnApuestas;
+            $total = $a->dineroStack;
         }
 
         $query = "SELECT dineroApostado*-1 as resultado FROM apuestas WHERE id = ".$info->idapuesta;
@@ -96,10 +105,10 @@ use Illuminate\Support\Facades\DB;
             $total= $total+round($info->cierre,2);
             $resultado_din = round($info->cierre,2)+$resultado_din;
         }
-        
+        $Pdte = $Pdte+$resultado_din;
         $query = "UPDATE apuestas SET resultado = ".$info->resultado.", resultadodinero= ".$resultado_din." WHERE id = ".$info->idapuesta;
         $sa=DB::select($query);
-        $query = "UPDATE historico_apuestas SET dineroEnApuestas = ".$total." WHERE USUARIO = ".$idUsu;
+        $query = "UPDATE historico_apuestas SET dineroStack = ".$total.",  dineroEnApuestas = ".$Pdte." WHERE USUARIO = ".$idUsu;
         $sa=DB::select($query);
 
         return redirect()->action('App\Http\Controllers\Controller_admin_apuestas@Abiertas');
@@ -112,7 +121,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'ListaDeportesApuestas'  and nombre not in ('TITULO') order by valor";
         $deportes= DB::select($query);
 
-        $query = "SELECT  * FROM apuestas where resultado> 0  and ID_USUARIO =".$idUsu;
+        $query = "SELECT  apuestas.id,    CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,apuestas.created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado> 0  and ID_USUARIO =".$idUsu;
         $apuestas= DB::select($query);
 
       

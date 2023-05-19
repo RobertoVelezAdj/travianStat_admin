@@ -52,10 +52,8 @@
       </div>   
 
               </div>
-              <div class="col">
-                <div class="text-center m-5"> 
-                </div>
-                <div class="table-responsive m-3" width="20">
+              <div class="col table-responsive table-responsive">
+                
                   <table id="example1" class="table table-bordered table-striped ">
                     <thead class="table-dark">
                       <tr>
@@ -105,7 +103,6 @@
                       @endforeach
                     </tbody>
                   </table>
-                </div>
               </div>
 
             </div>
@@ -121,23 +118,26 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
-    <script>
-  $(function () {
+<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" ></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js" ></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js" ></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js" ></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" ></script>
+
+
+<script>
+ $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      "buttons": ["copy", "csv", "excel", "pdf", "print"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    
   });
+  
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

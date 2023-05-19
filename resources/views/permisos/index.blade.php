@@ -48,12 +48,11 @@
       </div>   
 
               </div>
-              <div class="col">
-                <div class="text-center m-5"> 
+              <div class="col table-responsive">
+                <div class="text-center m-5 "> 
                   <h1>Permisos disponibles</h1>
                 </div>
-                <div class="table-responsive m-3" width="20">
-                  <table id="example1" class="table table-bordered table-striped ">
+                   <table id="example1" class="table table-bordered table-striped ">
                     <thead class="table-dark">
                       <tr>
                         <th>Permisos</th>
@@ -99,13 +98,12 @@
                       @endforeach
                     </tbody>
                   </table>
-                </div>
-              </div>
-              <div class="col">
-                <div class="text-center m-5"> 
+               </div>
+              <div class="col table-responsive">
+                <div class="text-center m-5 "> 
                   <h1>USUARIOS:</h1>
                 </div>
-                <div class="table-responsive">
+                
                   <table id="topciones" class="table table-bordered table-striped table-responsivelg">
                     <thead  class="table-dark">
                       <tr>
@@ -212,9 +210,7 @@
                       @endforeach
                     </tbody>  
                   </table>
-                </div>
-              </div>
-            </div>
+             </div>
           </div>
               <!-- /.card-body -->
           </div>
@@ -227,22 +223,32 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
-    <script>
-  $(function () {
+<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" ></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js" ></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js" ></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js" ></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" ></script>
+
+
+<script>
+ $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      "buttons": ["copy", "csv", "excel", "pdf", "print"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    
   });
+  $(function () {
+    $("#topciones").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print"]
+    }).buttons().container().appendTo('#topciones_wrapper .col-md-6:eq(0)');
+    
+  });
+  
 </script>
 @stop
