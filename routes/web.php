@@ -55,5 +55,5 @@ Route::get('/Apuestas/Estado', [App\Http\Controllers\Controller_admin_apuestas::
 Route::put('/Apuestas/Crear', [App\Http\Controllers\Controller_admin_apuestas::class, 'Crear'])->middleware('can:Administrador')->name('Apuestas.Crear'); 
 Route::put('/Apuestas/FinalizarApuesta', [App\Http\Controllers\Controller_admin_apuestas::class, 'FinalizarApuesta'])->middleware('can:Administrador')->name('Apuestas.FinalizarApuesta'); 
 
-Route::get('/Apuestas/Cerradas', [App\Http\Controllers\Controller_admin_apuestas::class, 'cerradas'])->middleware('can:Apuestas')->name('cerradas'); 
-Route::get('/Apuestas/Historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'index'])->middleware('can:Apuestas')->name('Apuestas'); 
+Route::get('/Apuestas/Cerradas', [App\Http\Controllers\Controller_admin_apuestas::class, 'cerradas'])->middleware('can:Apuestas')->name('Apuestas.cerradas'); 
+Route::get('/Apuestas/Historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historico'])->middleware('can:Apuestas')->name('Apuesta.historicos'); 

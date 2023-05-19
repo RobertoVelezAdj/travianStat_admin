@@ -99,13 +99,13 @@ use Illuminate\Support\Facades\DB;
             foreach ($sa as $a){
                 $resultado_din =  $a->resultado;
             }             
-
+            $Pdte = $Pdte+$resultado_din;
         if($info->resultado<3){
             //Ganada o cierre
             $total= $total+round($info->cierre,2);
             $resultado_din = round($info->cierre,2)+$resultado_din;
         }
-        $Pdte = $Pdte+$resultado_din;
+       
         $query = "UPDATE apuestas SET resultado = ".$info->resultado.", resultadodinero= ".$resultado_din." WHERE id = ".$info->idapuesta;
         $sa=DB::select($query);
         $query = "UPDATE historico_apuestas SET dineroStack = ".$total.",  dineroEnApuestas = ".$Pdte." WHERE USUARIO = ".$idUsu;
@@ -121,7 +121,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'ListaDeportesApuestas'  and nombre not in ('TITULO') order by valor";
         $deportes= DB::select($query);
 
-        $query = "SELECT  apuestas.id,    CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,apuestas.created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado> 0  and ID_USUARIO =".$idUsu;
+        $query = "SELECT  apuestas.id, resultadodinero,   CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,apuestas.created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado> 0  and ID_USUARIO =".$idUsu;
         $apuestas= DB::select($query);
 
       
@@ -132,12 +132,23 @@ use Illuminate\Support\Facades\DB;
         return view('apuestas.cerradas')->with('mensaje',$mensaje)->with('deportes',$deportes)->with('apuestas',$apuestas);    
         
     }
-    public function crearRegistro(request $info)
+    public function historico(request $info)
     {
-        
+        $idUsu =auth()->id();
+    
+        $query = "select created_at as fecha, sum(resultadodinero) as resultadodinero , (select count(*)from apuestas a where resultado > 0 and apuestas.created_at = a.created_at and id_usuario =".$idUsu.") as contador from apuestas where resultado> 0 and id_usuario =".$idUsu." group by fecha order by fecha desc";
+        $cerradas=DB::select($query);
+        $query = "select parametrizaciones.nombre as  deporte, sum(resultadodinero) as resultadodinero, (select count(*)from apuestas a where resultado > 0 and apuestas.deporte = a.deporte and apuestas.deporte = parametrizaciones.valor and parametrizaciones.lista =  'deporteApuestas' and id_usuario =".$idUsu.")  as contador from apuestas, parametrizaciones where apuestas.deporte = parametrizaciones.valor and parametrizaciones.lista =  'ListaDeportesApuestas' and resultado> 0 and id_usuario =".$idUsu." group by parametrizaciones.nombre,apuestas.deporte,parametrizaciones.valor,parametrizaciones.lista ";
+        $tabla_deportes=DB::select($query);
+
+        $query = "SELECT * FROM `parametrizaciones` WHERE `lista` = 'deporteApuestas' order by valor";
+        $deportes= DB::select($query);
+
+        $query = "SELECT * FROM `historico_apuestas_diario` order by created_at";
+        $historico= DB::select($query);
+ 
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return  view('apuestas.historico')->with('apuestas',$cerradas)->with('historico',$historico)->with('tabla_deportes',$tabla_deportes)->with('deportes',$deportes)->with('mensaje',$mensaje);
     }
-    public function EliminarRegistro(request $info)
-    {
-       
-    }
+    
 }

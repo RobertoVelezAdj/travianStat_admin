@@ -29,6 +29,7 @@
                         <th>Apuesta</th>
                         <th>Probabilidad</th>
                         <th>Estado</th>
+                        <th>Total €</th>
                        </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,7 @@
                           <th>{{$apuesta->dineroApostado}}€</th>
                           <th>{{$apuesta->probabilidad}}%</th>
                           <th>{{$apuesta->estado_descri}}</th>
+                          <th>{{$apuesta->resultadodinero}}</th>
                         </tr>
                       @endforeach
                     </tbody>
