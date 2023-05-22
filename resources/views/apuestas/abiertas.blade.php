@@ -88,47 +88,46 @@
                             <button type="button" class="btn   btn-info btn-info" data-toggle="modal" data-target="#Resultado-{{$apuesta->id}}">Resultado</button>  
                           </th>
                         </tr>
-                           <div class="modal fade" id="Resultado-{{$apuesta->id}}" tabindex="-1" role="dialog" aria-labelledby="#Resultado-{{$apuesta->id}}" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Fianlizar apuesta</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <form action="/Apuestas/FinalizarApuesta" method="POST">
-                                                    @method('PUT')
+                          <div class="modal fade" id="Resultado-{{$apuesta->id}}" tabindex="-1" role="dialog" aria-labelledby="#Resultado-{{$apuesta->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Fianlizar apuesta</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <form action="/Apuestas/FinalizarApuesta" method="POST">
+                                                @method('PUT')
+                                                @csrf
+                                                @method('PUT')
                                                     @csrf
-                                                    @method('PUT')
-                                                        @csrf
-                                                        <div class="modal-body">
-                                                        <select  name="resultado" class="form-control" id ="resultado">
-                                                            <option value="1">Ganada</option>
-                                                            <option value="2">Cierre</option> 
-                                                            <option value="3">Perdida</option> 
-                                                        </select>
-                                                        </div>
-                                                        @php 
-                                                          $cierre =round(($apuesta->porcentaje*$apuesta->dineroApostado),2,PHP_ROUND_HALF_UP);
-                                                        @endphp
-                                                        <label for="nombreAldea">Cierre</label>
-                                                            <input type="text" name="cierre" class="form-control" id ="cierre" value="{{$cierre}}"> 
-                                                        <input  name="idapuesta" type="hidden" value="{{$apuesta->id}}">
-                                                        <input  name="porcentaje" type="hidden" value="{{$apuesta->porcentaje}}">
-                                                        <input  name="apuesta" type="hidden" value="{{$apuesta->dineroApostado}}">
-                                                        <div class="modal-footer">
-                                                            <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                                                            <button type="submit" class="btn btn-danger">Finalizar apuesta</button>
-                                                        </div>
-                                                </form>
-                                            </div>
+                                                    <div class="modal-body">
+                                                    <select  name="resultado" class="form-control" id ="resultado">
+                                                        <option value="1">Ganada</option>
+                                                        <option value="2">Cierre</option> 
+                                                        <option value="3">Perdida</option> 
+                                                    </select>
+                                                    </div>
+                                                    @php 
+                                                      $cierre =round(($apuesta->porcentaje*$apuesta->dineroApostado),2,PHP_ROUND_HALF_UP);
+                                                    @endphp
+                                                    <label for="nombreAldea">Cierre</label>
+                                                        <input type="text" name="cierre" class="form-control" id ="cierre" value="{{$cierre}}"> 
+                                                    <input  name="idapuesta" type="hidden" value="{{$apuesta->id}}">
+                                                    <input  name="porcentaje" type="hidden" value="{{$apuesta->porcentaje}}">
+                                                    <input  name="apuesta" type="hidden" value="{{$apuesta->dineroApostado}}">
+                                                    <div class="modal-footer">
+                                                        <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                                        <button type="submit" class="btn btn-danger">Finalizar apuesta</button>
+                                                    </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </div>
-                            </div>   
+                              </div>
+                             </div>   
                       @endforeach
                     </tbody>
                   </table>
