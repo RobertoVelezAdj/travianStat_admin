@@ -41,9 +41,9 @@ use Illuminate\Support\Facades\DB;
             $id_aldea =  $a->id;
         }
         //con el id.. registro en edificios y produccion
-        $query = "INSERT INTO ALDEA_EDIFICIOS(id_aldea)VALUES(".$id_aldea.")";
+        $query = "INSERT INTO aldea_edificios(id_aldea)VALUES(".$id_aldea.")";
         $tipos= DB::select($query);
-        $query = "INSERT INTO ALDEA_PRODUCION(id_aldea)VALUES(".$id_aldea.")";
+        $query = "INSERT INTO aldea_producion(id_aldea)VALUES(".$id_aldea.")";
         $tipos= DB::select($query);
 
         $aux=$this->creacion_mensaje('success', "Aldea generada de forma correcta.",$idUsu);
