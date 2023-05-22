@@ -357,24 +357,24 @@ return [
         ],
         [
             'text'    => 'Información de cuenta',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-home',
             'url'  => '#',
         ],
         [
             'text'    => 'Información de aldeas',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-building',
             'submenu' => [
                 [
                     'text' => 'Mis aldeas',
-                    'url'  => '#',
+                    'url'  => '/Aldeas/informacion',
                 ],
                 [
                     'text' => 'Edificios',
-                    'url'  => '#',
+                    'url'  => '/Aldeas/edificios',
                 ],
                 [
                     'text' => 'Mis tareas',
-                    'url'  => '#',
+                    'url'  => '/Aldeas/tareas',
                 ],
                 
             ],

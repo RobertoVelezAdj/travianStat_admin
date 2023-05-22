@@ -33,6 +33,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
+
 //Admin usuarios
 Route::get('/AdminPermisos', [App\Http\Controllers\Controller_admin_permisos::class, 'index'])->middleware('can:Administrador')->name('AdminPermisos'); 
 Route::put('/AdminPermisos/Crear', [App\Http\Controllers\Controller_admin_permisos::class, 'crearpermiso'])->middleware('can:Administrador')->name('AdminPermisos.Crear'); 
@@ -58,6 +59,13 @@ Route::put('/Apuestas/FinalizarApuesta', [App\Http\Controllers\Controller_admin_
 Route::get('/Apuestas/Cerradas', [App\Http\Controllers\Controller_admin_apuestas::class, 'cerradas'])->middleware('can:Apuestas')->name('Apuestas.cerradas'); 
 Route::get('/Apuestas/Historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historico'])->middleware('can:Apuestas')->name('Apuesta.historicos'); 
 
+//Aldeas
+Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.informacion'); 
+Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Crear'])->name('aldeas.crear'); 
+
+Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.edificios'); 
+
+Route::get('/Aldeas/tareas', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.tareas'); 
 
 
 //historificacion
