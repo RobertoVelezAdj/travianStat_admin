@@ -148,10 +148,10 @@ return [
     |
     */
 
-    'layout_topnav' => null,
+    'layout_topnav' => false,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => true,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => false,
     'layout_fixed_footer' => false,
     'layout_dark_mode' => false,
 
@@ -210,7 +210,7 @@ return [
     |
     */
 
-    'sidebar_mini' => 'false',
+    'sidebar_mini' => true,
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => true,
     'sidebar_collapse_remember' => false,
@@ -218,7 +218,7 @@ return [
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
-    'sidebar_nav_animation_speed' => 200,
+    'sidebar_nav_animation_speed' => 250,
 
     /*
     |--------------------------------------------------------------------------
