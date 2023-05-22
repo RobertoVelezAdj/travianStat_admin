@@ -150,7 +150,7 @@ use Illuminate\Support\Facades\DB;
         $mensaje=$this->obtener_mensaje( $idUsu);
         return  view('apuestas.historico')->with('apuestas',$cerradas)->with('historico',$historico)->with('tabla_deportes',$tabla_deportes)->with('deportes',$deportes)->with('mensaje',$mensaje);
     }
-    public function historificacion(request $info)
+    public function historificacion()
     {    
         $query = "SELECT * FROM historico_apuestas ";
         $historico=DB::select($query);

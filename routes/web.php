@@ -61,4 +61,4 @@ Route::get('/Apuestas/Historico', [App\Http\Controllers\Controller_admin_apuesta
 
 
 //historificacion
-Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->name('Apuestas'); 
+Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->name('historico'); 
