@@ -330,8 +330,39 @@ return [
                     'icon'    => 'fas fa-fw fa-share',
                     'can' => 'Administrador',
                 ],
+                [
+                    'text' => 'Admin servidores',
+                    'url'  => '/AdminServidores',
+                    'icon'    => 'fas fa-fw fa-share',
+                    'can' => 'Administrador',
+                ],
             ],
             
+        ],
+        [
+            'text'    => 'Información de cuenta',
+            'icon'    => 'fas fa-fw fa-home',
+            'url'  => '/MiCuenta/Informacion',
+        ],
+        [
+            'text'    => 'Información de aldeas',
+            'icon'    => 'fas fa-fw fa-building',
+            'submenu' => [
+                [
+                    'text' => 'Mis aldeas',
+                    'url'  => '/Aldeas/informacion',
+                ],
+                [
+                    'text' => 'Edificios',
+                    'url'  => '/Aldeas/edificios',
+                ],
+                [
+                    'text' => 'Mis tareas',
+                    'url'  => '/Aldeas/tareas',
+                    'can' => 'Administradorw',
+                ],
+                
+            ],
         ],
         [
             'text'    => 'Cálculos',
@@ -353,30 +384,6 @@ return [
                     'text' => 'Tropas necesarias listas',
                     'url'  => '#',
                 ],
-            ],
-        ],
-        [
-            'text'    => 'Información de cuenta',
-            'icon'    => 'fas fa-fw fa-home',
-            'url'  => '#',
-        ],
-        [
-            'text'    => 'Información de aldeas',
-            'icon'    => 'fas fa-fw fa-building',
-            'submenu' => [
-                [
-                    'text' => 'Mis aldeas',
-                    'url'  => '/Aldeas/informacion',
-                ],
-                [
-                    'text' => 'Edificios',
-                    'url'  => '/Aldeas/edificios',
-                ],
-                [
-                    'text' => 'Mis tareas',
-                    'url'  => '/Aldeas/tareas',
-                ],
-                
             ],
         ],
         [

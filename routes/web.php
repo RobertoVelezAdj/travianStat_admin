@@ -40,24 +40,24 @@ Route::put('/AdminPermisos/Crear', [App\Http\Controllers\Controller_admin_permis
 Route::put('/AdminPermisos/Añadir', [App\Http\Controllers\Controller_admin_permisos::class, 'AnadirPermiso'])->middleware('can:Administrador')->name('AdminPermisos.AnadirPermiso');
 Route::put('/AdminPermisos/EliminarPermisoUsuario', [App\Http\Controllers\Controller_admin_permisos::class, 'EliminarPermisoUsuario'])->middleware('can:Administrador')->name('AdminPermisos.EliminarPermisoUsuario');
 Route::put('/AdminPermisos/EliminarPermisoTabla', [App\Http\Controllers\Controller_admin_permisos::class, 'EliminarPermisoTabla'])->middleware('can:Administrador')->name('AdminPermisos.Eliminar');
-
 //Admin parametrizaciones
 Route::get('/AdminParametrizaciones', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'index'])->middleware('can:Administrador')->name('Parametrizaciones'); 
 Route::put('/AdminParametrizaciones/Crear', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'crearLista'])->middleware('can:Administrador')->name('Parametrizaciones.crearLista'); 
 Route::put('/AdminParametrizaciones/Eliminar', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'EliminarLista'])->middleware('can:Administrador')->name('Parametrizaciones.crearLista'); 
-
 Route::get('/AdminParametrizaciones/MostrarRegistro', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'MostrarLista'])->middleware('can:Administrador')->name('Parametrizaciones.MostrarLista'); 
 Route::put('/AdminParametrizaciones/CrearRegistro', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'crearRegistro'])->middleware('can:Administrador')->name('Parametrizaciones.crearRegistro'); 
 Route::put('/AdminParametrizaciones/EliminarRegistro', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'EliminarRegistro'])->middleware('can:Administrador')->name('Parametrizaciones.EliminarRegistro'); 
-
-
 //Admin apuestas
 Route::get('/Apuestas/Estado', [App\Http\Controllers\Controller_admin_apuestas::class, 'Abiertas'])->middleware('can:Apuestas')->name('Apuestas'); 
 Route::put('/Apuestas/Crear', [App\Http\Controllers\Controller_admin_apuestas::class, 'Crear'])->middleware('can:Administrador')->name('Apuestas.Crear'); 
 Route::put('/Apuestas/FinalizarApuesta', [App\Http\Controllers\Controller_admin_apuestas::class, 'FinalizarApuesta'])->middleware('can:Administrador')->name('Apuestas.FinalizarApuesta'); 
-
 Route::get('/Apuestas/Cerradas', [App\Http\Controllers\Controller_admin_apuestas::class, 'cerradas'])->middleware('can:Apuestas')->name('Apuestas.cerradas'); 
 Route::get('/Apuestas/Historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historico'])->middleware('can:Apuestas')->name('Apuesta.historicos'); 
+//Admin servidores
+Route::get('/AdminServidores', [App\Http\Controllers\Controller_admin_servidor::class, 'index'])->middleware('can:Apuestas')->name('AdminServidores'); 
+Route::put('/AdminServidores/Crear', [App\Http\Controllers\Controller_admin_servidor::class, 'crear'])->middleware('can:Administrador')->name('AdminServidores.Crear'); 
+Route::put('/AdminServidores/borrar', [App\Http\Controllers\Controller_admin_servidor::class, 'borrar'])->middleware('can:Administrador')->name('AdminServidores.borrar'); 
+
 
 //Aldeas
 Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.informacion'); 
@@ -66,7 +66,8 @@ Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Cre
 Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.edificios'); 
 
 Route::get('/Aldeas/tareas', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.tareas'); 
-
-
+//Mi cuenta
+Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->name('MiCuenta.Informacion'); 
+Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->name('aldeas.crear'); 
 //historificacion
 Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->name('historico'); 

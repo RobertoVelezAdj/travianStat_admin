@@ -107,6 +107,7 @@
                                                     <label>¿Estas segur@ de eliminar la lista de parametrización {{$param->lista}}?.</label>
                                                     <input  name="parametrizacion" type="hidden" value="{{$param->lista}}">  
                                                     </div>
+                                                    
                                                      <button type="submit" class="btn btn-outline-ligh bg-black">Eliminar lista</button>
                                                 </form>
                                             </div>

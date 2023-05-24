@@ -41,7 +41,7 @@
                                 <input type="text" name="valor" class="form-control" id ="valor">
                                 <label for="nombreParam">Campo nombre de la parametrizacion</label>
                                 <input type="text" name="nombre" class="form-control" id ="valor">
-                                <input  name="parametrizacion" type="hidden" value="{{$nombre}}"
+                                <input  name="parametrizacion" type="hidden" value="{{$nombre}}">
                                 <input  name="descripcion" type="hidden" value="{{$descripcion}}">  
                                 <button type="submit" class="btn btn-outline-ligh bg-black m-3">Crear Parametrizacion</button>
                         </form>
