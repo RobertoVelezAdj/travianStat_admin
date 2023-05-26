@@ -49,12 +49,12 @@ Route::put('/AdminParametrizaciones/CrearRegistro', [App\Http\Controllers\Contro
 Route::put('/AdminParametrizaciones/EliminarRegistro', [App\Http\Controllers\Controller_admin_parametrizaciones::class, 'EliminarRegistro'])->middleware('can:Administrador')->name('Parametrizaciones.EliminarRegistro'); 
 //Admin apuestas
 Route::get('/Apuestas/Estado', [App\Http\Controllers\Controller_admin_apuestas::class, 'Abiertas'])->middleware('can:Apuestas')->name('Apuestas'); 
-Route::put('/Apuestas/Crear', [App\Http\Controllers\Controller_admin_apuestas::class, 'Crear'])->middleware('can:Administrador')->name('Apuestas.Crear'); 
-Route::put('/Apuestas/FinalizarApuesta', [App\Http\Controllers\Controller_admin_apuestas::class, 'FinalizarApuesta'])->middleware('can:Administrador')->name('Apuestas.FinalizarApuesta'); 
+Route::put('/Apuestas/Crear', [App\Http\Controllers\Controller_admin_apuestas::class, 'Crear'])->middleware('can:Apuestas')->name('Apuestas.Crear'); 
+Route::put('/Apuestas/FinalizarApuesta', [App\Http\Controllers\Controller_admin_apuestas::class, 'FinalizarApuesta'])->middleware('can:Apuestas')->name('Apuestas.FinalizarApuesta'); 
 Route::get('/Apuestas/Cerradas', [App\Http\Controllers\Controller_admin_apuestas::class, 'cerradas'])->middleware('can:Apuestas')->name('Apuestas.cerradas'); 
 Route::get('/Apuestas/Historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historico'])->middleware('can:Apuestas')->name('Apuesta.historicos'); 
 //Admin servidores
-Route::get('/AdminServidores', [App\Http\Controllers\Controller_admin_servidor::class, 'index'])->middleware('can:Apuestas')->name('AdminServidores'); 
+Route::get('/AdminServidores', [App\Http\Controllers\Controller_admin_servidor::class, 'index'])->middleware('can:Administrador')->name('AdminServidores'); 
 Route::put('/AdminServidores/Crear', [App\Http\Controllers\Controller_admin_servidor::class, 'crear'])->middleware('can:Administrador')->name('AdminServidores.Crear'); 
 Route::put('/AdminServidores/borrar', [App\Http\Controllers\Controller_admin_servidor::class, 'borrar'])->middleware('can:Administrador')->name('AdminServidores.borrar'); 
 
