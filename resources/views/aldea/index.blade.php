@@ -375,6 +375,26 @@
             </div>
                   @endforeach
               </tbody>
+              <tfoot>
+            <tr>
+            <th></th>
+            
+            <th>Total:</th>
+            <th>{{$suma_madera_total}}</th>
+            <th>{{$suma_barro_total}}</th>
+            <th>{{$suma_hierro_total}}</th>
+            <th>{{$suma_cereal_total}}</th>
+            <th>{{$suma_materias_total}}</th>
+            <th>{{$suma_puntosc_total}}</th>
+            <th>{{$pc_totales_alianza}}</th>
+            <th></th>
+            <th></th>
+            <th>{{$pc_totales_fiestas}}</th>
+            <th>{{$pc_todos}}</th>
+            <th></th>
+        
+        </tr>
+        </tfoot>
             </table>
         </div>
       </div>
