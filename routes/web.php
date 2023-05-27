@@ -22,9 +22,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('dashboard');
 });
 
 Auth::routes();
@@ -62,6 +60,9 @@ Route::put('/AdminServidores/borrar', [App\Http\Controllers\Controller_admin_ser
 //Aldeas
 Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.informacion'); 
 Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Crear'])->name('aldeas.crear'); 
+Route::put('/Aldeas/editar', [App\Http\Controllers\Controller_aldeas::class, 'editar'])->name('aldeas.editar'); 
+Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'borrar'])->name('aldeas.borrar'); 
+
 
 Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.edificios'); 
 

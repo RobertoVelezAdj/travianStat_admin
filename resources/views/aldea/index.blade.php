@@ -117,7 +117,7 @@
                 $suma_hierro_total =  $suma_hierro_total+ $aldea->hierro;
                 $suma_cereal_total = $suma_cereal_total+$aldea->cereal;
                 $suma_materias_total = $suma_materias_total + $suma_materias_aldea;
-                /*
+                
                //echo $putnos_fiesta_grande;
                //echo $aldea->tiempo_pequena;
                 if($aldea->fiesta_pequena==1){
@@ -156,24 +156,223 @@
                 $suma_puntosc_total =$suma_puntosc_total + $aldea->puntos_cultura;
                 $pc_totales_fiestas = $pc_totales_fiestas + $pc_aldea_fiesta;
                
-                $pc_totales_alianza = $pc_totales_alianza  + $pc_alianza;*/
+                $pc_totales_alianza = $pc_totales_alianza  + $pc_alianza;
             @endphp
                   <tr>
                     <th>{{$aldea->nombre}} ({{$aldea->coord_x}}/{{$aldea->coord_y}})</th>
-                    <th>{{$aldea->tipo}}</th>
+                    <th>{{$aldea->tipo_aldea}}</th>
                     <th>{{$aldea->madera}}</th>
                     <th>{{$aldea->barro}}</th>
                     <th>{{$aldea->hierro}}</th>
                     <th>{{$aldea->cereal}}</th>
                     <th>{{$suma_materias_aldea}} </th>
                     <th>{{$aldea->puntos_cultura}}</th>
-                    <th>PC bono alianza</th>
-                    <th>Fiesta pequeña</th>
-                    <th>Fiesta grande</th>
-                    <th>PC generado fiestas</th>
-                    <th>PC totales</th>
-                    <th>Opciones</th>
+                    <th>{{$pc_alianza}}</th>
+                    <th>{{$fp}}</th>
+                    <th>{{$fg}}</th>
+                    <th>{{$pc_aldea_fiesta}}</th>
+                    <th>{{$pc_totales_aldea}}</th>
+                    <th> 
+                      <div class="margin">
+                        <div class="btn-group  ">
+                          <button type="button" class="btn   btn-info btn-info">Acciones</button>
+                          <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                          <button class="dropdown-item btn-info" data-toggle="modal" data-target="#editarAldea-{{$aldea->id_aldea}}">Editar aldea</button>
+                          <button class="dropdown-item btn-info" data-toggle="modal" data-target="#eliminarAldeas-{{$aldea->id_aldea}}">Eliminar aldea</button>
+
+                        </div>
+                      </div>
+                    </th>
                   </tr>
+                  <div class="modal fade" id="reportar-{{$aldea->id_aldea}}" tabindex="-1" role="dialog" aria-labelledby="reportar-{{$aldea->id_aldea}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Reportar ataque  a la aldea "{{$aldea->nombre}}{{ __('  ') }} ({{$aldea->coord_x }}{{ __('/') }}{{$aldea->coord_y }})" </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <form action="/aldeas/reporte" method="POST">
+                                    @method('PUT')
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div>
+                                            <label for="madera">ATACANTE (COORD X):</label>
+                                            <input type="text" name="coord_x" class="form-control" id ="coord_x"  vallue = "0" pattern="^[0-9]+">
+                                        
+                                            <label for="madera">ATACANTE (COORD Y):</label>
+                                            <input type="text" name="coord_y" class="form-control" id ="coord_y" vallue = "0" pattern="^[0-9]+">
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">Día impacto </label>  
+                                            <input type="date" name="dia" >
+                                            <label for="aldeas_interes">Hora impacto </label>  
+                                            <input type="time" name="hora" step="1">
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">Artefacto en tu poder: </label>  
+                                            <select  name="tipo" class="form-control" id ="artedeff"> 
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">Número de ataques a la vez: </label>  
+                                            <input type="text" name="Nvagones" class="form-control" vallue = "0" id ="Nvagones"  pattern="^[0-9]+">
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">Posibilidad de intercalada: </label>  
+                                            <select  name="intercalada" class="form-control" id ="intercalada">
+                                                <option value='NO'>NO</option>
+                                                <option value='SI'>SI</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">Velocidad vagones: </label>  
+                                            <input type="text" name="velocidadVagones" vallue = "0" class="form-control" id ="velocidadVagones"  pattern="^[0-9]+">
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">PT agresor:  </label>  
+                                            <input type="text" name="ptAgresor" vallue = "0" class="form-control" id ="ptAgresor"  pattern="^[0-9]+">
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">Artefacto agresor:  </label>  
+                                            <select  name="arteoff" class="form-control" id ="arteoff">
+                                                <option value='1'>Sin artefacto</option>
+                                               
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">link heroe</label>  
+                                            <input type="text" name="link_heroe" class="form-control" id ="link_heroe"  required>
+                                        </div>
+                                        <div>
+                                            <label for="aldeas_interes">Artículo heroe</label>  
+                                            <select  name="heroe_botas" class="form-control" id ="heroe_botas">
+                                                <option value='0'>Sin botas</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <input  name="idAldea" type="hidden" value="{{$aldea->id_aldea}}">
+                                    <div class="modal-footer">
+                                        <button type="button"class="btn btn-danger" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Reportar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="eliminarAldeas-{{$aldea->id_aldea}}" tabindex="-1" role="dialog" aria-labelledby="eliminarAldeas-{{$aldea->id_aldea}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar aldea</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <form action="/Aldeas/borrar" method="POST">
+                                    @method('PUT')
+                                    @csrf
+                                    <div class="modal-body">
+                                        ¿Está seguro que desea eliminar la aldea "{{ $aldea->nombre}}"?
+                                    </div>
+                                    <input  name="idAldea" type="hidden" value="{{$aldea->id_aldea}}">
+                                    <div class="modal-footer">
+                                        <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="editarAldea-{{$aldea->id_aldea}}" tabindex="-1" role="dialog" aria-labelledby="editarAldea-{{$aldea->id_aldea}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Editar aldea</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <form action="/Aldeas/editar" action="{{'submit'}}" method="post">
+                                    @method('PUT')
+                                    @csrf
+                                        <label for="nombreAldea">NombreAldea</libel>
+                                        <input type="text" name="nombreAldea" class="form-control" id ="nombreAldea" value = "{{$aldea->nombre}}">
+                                        <label for="tipo">Tipo de aldea</libel>
+                                        <select  name="tipo" class="form-control" id ="tipo">
+                                          @foreach($tipos as $tipo)
+                                          @php           
+                                            if($aldea->tipo ==$tipo->valor){
+                                                echo "<option value='$tipo->valor'default > $tipo->nombre</option>";
+                                              }else{
+                                                 echo "<option value='$tipo->valor' > $tipo->nombre</option>";
+                                            }
+                                          @endphp
+                                            
+                                          @endforeach 
+                                        </select>
+                                         <label for="madera">Producción de madera</libel>
+                                        <input type="text" name="madera" class="form-control" id ="madera" min="1" pattern="^[0-9]+" value = "{{$aldea->madera}}">
+                                        <label for="barro">Producción de barro</libel>
+                                        <input type="text" name="barro" class="form-control" id ="barro"  min="1" pattern="^[0-9]+" value = "{{$aldea->barro}}">
+                                        <label for="hierro">Producción de hierro</libel>
+                                        <input type="text" name="hierro" class="form-control" id ="hierro" min="1" pattern="^[0-9]+" value = "{{$aldea->hierro}}">
+                                        <label for="cereal">Producción de cereal</libel>
+                                        <input type="text" name="cereal" class="form-control" id ="cereal"  pattern="[-]*[0-9]+" value = "{{$aldea->cereal}}">
+                                        <label for="puntos_cultura">Puntos de cultura</libel>
+                                        <input  name="puntos_cultura" class="form-control" id ="puntos_cultura" min="1"  pattern="^[0-9]+" value = "{{$aldea->puntos_cultura}}">
+
+                                        <label for="fiesta_grande">Fiesta grande</libel>
+                                        <select  name="fiesta_grande" class="form-control" id ="fiesta_grande">
+                                            @switch(true)
+                                                @case($aldea->fiesta_grande == '0')
+                                                    <option value="0" selected = 'selected'>No</option> 
+                                                    <option value="1">Si</option> 
+                                                    @break
+                                                @case($aldea->fiesta_grande == '1')
+                                                    <option value="0">No</option> 
+                                                    <option value="1" selected = 'selected'>Si</option> 
+                                                    @break
+                                            @endswitch                     
+                                        </select>
+                                        <label for="fiesta_pequena">Fiesta pequeña</libel>
+                                        <select  name="fiesta_pequena" class="form-control" id ="fiesta_pequena">
+                                            @switch(true)
+                                                @case($aldea->fiesta_pequena == '0')
+                                                    <option value="0" selected = 'selected'>No</option> 
+                                                    <option value="1">Si</option> 
+                                                    @break
+                                                @case($aldea->fiesta_pequena == '1')
+                                                    <option value="0">No</option> 
+                                                    <option value="1" selected = 'selected'>Si</option> 
+                                                    @break
+                                                @endswitch  
+                                        </select>
+                                        <input  name="idAldea" type="hidden" value="{{$aldea->id_aldea}}">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                   @endforeach
               </tbody>
             </table>

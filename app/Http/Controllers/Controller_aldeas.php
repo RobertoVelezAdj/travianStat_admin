@@ -18,14 +18,42 @@ use Illuminate\Support\Facades\DB;
         //se elee información de las aldeas 
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposAldea'  and nombre not in ('TITULO') order by valor";
         $tipos= DB::select($query);
-        $query = "SELECT a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro, ap.cereal,ap.puntos_cultura FROM aldea a,aldea_producion ap WHERE  ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
+        $query = "SELECT a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro, ap.cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p WHERE p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
         $aldeas= DB::select($query);
   
+        $query = "select sum(puntos_cultura) as pc_aldeas from aldea, aldea_producion p where p.id_aldea = aldea.id and  aldea.id_usuario =".$idUsu;
+        $pc_totales_aldeas=DB::select($query);
+        foreach($pc_totales_aldeas as $s)
+        {
+            $pc_aldeas = $s->pc_aldeas;
+        }
+        $fiesta_grande = 2000;
+        $fiesta_pequeña = 500;
+        $query = "SELECT pc_max_fiesta_pequeña, pc_max_fiesta_grande, velocidad_fiesta  FROM users, servidor, velocidad_servidores WHERE users.servidor = servidor.id and servidor.velocidad = velocidad_servidores.id and users.id = ".$idUsu;
+        $resultado=DB::select($query);
+        foreach ($resultado as $a){
+            $fiesta_pequeña =  $a->pc_max_fiesta_pequeña;
+            $fiesta_grande =  $a->pc_max_fiesta_grande;
+            $velocidad_fiesta =  $a->velocidad_fiesta;
+        }
 
+        if ($pc_aldeas > $fiesta_grande){
+            $pc_fiesta_grande = $fiesta_grande;
+        }else{
+            $pc_fiesta_grande = $pc_aldeas;
+        }
+        //Se calcula el bono de pc de alianza
+        $filosofia = 1;
+        /*$query = "SELECT alianzas.filosofia FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
+        $filo=DB::select($query);
+        foreach($filo as $s)
+        {
+            $filosofia = $s->filosofia;
+        } */
         $mensaje=$this->obtener_mensaje( $idUsu);
 
         
-        return view('aldea.index')->with('mensaje',$mensaje)->with('tipos',$tipos)->with('aldeas',$aldeas);
+        return view('aldea.index')->with('mensaje',$mensaje)->with('tipos',$tipos)->with('aldeas',$aldeas)->with('putnos_fiesta_grande',$pc_fiesta_grande)->with('putnos_fiesta_pequeña',$fiesta_pequeña)->with('velocidad_fiesta',$velocidad_fiesta)->with('filosofia',$filosofia);
     }
     
     public function Crear(request $info){
@@ -49,80 +77,36 @@ use Illuminate\Support\Facades\DB;
         $aux=$this->creacion_mensaje('success', "Aldea generada de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
     }
-    public function FinalizarApuesta(request $info) {
+    public function editar(request $info) {
         $idUsu =auth()->id();
-        $query = "SELECT dineroEnApuestas, dineroStack FROM historico_apuestas WHERE usuario =".$idUsu;
-        $sa=DB::select($query);
-        
-        foreach ($sa as $a){
-            $Pdte =  $a->dineroEnApuestas;
-            $total = $a->dineroStack;
-        }
+        $query = "UPDATE aldea SET tipo = '".$info->tipo."', nombre = '".$info->nombreAldea."', fiesta_grande = ".$info->fiesta_grande.",fiesta_pequena = ".$info->fiesta_pequena." WHERE id = ".$info->idAldea.";";
+        $aldea=DB::select($query);
+  
+        $query = "UPDATE aldea_producion SET  puntos_cultura = ".$info->puntos_cultura.",madera = ".$info->madera.", barro = ".$info->barro.", hierro = ".$info->hierro.", cereal = ".$info->cereal." WHERE id_aldea = ".$info->idAldea.";";
+        $aldea=DB::select($query);
 
-        $query = "SELECT dineroApostado*-1 as resultado FROM apuestas WHERE id = ".$info->idapuesta;
-            $sa=DB::select($query);
-            foreach ($sa as $a){
-                $resultado_din =  $a->resultado;
-            }             
-            $Pdte = $Pdte+$resultado_din;
-        if($info->resultado<3){
-            //Ganada o cierre
-            $total= $total+round($info->cierre,2);
-            $resultado_din = round($info->cierre,2)+$resultado_din;
-        }
-       
-        $query = "UPDATE apuestas SET resultado = ".$info->resultado.", resultadodinero= ".$resultado_din." WHERE id = ".$info->idapuesta;
-        $sa=DB::select($query);
-        $query = "UPDATE historico_apuestas SET dineroStack = ".$total.",  dineroEnApuestas = ".$Pdte." WHERE USUARIO = ".$idUsu;
-        $sa=DB::select($query);
-
-        return redirect()->action('App\Http\Controllers\Controller_admin_apuestas@Abiertas');
+        $aux=$this->creacion_mensaje('success', "Aldea editada de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
 
         }
-    public function cerradas(request $info){
+    public function borrar(request $info){
         $idUsu =auth()->id();
 
-        $query = "SELECT * FROM parametrizaciones WHERE lista = 'ListaDeportesApuestas'  and nombre not in ('TITULO') order by valor";
-        $deportes= DB::select($query);
-
-        $query = "SELECT  apuestas.id, resultadodinero,   CASE WHEN resultado = 0 THEN 'En curso' WHEN resultado = 1 THEN 'Ganada' WHEN resultado = 2 THEN 'Cerrada' WHEN resultado = 3 THEN 'Perdida' END AS estado_descri, id_usuario, parametrizaciones.nombre as deporte, porcentaje, dineroApostado, apuestas.descripcion, resultado, resultadoDinero, stack, probabilidad,cast(apuestas.created_at as date) as created_at FROM apuestas, parametrizaciones where lista = 'ListaDeportesApuestas' and parametrizaciones.valor = apuestas.deporte and resultado> 0  and ID_USUARIO =".$idUsu;
-        $apuestas= DB::select($query);
+        $query = "DELETE FROM aldea WHERE id =".$info->idAldea." ;";
+        $aldea=DB::select($query);
+        $query = "DELETE FROM aldea_producion WHERE id_aldea =".$info->idAldea." ;";
+        $aldea=DB::select($query);
+        $query = "DELETE FROM aldea_edificios WHERE id_aldea =".$info->idAldea." ;";
+        $aldea=DB::select($query);
 
       
 
-        $mensaje=$this->obtener_mensaje( $idUsu);
-
-        
-        return view('apuestas.cerradas')->with('mensaje',$mensaje)->with('deportes',$deportes)->with('apuestas',$apuestas);    
-        
-        }
-    public function historico(request $info)
-    {
-        $idUsu =auth()->id();
-    
-        $query = "select created_at as fecha, cast(apuestas.created_at as date)  as fecha2, sum(resultadodinero) as resultadodinero , (select count(*)from apuestas a where resultado > 0 and apuestas.created_at = a.created_at and id_usuario =".$idUsu.") as contador from apuestas where resultado> 0 and id_usuario =".$idUsu." group by fecha order by fecha desc";
-        $cerradas=DB::select($query);
-        $query = "select parametrizaciones.nombre as  deporte, sum(resultadodinero) as resultadodinero, (select count(*)from apuestas a where resultado > 0 and apuestas.deporte = a.deporte and apuestas.deporte = parametrizaciones.valor and parametrizaciones.lista =  'deporteApuestas' and id_usuario =".$idUsu.")  as contador from apuestas, parametrizaciones where apuestas.deporte = parametrizaciones.valor and parametrizaciones.lista =  'ListaDeportesApuestas' and resultado> 0 and id_usuario =".$idUsu." group by parametrizaciones.nombre,apuestas.deporte,parametrizaciones.valor,parametrizaciones.lista ";
-        $tabla_deportes=DB::select($query);
-
-        $query = "SELECT * FROM `parametrizaciones` WHERE `lista` = 'deporteApuestas' order by valor";
-        $deportes= DB::select($query);
-
-        $query = "SELECT id,usuario,dineroEnApuestas,dineroStack,cast(created_At as date) as created_at FROM `historico_apuestas_diario` order by created_at";
-        $historico= DB::select($query);
  
-        $mensaje=$this->obtener_mensaje( $idUsu);
-        return  view('apuestas.historico')->with('apuestas',$cerradas)->with('historico',$historico)->with('tabla_deportes',$tabla_deportes)->with('deportes',$deportes)->with('mensaje',$mensaje);
-    }
-    public function historificacion()
-    {    
-        $query = "SELECT * FROM historico_apuestas ";
-        $historico=DB::select($query);
         
-        foreach ($historico as $a){
-            $query = "INSERT INTO historico_apuestas_diario (USUARIO,DINEROENAPUESTAS,DINEROSTACK,CREATED_AT,UPDATED_AT) VALUES('".$a->usuario."','".$a->dineroEnApuestas."','".$a->dineroStack."',current_date(),current_date()) ";
-            $cerradas=DB::select($query);
+        $aux=$this->creacion_mensaje('success', "Aldea borrada de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        
         }
-     }
+  
     
 }
