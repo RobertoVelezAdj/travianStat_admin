@@ -107,6 +107,28 @@ use Illuminate\Support\Facades\DB;
         return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         
         }
+        public function edificios(){   
+            $idUsu =auth()->id();
   
+           $query = "SELECT a.nombre, a.coord_x, a.coord_y, e.cuartel, e.cuartel_g, e.establo, e.establo_g, e.taller, e.ayuntamiento, e.p_torneos, e.o_comercio , e.id_aldea FROM aldea_edificios e, aldea a WHERE a.id_usuario = ".$idUsu;
+           $aldeas=DB::select($query);
+           
+           $mensaje=$this->obtener_mensaje( $idUsu);
+   
+           
+           return view('aldea.edificios')->with('mensaje',$mensaje)->with('aldeas',$aldeas);
+       }
+       public function editarEdificios(request $info){   
+        $idUsu =auth()->id();
+
+        $query = "UPDATE aldea_edificios SET cuartel='".$info->cuartel."',cuartel_g='".$info->cuartel_g."',establo='".$info->establo."',establo_g='".$info->establo_g."',taller='".$info->taller."',ayuntamiento='".$info->ayuntamiento."',p_torneos='".$info->p_torneos."',o_comercio='".$info->o_comercio."' WHERE id_aldea = ".$info->id_aldea;
+        $aldeas=DB::select($query);
+ 
+       $aux=$this->creacion_mensaje('success', "Aldea editada de forma correcta.",$idUsu);
+
+       return redirect()->action('App\Http\Controllers\Controller_aldeas@edificios');
+
+   }
+       
     
 }

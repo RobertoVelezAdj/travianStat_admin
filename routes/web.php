@@ -64,7 +64,9 @@ Route::put('/Aldeas/editar', [App\Http\Controllers\Controller_aldeas::class, 'ed
 Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'borrar'])->name('aldeas.borrar'); 
 
 
-Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.edificios'); 
+
+Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'edificios'])->name('aldeas.edificios'); 
+Route::put('/Aldeas/Editaredificios', [App\Http\Controllers\Controller_aldeas::class, 'editarEdificios'])->name('aldeas.editarEdificios'); 
 
 Route::get('/Aldeas/tareas', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.tareas'); 
 //Mi cuenta
