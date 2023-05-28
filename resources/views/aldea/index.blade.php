@@ -10,8 +10,8 @@
    <div class="card">
     <div class="card-body">
       <div class="container  w-auto">
-        <div class="col margin  w-auto">
-          <div class="text-center mb-7  w-auto"> 
+        <div class="col margin  w-10">
+          <div class="text-center mb-10  w-10"> 
             <div class= "m-3">
               <h1>Aldeas</h1>
             </div>
