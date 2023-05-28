@@ -10,8 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\HTTP\Controllers\funciones\funciones;
 use Illuminate\Support\Facades\DB;
- class Controller_aldeas extends Controller
-{
+ class Controller_aldeas extends Controller{
     
     public function index(){   
          $idUsu =auth()->id();
@@ -106,7 +105,7 @@ use Illuminate\Support\Facades\DB;
     public function edificios(){   
         $idUsu =auth()->id();
   
-        $query = "SELECT a.nombre, a.coord_x, a.coord_y, e.cuartel, e.cuartel_g, e.establo, e.establo_g, e.taller, e.ayuntamiento, e.p_torneos, e.o_comercio , e.id_aldea FROM aldea_edificios e, aldea a WHERE  a.id_aldea = e.id_aldea and a.id_usuario = ".$idUsu;
+        $query = "SELECT a.nombre, a.coord_x, a.coord_y, e.cuartel, e.cuartel_g, e.establo, e.establo_g, e.taller, e.ayuntamiento, e.p_torneos, e.o_comercio , e.id_aldea FROM aldea_edificios e, aldea a WHERE  a.id = e.id_aldea and a.id_usuario = ".$idUsu;
         $aldeas=DB::select($query);
            
         $mensaje=$this->obtener_mensaje( $idUsu);
