@@ -99,26 +99,22 @@ use Illuminate\Support\Facades\DB;
         $query = "DELETE FROM aldea_edificios WHERE id_aldea =".$info->idAldea." ;";
         $aldea=DB::select($query);
 
-      
-
- 
-        
         $aux=$this->creacion_mensaje('success', "Aldea borrada de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         
         }
-        public function edificios(){   
-            $idUsu =auth()->id();
+    public function edificios(){   
+        $idUsu =auth()->id();
   
-           $query = "SELECT a.nombre, a.coord_x, a.coord_y, e.cuartel, e.cuartel_g, e.establo, e.establo_g, e.taller, e.ayuntamiento, e.p_torneos, e.o_comercio , e.id_aldea FROM aldea_edificios e, aldea a WHERE a.id_usuario = ".$idUsu;
-           $aldeas=DB::select($query);
+        $query = "SELECT a.nombre, a.coord_x, a.coord_y, e.cuartel, e.cuartel_g, e.establo, e.establo_g, e.taller, e.ayuntamiento, e.p_torneos, e.o_comercio , e.id_aldea FROM aldea_edificios e, aldea a WHERE  a.id_aldea = e.id_aldea and a.id_usuario = ".$idUsu;
+        $aldeas=DB::select($query);
            
-           $mensaje=$this->obtener_mensaje( $idUsu);
+        $mensaje=$this->obtener_mensaje( $idUsu);
    
            
            return view('aldea.edificios')->with('mensaje',$mensaje)->with('aldeas',$aldeas);
        }
-       public function editarEdificios(request $info){   
+    public function editarEdificios(request $info){   
         $idUsu =auth()->id();
 
         $query = "UPDATE aldea_edificios SET cuartel='".$info->cuartel."',cuartel_g='".$info->cuartel_g."',establo='".$info->establo."',establo_g='".$info->establo_g."',taller='".$info->taller."',ayuntamiento='".$info->ayuntamiento."',p_torneos='".$info->p_torneos."',o_comercio='".$info->o_comercio."' WHERE id_aldea = ".$info->id_aldea;

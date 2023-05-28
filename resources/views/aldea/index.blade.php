@@ -73,7 +73,7 @@
             </div>
           </div>   
         </div>
-        <div class="col table-responsive">
+        <div class="col table-responsive w-100">
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">
                 <tr>
