@@ -63,6 +63,8 @@ Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Cre
 Route::put('/Aldeas/editar', [App\Http\Controllers\Controller_aldeas::class, 'editar'])->name('aldeas.editar'); 
 Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'borrar'])->name('aldeas.borrar'); 
 
+Route::get('/Aldeas/tropas', [App\Http\Controllers\Controller_aldeas::class, 'mistropas'])->name('aldeas.mistropas'); 
+Route::put('/Aldeas/actualizar', [App\Http\Controllers\Controller_aldeas::class, 'actualizar'])->name('aldeas.actualizar'); 
 
 
 Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'edificios'])->name('aldeas.edificios'); 

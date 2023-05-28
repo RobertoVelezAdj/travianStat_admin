@@ -126,6 +126,30 @@ use Illuminate\Support\Facades\DB;
        return redirect()->action('App\Http\Controllers\Controller_aldeas@edificios');
 
    }
-       
+   public function mistropas(){   
+    $idUsu =auth()->id();
+    //select de tropas
+    $query = "select a.nombre,coord_x, coord_y, t.tropa_1, t.tropa_2, t.tropa_3, t.tropa_4, t.tropa_5, t.tropa_6, t.tropa_7, t.tropa_8, t.tropa_9, t.tropa_10, t.tropa_11 from aldea a, aldea_tropas t where a.id = t.id_aldea and a.id_usuario = ".$idUsu;
+    $tropas= DB::select($query);
     
+    $query = "SELECT t.nombre_tropa FROM tropas t, users u WHERE t.nombre_tropa<>'Héroe' and t.raza = u.raza and u.id = ".$idUsu;
+    $tipo_tropas= DB::select($query);
+    
+    $mensaje=$this->obtener_mensaje( $idUsu);
+    return view('aldea.mistropas')->with('mensaje',$mensaje)->with('tropas',$tropas)->with('tipo_tropas',$tipo_tropas);
+   }
+   public function actualizar(request $info){
+    $idUsu =auth()->id();
+    $cadena = explode(" ", $info->madera);
+
+    //OBTENGHO ID ALDEA
+    $query = "UPDATE aldea_tropas SET tropa_1='".$cadena[1]."',tropa_2='".$cadena[2]."',tropa_3='".$cadena[3]."',tropa_4='".$cadena[4]."',tropa_5='".$cadena[5]."',tropa_6='".$cadena[6]."',tropa_7='".$cadena[7]."',tropa_8='".$cadena[8]."',tropa_9='".$cadena[9]."',tropa_10='".$cadena[10]."',tropa_11='".$cadena[11]."' WHERE  ID_ALDEA= 6";
+    $tipo_tropas= DB::select($query);
+
+     
+      
+     $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+    return redirect()->action('App\Http\Controllers\Controller_aldeas@mistropas');
+   }
+
 }
