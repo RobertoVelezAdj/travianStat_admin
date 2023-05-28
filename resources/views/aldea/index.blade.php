@@ -9,9 +9,9 @@
 @section('content')
    <div class="card">
     <div class="card-body">
-      <div class="container">
-        <div class="col margin">
-          <div class="text-center mb-7"> 
+      <div class="container  w-auto">
+        <div class="col margin  w-auto">
+          <div class="text-center mb-7  w-auto"> 
             <div class= "m-3">
               <h1>Aldeas</h1>
             </div>
@@ -73,7 +73,7 @@
             </div>
           </div>   
         </div>
-        <div class="col table-responsive w-100">
+        <div class="col table-responsive w-auto">
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">
                 <tr>
