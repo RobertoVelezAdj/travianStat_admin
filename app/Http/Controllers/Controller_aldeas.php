@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
         //se elee información de las aldeas 
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposAldea'  and nombre not in ('TITULO') order by valor";
         $tipos= DB::select($query);
+        $query = "SELECT tiempo_fiestas.tiempo_pequena, tiempo_fiestas.tiempo_grande,a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
         $aldeas= DB::select($query);
   
         $query = "select sum(puntos_cultura) as pc_aldeas from aldea, aldea_producion p where p.id_aldea = aldea.id and  aldea.id_usuario =".$idUsu;
@@ -252,15 +253,6 @@ use Illuminate\Support\Facades\DB;
         $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         }
-    public function consumotropas($id_aldea){
-        $consumo_total = 0;
-        $sql="select (at1.tropa_1*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 1)) as tropa_1,(at1.tropa_2*(select t.consumo from tropas t where t.raza = u.raza and t.orden =2)) as tropa_2, (at1.tropa_3*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 3)) as tropa_3,(at1.tropa_4*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 4)),(at1.tropa_5*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 5)) as tropa_5,(at1.tropa_6*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 6)) as tropa_6,(at1.tropa_7*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 7)) as tropa_7,(at1.tropa_8*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 86)) as tropa_8,(at1.tropa_9*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 9)) as tropa_9,(at1.tropa_10*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 10)) as tropa_10,(at1.tropa_11*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 11)) as tropa_11 from aldea_tropas at1, aldea a, users u where  at1.id_aldea = a.id and a.id  =".$id_aldea;
-        $resultado= DB::select($query);
-        
-        foreach ($resultado as $a){
-            $consumo_total =  $a->tropa_1+$a->tropa_2+$a->tropa_3+$a->tropa_4+$a->tropa_5+$a->tropa_6+$a->tropa_7+$a->tropa_8+$a->tropa_9+$a->tropa_10+$a->tropa_11;
-        }
-        return $consumo_total;
-    }
+    
 
 }
