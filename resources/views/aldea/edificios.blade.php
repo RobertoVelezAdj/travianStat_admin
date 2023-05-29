@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Apuestas')
+@section('title', 'Mis edificios')
 
 @section('content_header')
     <h1 class="abs-center" > </h1>
@@ -9,11 +9,13 @@
 @section('content')
    <div class="card">
     <div class="card-body">
-      <div class="container">
+      <div class="w-100">
         <div class="col margin">
           <div class="text-center mb-7"> 
             
-        
+          <div class= "m-3">
+              <h1>Mis edificios</h1>
+            </div>
         <div class="col table-responsive">
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">

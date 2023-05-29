@@ -10,7 +10,7 @@
             <!-- /.card-header -->
         <div class="card">
           <div class="card-body">
-            <div class="container">
+            <div class="w-100">
               <div class="col margin">
                 <div class="text-center mb-7"> 
                   <div class= "m-3">
@@ -59,8 +59,7 @@
 
               </div>
               <div class="col table-responsive">
-                sad
-                <table id="topciones" class="table table-bordered table-striped table-responsivelg">
+                 <table id="topciones" class="table table-bordered table-striped table-responsivelg">
                     <thead  class="table-dark">
                       <tr>
                         <th>ID</th>

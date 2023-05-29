@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\DB;
         //se elee información de las aldeas 
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposAldea'  and nombre not in ('TITULO') order by valor";
         $tipos= DB::select($query);
-        $query = "SELECT tiempo_fiestas.tiempo_pequena, tiempo_fiestas.tiempo_grande,a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro, ap.cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas WHERE e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
         $aldeas= DB::select($query);
   
         $query = "select sum(puntos_cultura) as pc_aldeas from aldea, aldea_producion p where p.id_aldea = aldea.id and  aldea.id_usuario =".$idUsu;
@@ -125,31 +124,143 @@ use Illuminate\Support\Facades\DB;
 
        return redirect()->action('App\Http\Controllers\Controller_aldeas@edificios');
 
-   }
-   public function mistropas(){   
+        }
+    public function mistropas(){   
     $idUsu =auth()->id();
     //select de tropas
     $query = "select a.nombre,coord_x, coord_y, t.tropa_1, t.tropa_2, t.tropa_3, t.tropa_4, t.tropa_5, t.tropa_6, t.tropa_7, t.tropa_8, t.tropa_9, t.tropa_10, t.tropa_11 from aldea a, aldea_tropas t where a.id = t.id_aldea and a.id_usuario = ".$idUsu;
     $tropas= DB::select($query);
     
-    $query = "SELECT t.nombre_tropa FROM tropas t, users u WHERE t.nombre_tropa<>'Héroe' and t.raza = u.raza and u.id = ".$idUsu;
+    $query = "SELECT t.nombre_tropa FROM tropas t, users u WHERE   t.raza = u.raza and u.id = ".$idUsu;
     $tipo_tropas= DB::select($query);
     
     $mensaje=$this->obtener_mensaje( $idUsu);
     return view('aldea.mistropas')->with('mensaje',$mensaje)->with('tropas',$tropas)->with('tipo_tropas',$tipo_tropas);
-   }
-   public function actualizar(request $info){
-    $idUsu =auth()->id();
-    $cadena = explode(" ", $info->madera);
+    }
+    public function actualizar(request $info){
+        $idUsu =auth()->id();
+        $vowels = array("select", "query", "insert", "update");
+        $cadena_limpia = str_replace($vowels, "", $info->madera);
+        $cadena = explode(" ", $cadena_limpia);
+        $id_aldea = 0;
+        $nombre = 0;
+        $tropa_1 = 1;
+        $tropa_2 = 2;
+        $tropa_3 = 3;
+        $tropa_4 = 4;
+        $tropa_5 = 5;
+        $tropa_6 = 6;
+        $tropa_7 = 7;
+        $tropa_8 = 8;
+        $tropa_9 = 9;
+        $tropa_10 = 10;
+        $tropa_11 = 11;
+        for($i = 0; $i < sizeof($cadena);$i=$i+12)
+        {
+            $id_aldea=0;
+            $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$cadena[$nombre]."'";
+            $resultado= DB::select($query);
+            foreach ($resultado as $a){
+                $id_aldea =  $a->id;
+            }
 
-    //OBTENGHO ID ALDEA
-    $query = "UPDATE aldea_tropas SET tropa_1='".$cadena[1]."',tropa_2='".$cadena[2]."',tropa_3='".$cadena[3]."',tropa_4='".$cadena[4]."',tropa_5='".$cadena[5]."',tropa_6='".$cadena[6]."',tropa_7='".$cadena[7]."',tropa_8='".$cadena[8]."',tropa_9='".$cadena[9]."',tropa_10='".$cadena[10]."',tropa_11='".$cadena[11]."' WHERE  ID_ALDEA= 6";
-    $tipo_tropas= DB::select($query);
+            $query = "UPDATE aldea_tropas SET tropa_1='".$cadena[$tropa_1]."',tropa_2='".$cadena[$tropa_2]."',tropa_3='".$cadena[$tropa_3]."',tropa_4='".$cadena[$tropa_4]."',tropa_5='".$cadena[$tropa_5]."',tropa_6='".$cadena[$tropa_6]."',tropa_7='".$cadena[$tropa_7]."',tropa_8='".$cadena[$tropa_8]."',tropa_9='".$cadena[$tropa_9]."',tropa_10='".$cadena[$tropa_10]."',tropa_11='".$cadena[$tropa_11]."' WHERE  ID_ALDEA= ".$id_aldea;
+            $tipo_tropas= DB::select($query);
 
-     
-      
-     $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-    return redirect()->action('App\Http\Controllers\Controller_aldeas@mistropas');
-   }
+            $nombre=$nombre+12;
+            $tropa_1 = $tropa_1+12;
+            $tropa_2 = $tropa_2+12;
+            $tropa_3 = $tropa_3+12;
+            $tropa_4 = $tropa_4+12;
+            $tropa_5 = $tropa_5+12;
+            $tropa_6 = $tropa_6+12;
+            $tropa_7 = $tropa_7+12;
+            $tropa_8 = $tropa_8+12;
+            $tropa_9 = $tropa_9+12;
+            $tropa_10 =$tropa_10+12;
+            $tropa_11 =$tropa_11 +12;
+        }
+
+        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@mistropas');
+        }
+    public function actualizarprod(request $info){
+        $idUsu =auth()->id();
+        $vowels = array("select", "query", "insert", "update","‭");
+        $cadena_limpia = str_replace($vowels, "", $info->madera);
+        $cadena = explode(" ", $cadena_limpia);
+        $id_aldea = 0;
+        $nombre = 0;
+        $madera = 1;
+        $barro = 2;
+        $hierro = 3;
+        $cereal = 4;
+        $punto = ".";
+        for($i = 0; $i < sizeof($cadena);$i=$i+5)
+        {
+            $id_aldea=0;
+            $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$cadena[$nombre]."'";
+            $resultado= DB::select($query);
+            foreach ($resultado as $a){
+                $id_aldea =  $a->id;
+            }
+    
+            $query = "UPDATE `aldea_producion` SET `madera`='".trim(str_replace($punto, "", $cadena[$madera]))."',`barro`='".trim(str_replace($punto, "", $cadena[$barro]))."',`hierro`='".trim(str_replace($punto, "", $cadena[$hierro]))."',`cereal`='".trim(str_replace($punto, "", $cadena[$cereal]))."' WHERE  ID_ALDEA= ".$id_aldea;
+            //echo $query;
+            $tipo_tropas= DB::select($query);
+
+            $nombre=$nombre+5;
+            $madera = $madera+5;
+            $barro = $barro+5;
+            $hierro = $hierro+5;
+            $cereal = $cereal+5;
+        }
+
+        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        }   
+    public function actualizarpc(request $info){
+        $idUsu =auth()->id();
+        $vowels = array("select", "query", "insert", "update");
+        $cadena_limpia = str_replace($vowels, "", $info->madera);
+        $cadena = explode(" ", $cadena_limpia);
+        $id_aldea = 0;
+        $nombre = 0;
+        $pc_dia = 1;
+        $fiestas = 2;
+        $tropas = 3;
+        $slot = 4;
+        for($i = 0; $i < sizeof($cadena);$i=$i+5)
+        {
+            $id_aldea=0;
+            $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$cadena[$nombre]."'";
+            $resultado= DB::select($query);
+            foreach ($resultado as $a){
+                $id_aldea =  $a->id;
+            }
+
+            $query = "UPDATE aldea_producion SET puntos_cultura='".$cadena[$pc_dia]."' WHERE  ID_ALDEA= ".$id_aldea;
+            $tipo_tropas= DB::select($query);
+
+            $nombre=$nombre+5;
+            $pc_dia = $pc_dia+5;
+            $fiestas = $fiestas+5;
+            $tropas = $tropas+5;
+            $slot = $slot+5;
+        }
+
+        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        }
+    public function consumotropas($id_aldea){
+        $consumo_total = 0;
+        $sql="select (at1.tropa_1*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 1)) as tropa_1,(at1.tropa_2*(select t.consumo from tropas t where t.raza = u.raza and t.orden =2)) as tropa_2, (at1.tropa_3*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 3)) as tropa_3,(at1.tropa_4*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 4)),(at1.tropa_5*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 5)) as tropa_5,(at1.tropa_6*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 6)) as tropa_6,(at1.tropa_7*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 7)) as tropa_7,(at1.tropa_8*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 86)) as tropa_8,(at1.tropa_9*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 9)) as tropa_9,(at1.tropa_10*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 10)) as tropa_10,(at1.tropa_11*(select t.consumo from tropas t where t.raza = u.raza and t.orden = 11)) as tropa_11 from aldea_tropas at1, aldea a, users u where  at1.id_aldea = a.id and a.id  =".$id_aldea;
+        $resultado= DB::select($query);
+        
+        foreach ($resultado as $a){
+            $consumo_total =  $a->tropa_1+$a->tropa_2+$a->tropa_3+$a->tropa_4+$a->tropa_5+$a->tropa_6+$a->tropa_7+$a->tropa_8+$a->tropa_9+$a->tropa_10+$a->tropa_11;
+        }
+        return $consumo_total;
+    }
 
 }

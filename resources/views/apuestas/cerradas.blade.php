@@ -9,7 +9,7 @@
 @section('content')
             <!-- /.card-header -->
         <div class="card ">
-            <div class="container w-auto">
+            <div class="  w-auto">
               <div class="col margin">
                 <div class="text-center mb-7"> 
                   <div class= "m-3">

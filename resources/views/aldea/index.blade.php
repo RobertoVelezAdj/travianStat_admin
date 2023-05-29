@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Apuestas')
+@section('title', 'Mis aldeas')
 
 @section('content_header')
     <h1 class="abs-center" > </h1>
@@ -9,11 +9,11 @@
 @section('content')
    <div class="card">
     <div class="card-body">
-      <div class="container  w-auto">
+      <div class="   w-auto">
         <div class="col margin  w-10">
           <div class="text-center mb-10  w-10"> 
             <div class= "m-3">
-              <h1>Aldeas</h1>
+              <h1>Mis aldeas</h1>
             </div>
             <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#exampleModalCenter">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -22,6 +22,67 @@
                 </svg> 
               Nueva aldea
             </button>
+            <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#produccion">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg> 
+              Actualizar producción
+            </button>
+            <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#pc">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg> 
+              Actualizar pc
+            </button>
+            <div class="modal fade" id="produccion" tabindex="-1" role="dialog" aria-labelledby="produccion" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">
+                            Actualizar producción
+                          </h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="form-group m-3">
+                            <form action="/Aldeas/actualizarprod" action="{{'submit'}}" method="post">
+                              @method('PUT')
+                              @csrf
+                              <input type="text" name="madera" class="form-control" id ="tropas"  >
+                                <button type="submit" class="btn btn-outline-ligh bg-black m-3">Guardar información</button>
+                            </form>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="pc" tabindex="-1" role="dialog" aria-labelledby="pc" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle"> Actualizar pc</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="form-group m-3">
+                            <form action="/Aldeas/actualizarpc" action="{{'submit'}}" method="post">
+                              @method('PUT')
+                              @csrf
+                              <input type="text" name="madera" class="form-control" id ="tropas"  >
+                                <button type="submit" class="btn btn-outline-ligh bg-black m-3">Guardar información</button>
+                            </form>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+   
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -111,11 +172,11 @@
                 $f_peque = 0;
                 $pc_totales_aldea = 0;
                 $pc_aldea_fiesta = 0;
-                $suma_materias_aldea = $aldea->madera+$aldea->barro+$aldea->hierro+$aldea->cereal;
-                $suma_madera_total =  $suma_madera_total + $aldea->madera;
-                $suma_barro_total = $suma_barro_total+$aldea->barro;
-                $suma_hierro_total =  $suma_hierro_total+ $aldea->hierro;
-                $suma_cereal_total = $suma_cereal_total+$aldea->cereal;
+                $suma_materias_aldea = (int)$aldea->madera+(int)$aldea->barro+(int)$aldea->hierro+(int)$aldea->cereal;
+                $suma_madera_total =  $suma_madera_total + (int)$aldea->madera;
+                $suma_barro_total = $suma_barro_total+(int)$aldea->barro;
+                $suma_hierro_total =  $suma_hierro_total+ (int)$aldea->hierro;
+                $suma_cereal_total = $suma_cereal_total+(int)$aldea->cereal;
                 $suma_materias_total = $suma_materias_total + $suma_materias_aldea;
                 
                //echo $putnos_fiesta_grande;
@@ -327,15 +388,15 @@
                                           @endforeach 
                                         </select>
                                          <label for="madera">Producción de madera</libel>
-                                        <input type="text" name="madera" class="form-control" id ="madera" min="1" pattern="^[0-9]+" value = "{{$aldea->madera}}">
+                                        <input type="number" name="madera" class="form-control" id ="madera" min="1" pattern="^[0-9]+" value = "{{(int)$aldea->madera}}">
                                         <label for="barro">Producción de barro</libel>
-                                        <input type="text" name="barro" class="form-control" id ="barro"  min="1" pattern="^[0-9]+" value = "{{$aldea->barro}}">
+                                        <input type="number" name="barro" class="form-control" id ="barro"  min="1" pattern="^[0-9]+" value = "{{(int)$aldea->barro}}">
                                         <label for="hierro">Producción de hierro</libel>
-                                        <input type="text" name="hierro" class="form-control" id ="hierro" min="1" pattern="^[0-9]+" value = "{{$aldea->hierro}}">
+                                        <input type="number" name="hierro" class="form-control" id ="hierro" min="1" pattern="^[0-9]+" value = "{{(int)$aldea->hierro}}">
                                         <label for="cereal">Producción de cereal</libel>
-                                        <input type="text" name="cereal" class="form-control" id ="cereal"  pattern="[-]*[0-9]+" value = "{{$aldea->cereal}}">
+                                        <input type="number" name="cereal" class="form-control" id ="cereal"  pattern="[-]*[0-9]+" value = "{{(int)$aldea->cereal}}">
                                         <label for="puntos_cultura">Puntos de cultura</libel>
-                                        <input  name="puntos_cultura" class="form-control" id ="puntos_cultura" min="1"  pattern="^[0-9]+" value = "{{$aldea->puntos_cultura}}">
+                                        <input  name="puntos_cultura" class="form-control" id ="puntos_cultura" min="1"  pattern="^[0-9]+" value = "{{(int)$aldea->puntos_cultura}}">
 
                                         <label for="fiesta_grande">Fiesta grande</libel>
                                         <select  name="fiesta_grande" class="form-control" id ="fiesta_grande">

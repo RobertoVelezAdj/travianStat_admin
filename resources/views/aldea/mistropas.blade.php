@@ -8,12 +8,12 @@
 
 @section('content')
    <div class="card">
-    <div class="card-body">
-      <div class="container  w-auto">
-        <div class="col margin  w-10">
-          <div class="text-center mb-10  w-10"> 
+    <div class="card-body ">
+      <div class=" w-100">
+        <div class="col margin   ">
+          <div class="text-center mb-10 "> 
             <div class= "m-3">
-              <h1>Aldeas</h1>
+              <h1>Mis tropas</h1>
             </div>
             <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#exampleModalCenter">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -37,7 +37,7 @@
                               @method('PUT')
                               @csrf
                               <input type="text" name="madera" class="form-control" id ="tropas"  >
-                                <button type="submit" class="btn btn-outline-ligh bg-black m-3">Crear aldea</button>
+                                <button type="submit" class="btn btn-outline-ligh bg-black m-3">Guardar información</button>
                             </form>
                           </div>
                       </div>
@@ -54,39 +54,25 @@
                   @foreach($tipo_tropas as $tropa)
                   <th>{{$tropa->nombre_tropa}}</th>
                   @endforeach
-                  <th>Opciones</th>
                 </tr>
               </thead>
               <tbody>
-              @foreach($tropas as $tropa)
-              <tr>
-                <th>{{$tropa->nombre}}({{$tropa->coord_x}}/{{$tropa->coord_y}})</th>
-                <th>{{$tropa->tropa_1}}</th>
-                <th>{{$tropa->tropa_2}}</th>
-                <th>{{$tropa->tropa_3}}</th>
-                <th>{{$tropa->tropa_4}}</th>
-                <th>{{$tropa->tropa_5}}</th>
-                <th>{{$tropa->tropa_6}}</th>
-                <th>{{$tropa->tropa_7}}</th>
-                <th>{{$tropa->tropa_8}}</th>
-                <th>{{$tropa->tropa_9}}</th>
-                <th>{{$tropa->tropa_10}}</th>
-                     <th> 
-                      <div class="margin">
-                        <div class="btn-group  ">
-                          <button type="button" class="btn   btn-info btn-info">Acciones</button>
-                          <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
-                          <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" role="menu">
-                          <button class="dropdown-item btn-info" data-toggle="modal" data-target="#editarAldea-">Editar aldea</button>
-                          <button class="dropdown-item btn-info" data-toggle="modal" data-target="#eliminarAldeas-">Eliminar aldea</button>
-
-                        </div>
-                      </div>
-                    </th>
+                @foreach($tropas as $tropa)
+                  <tr>
+                    <th>{{$tropa->nombre}}({{$tropa->coord_x}}/{{$tropa->coord_y}})</th>
+                    <th>{{$tropa->tropa_1}}</th>
+                    <th>{{$tropa->tropa_2}}</th>
+                    <th>{{$tropa->tropa_3}}</th>
+                    <th>{{$tropa->tropa_4}}</th>
+                    <th>{{$tropa->tropa_5}}</th>
+                    <th>{{$tropa->tropa_6}}</th>
+                    <th>{{$tropa->tropa_7}}</th>
+                    <th>{{$tropa->tropa_8}}</th>
+                    <th>{{$tropa->tropa_9}}</th>
+                    <th>{{$tropa->tropa_10}}</th>
+                    <th>{{$tropa->tropa_11}}</th>
                   </tr>
-                  @endforeach
+                @endforeach
                </tbody>
             </table>
         </div>

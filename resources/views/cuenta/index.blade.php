@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'mi cuenta')
+@section('title', 'Mi cuenta')
 
 @section('content_header')
     <h1 class="abs-center" > </h1>
@@ -9,10 +9,12 @@
 @section('content')
    <div class="card">
     <div class="card-body">
-      <div class="container">
+      <div class="w-50 container">
         <div class="col margin">
           <div class="text-center mb-7"> 
-             
+          <div class= "m-3">
+              <h1>Mi cuenta</h1>
+            </div> 
         
                                   
           @foreach($info as $a)
