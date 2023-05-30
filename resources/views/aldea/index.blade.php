@@ -121,10 +121,16 @@
                                   <option value="1">Si</option>   
                                 </select>  
  
-                                <div class="form-check form-switch">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
-                                  <label class="form-check-label" for="flexSwitchCheckDefault">Generación automática de tareas:</label>
+                                <div class="form-check form-switch" >
+                                  <input class="form-check-input" name = "check"type="checkbox" id="flexSwitchCheckDefault" checked>
+                                  <label class="form-check-label" for="flexSwitchCheckDefault">Generación automática de tareas</label>
                                 </div>
+                                <label for="nombreParam">Tareas</label>
+                                <select  name="tipotarea" class="form-control" id ="tipoaldea"> 
+                                  @foreach($tareas as $tarea)
+                                    <option value="{{$tarea->valor}}" > {{$tarea->nombre}}</option>
+                                  @endforeach 
+                                 </select>
                                 <button type="submit" class="btn btn-outline-ligh bg-black m-3">Crear aldea</button>
                             </form>
                           </div>

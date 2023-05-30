@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\DB;
         //se elee información de las aldeas 
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposAldea'  and nombre not in ('TITULO') order by valor";
         $tipos= DB::select($query);
+
+        $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposTareas'  and nombre not in ('TITULO') order by valor";
+        $tareas= DB::select($query);
+
         $query = "SELECT tiempo_fiestas.tiempo_pequena, tiempo_fiestas.tiempo_grande,a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
         $aldeas= DB::select($query);
   
@@ -50,9 +54,9 @@ use Illuminate\Support\Facades\DB;
             $filosofia = $s->filosofia;
         } */
         $mensaje=$this->obtener_mensaje( $idUsu);
-
+       
         
-        return view('aldea.index')->with('mensaje',$mensaje)->with('tipos',$tipos)->with('aldeas',$aldeas)->with('putnos_fiesta_grande',$pc_fiesta_grande)->with('putnos_fiesta_pequeña',$fiesta_pequeña)->with('velocidad_fiesta',$velocidad_fiesta)->with('filosofia',$filosofia);
+        return view('aldea.index')->with('mensaje',$mensaje)->with('tareas',$tareas)->with('tipos',$tipos)->with('aldeas',$aldeas)->with('putnos_fiesta_grande',$pc_fiesta_grande)->with('putnos_fiesta_pequeña',$fiesta_pequeña)->with('velocidad_fiesta',$velocidad_fiesta)->with('filosofia',$filosofia);
     }
     
     public function Crear(request $info){
@@ -75,6 +79,16 @@ use Illuminate\Support\Facades\DB;
         $query = "INSERT INTO aldea_producion(id_aldea)VALUES(".$id_aldea.")";
         $tipos= DB::select($query);
 
+       
+        if( $info->check=="on"){
+            $query = "SELECT nombre,valor FROM parametrizaciones WHERE lista = '".$info->tipotarea."'  and nombre not in ('TITULO') order by valor";
+            $resultado= DB::select($query);
+
+            foreach ($resultado as $a){
+                $query = "INSERT INTO tareas(id_aldea,estado,titulo,descripcion,prioridad)VALUES(".$id_aldea.",0,'".$a->nombre."','',".$a->valor.")";
+                $tipos= DB::select($query);
+            }
+        }
         $aux=$this->creacion_mensaje('success', "Aldea generada de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
     }
@@ -127,16 +141,16 @@ use Illuminate\Support\Facades\DB;
 
         }
     public function mistropas(){   
-    $idUsu =auth()->id();
-    //select de tropas
-    $query = "select a.nombre,coord_x, coord_y, t.tropa_1, t.tropa_2, t.tropa_3, t.tropa_4, t.tropa_5, t.tropa_6, t.tropa_7, t.tropa_8, t.tropa_9, t.tropa_10, t.tropa_11 from aldea a, aldea_tropas t where a.id = t.id_aldea and a.id_usuario = ".$idUsu;
-    $tropas= DB::select($query);
-    
-    $query = "SELECT t.nombre_tropa FROM tropas t, users u WHERE   t.raza = u.raza and u.id = ".$idUsu;
-    $tipo_tropas= DB::select($query);
-    
-    $mensaje=$this->obtener_mensaje( $idUsu);
-    return view('aldea.mistropas')->with('mensaje',$mensaje)->with('tropas',$tropas)->with('tipo_tropas',$tipo_tropas);
+        $idUsu =auth()->id();
+        //select de tropas
+        $query = "select a.nombre,coord_x, coord_y, t.tropa_1, t.tropa_2, t.tropa_3, t.tropa_4, t.tropa_5, t.tropa_6, t.tropa_7, t.tropa_8, t.tropa_9, t.tropa_10, t.tropa_11 from aldea a, aldea_tropas t where a.id = t.id_aldea and a.id_usuario = ".$idUsu;
+        $tropas= DB::select($query);
+        
+        $query = "SELECT t.nombre_tropa FROM tropas t, users u WHERE   t.raza = u.raza and u.id = ".$idUsu;
+        $tipo_tropas= DB::select($query);
+        
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return view('aldea.mistropas')->with('mensaje',$mensaje)->with('tropas',$tropas)->with('tipo_tropas',$tipo_tropas);
     }
     public function actualizar(request $info){
         $idUsu =auth()->id();
@@ -252,6 +266,22 @@ use Illuminate\Support\Facades\DB;
 
         $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        }
+    public function tareas(){
+        $idUsu =auth()->id();
+       
+        $query = "select a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu;
+        $tareas= DB::select($query);
+        $query = "select a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu;
+        $resultado= DB::select($query);
+        foreach ($resultado as $a){
+           // $script =  "  <script>$(function () {$('#example".$contador."').DataTable({'responsive': true, 'lengthChange': false, 'autoWidth': false,'buttons': ['copy', 'csv', 'excel', 'pdf", 'print']}).buttons().container().appendTo('example".$contador."_wrapper .col-md-6:eq(0)'); });</script>";
+        }
+     
+
+
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return view('aldea.tareas')->with('mensaje',$mensaje)->with('tareas',$tareas);
         }
     
 

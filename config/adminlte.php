@@ -359,13 +359,11 @@ return [
                 [
                     'text' => 'Mis tareas',
                     'url'  => '/Aldeas/tareas',
-                    'can' => 'Administrador',
-                ],
+                 ],
                 [
                     'text' => 'Mis tropas',
                     'url'  => '/Aldeas/tropas',
-                    'can' => 'Administrador',
-                ],
+                 ],
                 
             ],
         ],

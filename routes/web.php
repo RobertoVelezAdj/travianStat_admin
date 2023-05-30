@@ -22,7 +22,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('dashboard');
+    Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('dashboard');
 });
 
 Auth::routes();
@@ -68,12 +68,13 @@ Route::put('/Aldeas/actualizarpc', [App\Http\Controllers\Controller_aldeas::clas
 Route::get('/Aldeas/tropas', [App\Http\Controllers\Controller_aldeas::class, 'mistropas'])->name('aldeas.mistropas'); 
 Route::put('/Aldeas/actualizar', [App\Http\Controllers\Controller_aldeas::class, 'actualizar'])->name('aldeas.actualizar'); 
 
+Route::get('/Aldeas/tareas', [App\Http\Controllers\Controller_aldeas::class, 'tareas'])->name('aldeas.tareas'); 
+
 
 Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'edificios'])->name('aldeas.edificios'); 
 Route::put('/Aldeas/Editaredificios', [App\Http\Controllers\Controller_aldeas::class, 'editarEdificios'])->name('aldeas.editarEdificios'); 
 
-Route::get('/Aldeas/tareas', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.tareas'); 
-//Mi cuenta
+ //Mi cuenta
 Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->name('MiCuenta.Informacion'); 
 Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->name('aldeas.crear'); 
 //historificacion
