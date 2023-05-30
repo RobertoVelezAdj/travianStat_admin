@@ -25,15 +25,14 @@
 
                 @php
                 $contador++;
-                if($contador>1){
+                if($contador>1&&$tarea->nombre!=$nombreAldea){
                  echo " </tbody> 
                     </table> 
-                  </div>   ";
+                  </div>  ";  
                 }
                   if($tarea->nombre!=$nombreAldea){
                     $nombreAldea= $tarea->nombre;
-                    echo " 
- 
+                    echo "
                     <div class= 'm-3'><h4>".$nombreAldea." (".$tarea->coord_x."/".$tarea->coord_y.")</h4></div><div class='col table-responsive'>
                     <table id='example".$contador."' class='table table-bordered table-striped'>
                       <thead class='table-dark'>
@@ -49,20 +48,20 @@
                       ";
                   }
                 @endphp        
-                 
-                        
-                     
+
                       <tr>
                         <th>{{$tarea->nombre}} ({{$tarea->coord_x}}/{{$tarea->coord_y}} )</th> 
                         <th>{{$tarea->prioridad}} </th> 
                         <th>{{$tarea->titulo}} </th> 
                         <th>{{$tarea->descripcion}} </th> 
-                         <th>copmpletar 
-                          Cambiar prioridad
-                         </th> 
+                        
+                        <th>Acciones</th> 
                       </tr>  
                        
                @endforeach
+               </tbody> 
+                    </table> 
+                  </div> 
       </div>
     </div>
   </div>       
@@ -99,9 +98,22 @@ const Toast = Swal.mixin({
   }
 })
  
-  <?php
-
-echo $mensaje;
+ <?php
+    echo $mensaje;
 ?> 
 </script>
+<?php
+$contador =0;
+foreach ($tareas as $tarea) {
+  $contador++;
+  echo "<script>
+  $(function () {
+     $('#example".$contador."').DataTable({
+       'responsive': true, 'lengthChange': false, 'autoWidth': false,
+       'buttons': ['copy', 'csv', 'excel', 'pdf', 'print']
+     }).buttons().container().appendTo('#example".$contador."_wrapper .col-md-6:eq(0)');
+   });
+ </script>";
+}
+?> 
 @stop

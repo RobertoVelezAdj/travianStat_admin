@@ -270,7 +270,7 @@ use Illuminate\Support\Facades\DB;
     public function tareas(){
         $idUsu =auth()->id();
        
-        $query = "select a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu;
+        $query = "select a.id, a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu." order by a.id, t.prioridad";
         $tareas= DB::select($query);
         $query = "select a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu;
         $resultado= DB::select($query);
