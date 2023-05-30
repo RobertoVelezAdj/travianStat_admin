@@ -92,6 +92,11 @@ use Illuminate\Support\Facades\DB;
         $aux=$this->creacion_mensaje('success', "Aldea generada de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
     }
+    public function redirec(){
+        
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+
+    }
     public function editar(request $info) {
         $idUsu =auth()->id();
         $query = "UPDATE aldea SET tipo = '".$info->tipo."', nombre = '".$info->nombreAldea."', fiesta_grande = ".$info->fiesta_grande.",fiesta_pequena = ".$info->fiesta_pequena." WHERE id = ".$info->idAldea.";";

@@ -22,12 +22,12 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('dashboard');
+    Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'redirec'])->name('dashboard');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\Controller_aldeas::class, 'redirec'])->name('home');
 
 
 
