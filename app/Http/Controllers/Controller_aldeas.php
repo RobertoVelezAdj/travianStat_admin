@@ -275,7 +275,7 @@ use Illuminate\Support\Facades\DB;
     public function tareas(){
         $idUsu =auth()->id();
        
-        $query = "select a.id, a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu." order by a.id, t.prioridad";
+        $query = "select a.id as  id_aldea, a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion, t.id as id_tarea from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu." order by a.id, t.prioridad";
         $tareas= DB::select($query);
         $query = "select a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu;
         $resultado= DB::select($query);
@@ -283,11 +283,81 @@ use Illuminate\Support\Facades\DB;
            // $script =  "  <script>$(function () {$('#example".$contador."').DataTable({'responsive': true, 'lengthChange': false, 'autoWidth': false,'buttons': ['copy', 'csv', 'excel', 'pdf", 'print']}).buttons().container().appendTo('example".$contador."_wrapper .col-md-6:eq(0)'); });</script>";
         }
      
+        $query = "SELECT * FROM aldea WHERE id_usuario =".$idUsu;
+        $aldeas=DB::select($query);
 
 
         $mensaje=$this->obtener_mensaje( $idUsu);
-        return view('aldea.tareas')->with('mensaje',$mensaje)->with('tareas',$tareas);
+        return view('aldea.tareas')->with('mensaje',$mensaje)->with('tareas',$tareas)->with('aldeas',$aldeas);
         }
+    public function nuevaTarea(request $info){
+        $idUsu =auth()->id();
+        
+        $query = "select a.id, a.nombre, a.coord_x, a.coord_y, t.prioridad, t.titulo, t.descripcion from  users u, aldea a, tareas t where  a.id_usuario = u.id and a.id = t.id_aldea and t.estado = 0 and u.id =".$idUsu." order by a.id, t.prioridad";
+        $tareas= DB::select($query);
+        
+        
+        $query = "SELECT * FROM aldea WHERE id_usuario =".$idUsu;
+        $aldeas=DB::select($query);
+
+        //todas las tareas updatear +1 la prioridad si es inferior
+        $query = "SELECT * FROM `tareas` where estado = 0 and id_aldea = ".$info->id_aldea." order by prioridad";
+        $resultado= DB::select($query);
+        foreach ($resultado as $a){
+            if($a->prioridad >= $info->prioridad){
+                $query = "UPDATE tareas t SET `prioridad`=".($a->prioridad+1).",updated_at=current_date() WHERE t.id = ".$a->id;
+                $ejecucion= DB::select($query);
+            }
+        }
+        //insertar la tarea
+        $query = "INSERT INTO tareas(id_aldea,estado,titulo,descripcion,prioridad)VALUES(".$info->id_aldea.",0,' ".$info->titulo."',' ".$info->Descripcion."',".$info->prioridad.")";        
+        $aldeas=DB::select($query);
+        $aux=$this->creacion_mensaje('success', "Aldea generada de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@tareas');
+        }
+    public function completarTarea(request $info)
+        {    
+        $idUsu =auth()->id();        
+        $query = "UPDATE `tareas` SET Estado = '1',updated_at=current_date() WHERE id = ".$info->id_tarea.";";
+        $tareas=DB::select($query);
+
+        $query = "SELECT * FROM `tareas` where estado = 0 and id_aldea = ".$info->id_aldea." order by prioridad";
+        $resultado= DB::select($query);
+        foreach ($resultado as $a){
+            if($a->prioridad >= $info->prioridad){
+                $query = "UPDATE tareas t SET `prioridad`=".($a->prioridad-1)." WHERE t.id = ".$a->id;
+                $ejecucion= DB::select($query);
+            }
+        }
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@tareas');
+    }
+    public function editartarea(request $info)
+        {    
+        $idUsu =auth()->id();     
+        $query = "UPDATE tareas SET prioridad = '".$info->prioridad."', titulo = ' ".$info->titulo."' , descripcion =' ".$info->descripcion."' WHERE id = ".$info->id_tarea.";";
+        $tareas=DB::select($query);
+        $prioridad_antigua = 0;
+        $query = "SELECT * FROM `tareas` WHERE id = ".$info->id_tarea.";";
+        $resultado=DB::select($query);
+
+        foreach ($resultado as $a){
+            $prioridad_antigua = $a->prioridad;
+        }
+        //si es la misma prioridad no hacer nada
+        if($prioridad_antigua!=$info->prioridad){
+            $query = "SELECT * FROM `tareas` where estado = 0 and   id <>".$info->id_tarea." and id_aldea = ".$info->id_aldea." order by prioridad";
+            $resultado= DB::select($query);
+            foreach ($resultado as $a){
+                if($a->prioridad >= $info->prioridad){
+                    $query = "UPDATE tareas t SET `prioridad`=".($a->prioridad+1)." WHERE t.id = ".$a->id;
+                    $ejecucion= DB::select($query);
+                }
+            }
+        }
+       
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@tareas');
+    }
+        
     
 
 }
