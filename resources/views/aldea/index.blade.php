@@ -379,7 +379,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Editar aldea {{$aldea->tipo}}/{{$tipo->valor}}</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Editar aldea </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -395,6 +395,7 @@
                                         <select  name="tipo" class="form-control" id ="tipo">
                                           @foreach($tipos as $tipo)
                                           @php           
+                                          
                                             if($aldea->tipo==$tipo->valor){
                                                 echo "<option value='$tipo->valor'  selected = 'selected'> $tipo->nombre</option>";
                                               }else{
