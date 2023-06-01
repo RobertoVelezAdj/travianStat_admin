@@ -357,6 +357,205 @@ use Illuminate\Support\Facades\DB;
        
         return redirect()->action('App\Http\Controllers\Controller_aldeas@tareas');
     }
+    public function encole()
+    {
+        $idUsu =auth()->id();
+        //$aldeas_usuario = DB::table('aldea')->where('id_cuenta',$idUsu)->get();
+        $query = "SELECT a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
+        $aldeas= DB::select($query);
+
+        $query = "SELECT t.nombre_tropa , t.id FROM tropas t, users u WHERE   t.raza = u.raza and u.id = ".$idUsu." order by t.orden";
+        $tipo_tropas= DB::select($query);
+        
+        $query = "SELECT a.id as id_aldea, a.nombre, a.coord_x, a.coord_y, tropas.nombre_tropa ,  e.* FROM aldea a, aldea_encole e, tropas WHERE  tropas.cereal > 0 and a.id = e.id_aldea and tropas.id = e.id_tropa and a.id_usuario = ".$idUsu;
+        $encole=DB::select($query);
+        //print_r($encole);
+        $mensaje=$this->obtener_mensaje( $idUsu);
+         return  view('aldea.encoles')->with('mensaje',$mensaje)->with('tipo_tropas',$tipo_tropas)->with('encoles',$encole)->with('aldeas',$aldeas);
+    }
+    public function cantidad($idTropa, $idAldea)
+    {
+        $idUsu =auth()->id();
+        $query = "SELECT velocidad_servidores.tiempo_entreno  as velocidad FROM users, servidor, velocidad_servidores WHERE users.servidor = servidor.id and servidor.id_velocidad = velocidad_servidores.id and users.id = ".$idUsu;
+        $resultado=DB::select($query);
+        foreach ($resultado as $a){
+            $velocidad =  $a->velocidad;
+        }
+        //se calcula el bono de alianza
+        $reclutamiento = 1;
+        $query = "SELECT alianzas.reclutamiento FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
+        $rec=DB::select($query);
+        foreach($rec as $s)
+        {
+            $reclutamiento = $s->reclutamiento;
+        } 
+        $madera =0;$madera_g =0;
+        $barro =  0;$barro_g =  0;
+        $hierro =  0;$hierro_g =  0;
+        $cereal =  0;$cereal_g =  0;
+        $cantidad_cuartel =0; $cantidad_cuartel_g = 0;
+        $cantidad_establo = 0; $cantidad_establo_g  = 0;
+        $cantidad_taller  = 0;
+
+       // echo "idAldea:".$idAldea;
+        //echo " idTropa:".$idTropa;
+        $query = "SELECT cuartel, establo, taller, tiempo FROM `tropas` WHERE id = ".$idTropa;
+        $resultado=DB::select($query);
+        foreach ($resultado as $a){
+            $cuartel =  $a->cuartel;
+            $establo =  $a->establo;
+            $taller =  $a->taller;
+            $tiempo =  $a->tiempo;
+        }
+        if ($cuartel == 1) {
+            $query = "SELECT cuartel,cuartel_g FROM aldea where id = ".$idAldea;
+            $resultado=DB::select($query);
+            foreach ($resultado as $a){
+                $nivel_cuartel =  $a->cuartel;
+                $nivel_cuartel_g =  $a->cuartel_g;
+            }
+            //echo $nivel_cuartel;
+            if($nivel_cuartel>=1){
+                $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Cuartel' and nivel = ".$nivel_cuartel;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $valor_cuartel =  $a->produccion;
+                }
+
+                $cantidad_tropa = (3600/($tiempo*$valor_cuartel))*$velocidad*$reclutamiento;
+                $cantidad_cuartel = $cantidad_tropa;
+                $query = "SELECT madera*".$cantidad_tropa." as madera, barro*".$cantidad_tropa." as barro, hierro*".$cantidad_tropa." as hierro, cereal*".$cantidad_tropa." as cereal FROM `tropas` WHERE id = ".$idTropa;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $madera = round($a->madera,0,PHP_ROUND_HALF_UP);
+                    $barro =  round($a->barro,0,PHP_ROUND_HALF_UP);
+                    $hierro =  round($a->hierro,0,PHP_ROUND_HALF_UP);
+                    $cereal =  round($a->cereal,0,PHP_ROUND_HALF_UP);
+                }
+            }
+            if($nivel_cuartel_g>=1){
+                $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Cuartel grande' and nivel = ".$nivel_cuartel_g;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $valor_cuartel_grande =  $a->produccion;
+                }
+                $cantidad_tropagrande = (3600/($tiempo*$valor_cuartel_grande))*$velocidad*$reclutamiento;
+                $cantidad_cuartel_g = $cantidad_tropagrande;
+                //echo "\n La cantidad grande es: ".$cantidad_tropagrande;
+                $query = "SELECT madera*3*".$cantidad_tropagrande." as madera, barro*3*".$cantidad_tropagrande." as barro, hierro*3*".$cantidad_tropagrande." as hierro, cereal*3*".$cantidad_tropagrande." as cereal FROM `tropas` WHERE id = ".$idTropa;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $madera_g =   round($a->madera,0,PHP_ROUND_HALF_UP);
+                    $barro_g =  round($a->barro,0,PHP_ROUND_HALF_UP);
+                    $hierro_g =  round($a->hierro,0,PHP_ROUND_HALF_UP);
+                    $cereal_g =  round($a->cereal,0,PHP_ROUND_HALF_UP);
+                }
+            }
+           // echo "madera:".$madera."#".$madera_g;
+        } elseif ($establo == 1) {
+            //se busca los niveles del edificio
+            $query = "SELECT establo,establo_g FROM aldea where id = ".$idAldea;
+            $resultado=DB::select($query);
+            foreach ($resultado as $a){
+                $nivel_establo =  $a->establo;
+                $nivel_establo_g =  $a->establo_g;
+            }
+            
+             //se calcula cantidad por hora
+                //normal
+                //grande
+            if($nivel_establo>=1){
+                $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Establo' and nivel = ".$nivel_establo;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $valor_establo =  $a->produccion;
+                }
+
+                $cantidad_tropa = (3600/($tiempo*$valor_establo)*$velocidad)*$reclutamiento;
+                $cantidad_establo = $cantidad_tropa;
+
+                //echo "<br> La cantidad es: ".$cantidad_tropa;
+                $query = "SELECT madera*".$cantidad_tropa." as madera, barro*".$cantidad_tropa." as barro, hierro*".$cantidad_tropa." as hierro, cereal*".$cantidad_tropa." as cereal FROM `tropas` WHERE id = ".$idTropa;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $madera = round($a->madera,0,PHP_ROUND_HALF_UP);
+                    $barro =  round($a->barro,0,PHP_ROUND_HALF_UP);
+                    $hierro =  round($a->hierro,0,PHP_ROUND_HALF_UP);
+                    $cereal =  round($a->cereal,0,PHP_ROUND_HALF_UP);
+                }
+            }
+            if($nivel_establo_g>=1){
+                $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Establo grande' and nivel = ".$nivel_establo_g;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $valor_establo_grande =  $a->produccion;
+                }
+                $cantidad_tropagrande = (3600/($tiempo*$valor_establo_grande)*$velocidad)*$reclutamiento;
+                $cantidad_establo_g = $cantidad_tropagrande;
+
+                //echo "\n La cantidad grande es: ".$cantidad_tropagrande;
+                $query = "SELECT madera*3*".$cantidad_tropagrande." as madera, barro*3*".$cantidad_tropagrande." as barro, hierro*3*".$cantidad_tropagrande." as hierro, cereal*3*".$cantidad_tropagrande." as cereal FROM `tropas` WHERE id = ".$idTropa;
+                $resultado=DB::select($query);
+                foreach ($resultado as $a){
+                    $madera_g =   round($a->madera,0,PHP_ROUND_HALF_UP);
+                    $barro_g =  round($a->barro,0,PHP_ROUND_HALF_UP);
+                    $hierro_g =  round($a->hierro,0,PHP_ROUND_HALF_UP);
+                    $cereal_g =  round($a->cereal,0,PHP_ROUND_HALF_UP);
+                }
+            }
+            //se calcula cantidad por hora
+                //normal
+                //grande
+            //se calculan materias por hora ( normal y grande)
+        } elseif ($taller == 1){
+             //se busca los niveles del edificio
+             $query = "SELECT taller FROM aldea where id = ".$idAldea;
+             $resultado=DB::select($query);
+             foreach ($resultado as $a){
+                 $nivel_taller =  $a->taller;
+             }
+             
+              //se calcula cantidad por hora
+                 //normal
+                 //grande
+             if($nivel_taller>=1){
+                 $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Establo' and nivel = ".$nivel_taller;
+                 $resultado=DB::select($query);
+                 foreach ($resultado as $a){
+                     $valor_taller =  $a->produccion;
+                 }
+ 
+                 $cantidad_tropa = (3600/($tiempo*$valor_taller)*$velocidad)*$reclutamiento;
+                 $cantidad_taller = $cantidad_tropa;
+
+                 $query = "SELECT madera*".$cantidad_tropa." as madera, barro*".$cantidad_tropa." as barro, hierro*".$cantidad_tropa." as hierro, cereal*".$cantidad_tropa." as cereal FROM `tropas` WHERE id = ".$idTropa;
+                 $resultado=DB::select($query);
+                 foreach ($resultado as $a){
+                     $madera = round($a->madera,0,PHP_ROUND_HALF_UP);
+                     $barro =  round($a->barro,0,PHP_ROUND_HALF_UP);
+                     $hierro =  round($a->hierro,0,PHP_ROUND_HALF_UP);
+                     $cereal =  round($a->cereal,0,PHP_ROUND_HALF_UP);
+                 }
+             }
+             //echo "madera:".$madera;
+        }
+        $cantidad = array(
+            "idAldea" => $idAldea,
+            "idTropa" => $idTropa,
+            "cuartel" => floor($cantidad_cuartel),
+            "cuartel_g" => floor($cantidad_cuartel_g),
+            "establo" => floor($cantidad_establo),
+            "establo_g" => floor($cantidad_establo_g),
+            "taller" => floor($cantidad_taller),
+            "madera" => ($madera_g+ $madera),
+            "barro" => ($barro+ $barro_g),
+            "hierro" => ($hierro+ $hierro_g),
+            "cereal" => ($cereal+ $cereal_g),
+        );
+        $query = "Insert into encole(id_aldea,id_tropa,tropa_cuartel,tropa_cuartel_g,tropa_establo,tropa_establo_g,taller,mat_madera,mat_barro,mat_hierro,mat_cereal) values(".$cantidades['idAldea'].",".$cantidades['idTropa'].",".$cantidades['cuartel'].",".$cantidades['cuartel_g'].",".$cantidades['establo'].",".$cantidades['establo_g'].",".$cantidades['taller'].",".$cantidades['madera'].",".$cantidades['barro'].",".$cantidades['hierro'].",".$cantidades['cereal'].")";
+        $insert=DB::select($query);
+        return $cantidad;
+    } 
         
     
 

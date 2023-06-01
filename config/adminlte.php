@@ -298,7 +298,7 @@ return [
                 [
                     'text' => 'Estado apuestas',
                     'url'  => '/Apuestas/Estado',
-                    'can' => 'Apuestas',
+                    'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Apuestas cerradas',
@@ -343,26 +343,37 @@ return [
             'text'    => 'Información de cuenta',
             'icon'    => 'fas fa-fw fa-home',
             'url'  => '/MiCuenta/Informacion',
+            'can' => 'Usuario_travian',
         ],
         [
             'text'    => 'Información de aldeas',
             'icon'    => 'fas fa-fw fa-building',
+            'can' => 'Usuario_travian',
             'submenu' => [
                 [
                     'text' => 'Mis aldeas',
                     'url'  => '/Aldeas/informacion',
+                    'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Edificios',
                     'url'  => '/Aldeas/edificios',
+                    'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Mis tareas',
                     'url'  => '/Aldeas/tareas',
+                    'can' => 'Usuario_travian',
                  ],
-                [
+                 [
                     'text' => 'Mis tropas',
                     'url'  => '/Aldeas/tropas',
+                    'can' => 'Usuario_travian',
+                 ],
+                 [
+                    'text' => 'Mis encoles',
+                    'url'  => '/Aldeas/encoles',
+                    'can' => 'Usuario_travian',
                  ],
                 
             ],
@@ -370,36 +381,44 @@ return [
         [
             'text'    => 'Cálculos',
             'icon'    => 'fas fa-fw fa-share',
+            'can' => 'Usuario_travian',
             'submenu' => [
                 [
                     'text' => 'NPC',
                     'url'  => '#',
+                    'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Próxima fundación',
                     'url'  => '#',
+                    'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Rutas de comercio',
                     'url'  => '#',
+                    'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Tropas necesarias listas',
                     'url'  => '#',
+                    'can' => 'Usuario_travian',
                 ],
             ],
         ],
         [
             'text'    => 'Información de Vacas',
             'icon'    => 'fas fa-fw fa-share',
+            'can' => 'Usuario_travian',
             'submenu' => [
                 [
                     'text' => 'Mis listas',
                     'url'  => '#',
+                    'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Buscador de vacas',
                     'url'  => '#',
+                    'can' => 'Usuario_travian',
                 ],                
             ],
         ],

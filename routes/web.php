@@ -58,28 +58,29 @@ Route::put('/AdminServidores/borrar', [App\Http\Controllers\Controller_admin_ser
 
 
 //Aldeas
-Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.informacion'); 
-Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Crear'])->name('aldeas.crear'); 
-Route::put('/Aldeas/editar', [App\Http\Controllers\Controller_aldeas::class, 'editar'])->name('aldeas.editar'); 
-Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'borrar'])->name('aldeas.borrar'); 
-Route::put('/Aldeas/actualizarprod', [App\Http\Controllers\Controller_aldeas::class, 'actualizarprod'])->name('aldeas.actualizarprod'); 
-Route::put('/Aldeas/actualizarpc', [App\Http\Controllers\Controller_aldeas::class, 'actualizarpc'])->name('aldeas.actualizarpc'); 
+Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->middleware('can:Usuario_travian')->name('aldeas.informacion'); 
+Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Crear'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
+Route::put('/Aldeas/editar', [App\Http\Controllers\Controller_aldeas::class, 'editar'])->middleware('can:Usuario_travian')->name('aldeas.editar'); 
+Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'borrar'])->middleware('can:Usuario_travian')->name('aldeas.borrar'); 
+Route::put('/Aldeas/actualizarprod', [App\Http\Controllers\Controller_aldeas::class, 'actualizarprod'])->middleware('can:Usuario_travian')->name('aldeas.actualizarprod'); 
+Route::put('/Aldeas/actualizarpc', [App\Http\Controllers\Controller_aldeas::class, 'actualizarpc'])->middleware('can:Usuario_travian')->name('aldeas.actualizarpc'); 
 
-Route::get('/Aldeas/tropas', [App\Http\Controllers\Controller_aldeas::class, 'mistropas'])->name('aldeas.mistropas'); 
-Route::put('/Aldeas/actualizar', [App\Http\Controllers\Controller_aldeas::class, 'actualizar'])->name('aldeas.actualizar'); 
+Route::get('/Aldeas/tropas', [App\Http\Controllers\Controller_aldeas::class, 'mistropas'])->middleware('can:Usuario_travian')->name('aldeas.mistropas'); 
+Route::put('/Aldeas/actualizar', [App\Http\Controllers\Controller_aldeas::class, 'actualizar'])->middleware('can:Usuario_travian')->name('aldeas.actualizar'); 
 
-Route::get('/Aldeas/tareas', [App\Http\Controllers\Controller_aldeas::class, 'tareas'])->name('aldeas.tareas'); 
-Route::put('/Aldeas/nuevaTarea', [App\Http\Controllers\Controller_aldeas::class, 'nuevaTarea'])->name('aldeas.nuevaTarea'); 
+Route::get('/Aldeas/tareas', [App\Http\Controllers\Controller_aldeas::class, 'tareas'])->middleware('can:Usuario_travian')->name('aldeas.tareas'); 
+Route::put('/Aldeas/nuevaTarea', [App\Http\Controllers\Controller_aldeas::class, 'nuevaTarea'])->middleware('can:Usuario_travian')->name('aldeas.nuevaTarea'); 
+Route::put('/Aldeas/editartarea', [App\Http\Controllers\Controller_aldeas::class, 'editartarea'])->middleware('can:Usuario_travian')->name('aldeas.editartarea'); 
+Route::put('/Aldeas/completarTarea', [App\Http\Controllers\Controller_aldeas::class, 'completarTarea'])->middleware('can:Usuario_travian')->name('aldeas.completarTarea'); 
 
-Route::put('/Aldeas/editartarea', [App\Http\Controllers\Controller_aldeas::class, 'editartarea'])->name('aldeas.editartarea'); 
-Route::put('/Aldeas/completarTarea', [App\Http\Controllers\Controller_aldeas::class, 'completarTarea'])->name('aldeas.completarTarea'); 
+Route::get('/Aldeas/encoles', [App\Http\Controllers\Controller_aldeas::class, 'encole'])->middleware('can:Usuario_travian')->name('aldeas.encole'); 
 
 
-Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'edificios'])->name('aldeas.edificios'); 
-Route::put('/Aldeas/Editaredificios', [App\Http\Controllers\Controller_aldeas::class, 'editarEdificios'])->name('aldeas.editarEdificios'); 
+Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'edificios'])->middleware('can:Usuario_travian')->name('aldeas.edificios'); 
+Route::put('/Aldeas/Editaredificios', [App\Http\Controllers\Controller_aldeas::class, 'editarEdificios'])->middleware('can:Usuario_travian')->name('aldeas.editarEdificios'); 
 
  //Mi cuenta
-Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->name('MiCuenta.Informacion'); 
-Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->name('aldeas.crear'); 
+Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->middleware('can:Usuario_travian')->name('MiCuenta.Informacion'); 
+Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
 //historificacion
-Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->name('historico'); 
+Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->middleware('can:Usuario_travian')->name('historico'); 
