@@ -36,25 +36,24 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <form action="/Aldeas/borrar" method="POST">
+                                <form action="/Aldeas/nuevoencole" method="POST">
                                     @method('PUT')
                                     @csrf
                                     <label for="nombreAldea">Aldea donde se encolará</label>
-                                    <select class="form-control"  name = "idAldea">
+                                    <select class="form-control"  name = "id_aldea">
                                         @foreach($aldeas as $aldea)
-                                        
                                                 <option value="{{$aldea->id_aldea}}">{{$aldea->nombre}} ({{$aldea->coord_x}}/{{$aldea->coord_y}})</option>                    
                                         @endforeach
                                     </select>
                                     <label for="tipo">Tipo de tropa</label>
-                                    <select class="form-control"  name = "idTropa">
+                                    <select class="form-control"  name = "id_tropa">
                                         @foreach($tipo_tropas as $tropa)
                                                 <option value="{{$tropa->id}}">{{$tropa->nombre_tropa}}</option>                    
                                         @endforeach
                                     </select>
                                     <div class="modal-footer">
                                         <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        <button type="submit" class="btn btn-primary">Añadir</button>
                                     </div>
                                 </form>
                             </div>
@@ -68,10 +67,19 @@
               <thead class="table-dark">
                 <tr>
                   <th>Nombre aldea</th>
-                  <th>Tipo de aldea</th>
-                  @foreach($tipo_tropas as $tropa)
-                  <th>{{$tropa->nombre_tropa}}</th>
-                  @endforeach
+                  <th>Tipo aldea</th>
+                  <th>Tropa</th>
+                  <th>Cuartel</th>
+                  <th>Cuartel g.</th>
+                  <th>Establo</th>
+                  <th>Establo g.</th>
+                  <th>Taller</th>
+                  <th>Suma tropas</th>
+                  <th>Madera</th>
+                  <th>Barro</th>
+                  <th>Hierro</th>
+                  <th>Cereal</th>
+                  <th>Total mats</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -79,7 +87,20 @@
                
                 @foreach($encoles as $aldea)
                   <tr>
-                     
+                  <th>{{$aldea->nombre}} ({{$aldea->coord_x}}/{{$aldea->coord_y}})</th>
+                  <th>{{$aldea->tipo}}</th> 
+                  <th>{{$aldea->nombre_tropa}}</th>
+                  <th>{{$aldea->tropa_cuartel}}</th>
+                  <th>{{$aldea->tropa_cuartel_g}}</th>
+                  <th>{{$aldea->tropa_establo}}</th>
+                  <th>{{$aldea->tropa_establo_g}}</th>
+                  <th>{{$aldea->taller}}</th>
+                  <th>suma tropas</th>
+                  <th>{{$aldea->mat_madera}}</th>
+                  <th>{{$aldea->mat_barro}}</th>
+                  <th>{{$aldea->mat_hierro}}</th>
+                  <th>{{$aldea->mat_cereal}}</th>
+                  <th>suma materias</th>
                     <th> 
                       <div class="margin">
                         <div class="btn-group  ">
@@ -98,20 +119,20 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Editar edificios de la aldea "{{$aldea->nombre}}{{ __('  ') }} ({{$aldea->coord_x }}{{ __('/') }}{{$aldea->coord_y }})" </h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Editar encole </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <form action="/Aldeas/Editaredificios" method="POST">
+                                <form action="/Aldeas/eliminarencole" method="POST">
                                     @method('PUT')
                                     @csrf
-                    
-                                      <input  name="id_aldea" type="hidden" value="{{$aldea->id_aldea}}">    
+                                        <label>¿Está seguro de eliminar el encole de la aldea {{$aldea->nombre}} ({{$aldea->coord_x}}/{{$aldea->coord_y}})?</label>
+                                      <input  name="idEncole" type="hidden" value="{{$aldea->id}}">    
                                       <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                                        <button type="submit" class="btn btn-info">Editar</button>
+                                        <button type="submit" class="btn btn-info">Eliminar</button>
                                  </form>
                             </div>
                         </div>

@@ -57,7 +57,33 @@
                 </tr>
               </thead>
               <tbody>
+                @php 
+                $tropa1 = 0;
+                $tropa2 = 0;
+                $tropa3 = 0;
+                $tropa4 = 0;
+                $tropa5 = 0;
+                $tropa6 = 0;
+                $tropa7 = 0;
+                $tropa8 = 0;
+                $tropa9 = 0;
+                $tropa10 = 0;
+                $tropa11 = 0;
+                @endphp
                 @foreach($tropas as $tropa)
+                @php 
+                $tropa1 = $tropa1+$tropa->tropa_1;
+                $tropa2 = $tropa2+$tropa->tropa_2;
+                $tropa3 = $tropa3+$tropa->tropa_3;
+                $tropa4 = $tropa4+$tropa->tropa_4;
+                $tropa5 = $tropa5+$tropa->tropa_5;
+                $tropa6 = $tropa6+$tropa->tropa_6;
+                $tropa7 = $tropa7+$tropa->tropa_7;
+                $tropa8 = $tropa8+$tropa->tropa_8;
+                $tropa9 = $tropa9+$tropa->tropa_9;
+                $tropa10 = $tropa10+$tropa->tropa_10;
+                $tropa11 = $tropa11+$tropa->tropa_11;
+                @endphp
                   <tr>
                     <th>{{$tropa->nombre}}({{$tropa->coord_x}}/{{$tropa->coord_y}})</th>
                     <th>{{$tropa->tropa_1}}</th>
@@ -74,6 +100,23 @@
                   </tr>
                 @endforeach
                </tbody>
+               <tfoot>
+                <tr>
+                  <th>Total:</th>
+                  <th>{{$tropa1}}</th>
+                  <th>{{$tropa2}}</th>
+                  <th>{{$tropa3}}</th>
+                  <th>{{$tropa4}}</th>
+                  <th>{{$tropa5}}</th>
+                  <th>{{$tropa6}}</th>
+                  <th>{{$tropa7}}</th>
+                  <th>{{$tropa8}}</th>
+                  <th>{{$tropa9}}</th>
+                  <th>{{$tropa10}}</th>
+                  <th>{{$tropa11}}</th>
+
+                </tr>
+              </tfoot>
             </table>
         </div>
       </div>

@@ -74,6 +74,8 @@ Route::put('/Aldeas/editartarea', [App\Http\Controllers\Controller_aldeas::class
 Route::put('/Aldeas/completarTarea', [App\Http\Controllers\Controller_aldeas::class, 'completarTarea'])->middleware('can:Usuario_travian')->name('aldeas.completarTarea'); 
 
 Route::get('/Aldeas/encoles', [App\Http\Controllers\Controller_aldeas::class, 'encole'])->middleware('can:Usuario_travian')->name('aldeas.encole'); 
+Route::put('/Aldeas/nuevoencole', [App\Http\Controllers\Controller_aldeas::class, 'nuevoencole'])->middleware('can:Usuario_travian')->name('aldeas.nuevoencole'); 
+Route::put('/Aldeas/eliminarencole', [App\Http\Controllers\Controller_aldeas::class, 'eliminarencole'])->middleware('can:Usuario_travian')->name('aldeas.eliminarencole'); 
 
 
 Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'edificios'])->middleware('can:Usuario_travian')->name('aldeas.edificios'); 

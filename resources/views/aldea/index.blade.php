@@ -412,7 +412,7 @@
                                         <label for="hierro">Producción de hierro</libel>
                                         <input type="number" name="hierro" class="form-control" id ="hierro" min="1" pattern="^[0-9]+" value = "{{(int)$aldea->hierro}}">
                                         <label for="cereal">Producción de cereal</libel>
-                                        <input type="number" name="cereal" class="form-control" id ="cereal"  pattern="[-]*[0-9]+" value = "{{(int)$aldea->cereal}}">
+                                        <input type="number" name="cereal" class="form-control" id ="cereal"  pattern="[-]*[0-9]+" value = "{{(int)$aldea->cereal_sintropas}}">
                                         <label for="puntos_cultura">Puntos de cultura</libel>
                                         <input  name="puntos_cultura" class="form-control" id ="puntos_cultura" min="1"  pattern="^[0-9]+" value = "{{(int)$aldea->puntos_cultura}}">
 

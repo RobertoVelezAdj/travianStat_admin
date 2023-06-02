@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposTareas'  and nombre not in ('TITULO') order by valor";
         $tareas= DB::select($query);
 
-        $query = "SELECT tiempo_fiestas.tiempo_pequena, tiempo_fiestas.tiempo_grande,a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
+        $query = "SELECT tiempo_fiestas.tiempo_pequena, tiempo_fiestas.tiempo_grande,a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.cereal as cereal_sintropas,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
         $aldeas= DB::select($query);
   
         $query = "select sum(puntos_cultura) as pc_aldeas from aldea, aldea_producion p where p.id_aldea = aldea.id and  aldea.id_usuario =".$idUsu;
@@ -139,7 +139,15 @@ use Illuminate\Support\Facades\DB;
 
         $query = "UPDATE aldea_edificios SET cuartel='".$info->cuartel."',cuartel_g='".$info->cuartel_g."',establo='".$info->establo."',establo_g='".$info->establo_g."',taller='".$info->taller."',ayuntamiento='".$info->ayuntamiento."',p_torneos='".$info->p_torneos."',o_comercio='".$info->o_comercio."' WHERE id_aldea = ".$info->id_aldea;
         $aldeas=DB::select($query);
- 
+        $query = "SELECT e.id , e.id_tropa, e.id_aldea FROM aldea_encole e, aldea a  where a.id = e.id_aldea and a.id_usuario = ".$idUs;
+        $resultado=DB::select($query);
+        foreach ($resultado as $a){
+
+            $cantidades = $this->cantidad($a->id_tropa, $a->id_aldea);
+            //borro el registro anterior
+            $query = "DELETE FROM aldea_encole WHERE id =  ".$a->id;
+            $t=DB::select($query);
+        }
        $aux=$this->creacion_mensaje('success', "Aldea editada de forma correcta.",$idUsu);
 
        return redirect()->action('App\Http\Controllers\Controller_aldeas@edificios');
@@ -361,34 +369,52 @@ use Illuminate\Support\Facades\DB;
     {
         $idUsu =auth()->id();
         //$aldeas_usuario = DB::table('aldea')->where('id_cuenta',$idUsu)->get();
-        $query = "SELECT a.id as id_aldea, a.coord_x, a.coord_y,a.nombre,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
+        $query = "SELECT a.id as id_aldea, a.coord_x, a.coord_y,a.nombre ,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
         $aldeas= DB::select($query);
 
         $query = "SELECT t.nombre_tropa , t.id FROM tropas t, users u WHERE   t.raza = u.raza and u.id = ".$idUsu." order by t.orden";
         $tipo_tropas= DB::select($query);
         
-        $query = "SELECT a.id as id_aldea, a.nombre, a.coord_x, a.coord_y, tropas.nombre_tropa ,  e.* FROM aldea a, aldea_encole e, tropas WHERE  tropas.cereal > 0 and a.id = e.id_aldea and tropas.id = e.id_tropa and a.id_usuario = ".$idUsu;
+        $query = "SELECT a.id as id_aldea,p2.nombre as tipo,  a.nombre, a.coord_x, a.coord_y, tropas.nombre_tropa ,  e.* FROM aldea a, aldea_encole e, tropas, parametrizaciones p2 WHERE  p2.lista = 'TiposAldea'  and p2.nombre not in ('TITULO') and p2.valor = a.tipo and  tropas.cereal > 0 and a.id = e.id_aldea and tropas.id = e.id_tropa and a.id_usuario = ".$idUsu;
         $encole=DB::select($query);
         //print_r($encole);
         $mensaje=$this->obtener_mensaje( $idUsu);
          return  view('aldea.encoles')->with('mensaje',$mensaje)->with('tipo_tropas',$tipo_tropas)->with('encoles',$encole)->with('aldeas',$aldeas);
     }
+    public function nuevoencole(request $info)
+    {
+        $idUsu =auth()->id();
+        //$aldeas_usuario = DB::table('aldea')->where('id_cuenta',$idUsu)->get();
+        $cantidades = $this->cantidad($info->id_tropa, $info->id_aldea);
+        
+        
+        //print_r($encole);
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@encole');
+    }
+    public function eliminarencole(request $info)
+    {
+        $query = "DELETE FROM aldea_encole WHERE id =".$info->idEncole." ;";
+        $aldea=DB::select($query);
+
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@encole');
+    } 
     public function cantidad($idTropa, $idAldea)
     {
         $idUsu =auth()->id();
-        $query = "SELECT velocidad_servidores.tiempo_entreno  as velocidad FROM users, servidor, velocidad_servidores WHERE users.servidor = servidor.id and servidor.id_velocidad = velocidad_servidores.id and users.id = ".$idUsu;
+        $query = "SELECT velocidad_servidores.tiempo_entreno  as velocidad FROM users, servidor, velocidad_servidores WHERE users.servidor = servidor.id and servidor.velocidad = velocidad_servidores.id and users.id = ".$idUsu;
         $resultado=DB::select($query);
         foreach ($resultado as $a){
             $velocidad =  $a->velocidad;
         }
         //se calcula el bono de alianza
         $reclutamiento = 1;
-        $query = "SELECT alianzas.reclutamiento FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
+        /*$query = "SELECT alianzas.reclutamiento FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
         $rec=DB::select($query);
         foreach($rec as $s)
         {
             $reclutamiento = $s->reclutamiento;
-        } 
+        } */
         $madera =0;$madera_g =0;
         $barro =  0;$barro_g =  0;
         $hierro =  0;$hierro_g =  0;
@@ -400,6 +426,10 @@ use Illuminate\Support\Facades\DB;
        // echo "idAldea:".$idAldea;
         //echo " idTropa:".$idTropa;
         $query = "SELECT cuartel, establo, taller, tiempo FROM `tropas` WHERE id = ".$idTropa;
+        $cuartel =  0;
+        $establo =  0;
+        $taller =  0;
+        $tiempo = 0;
         $resultado=DB::select($query);
         foreach ($resultado as $a){
             $cuartel =  $a->cuartel;
@@ -408,8 +438,10 @@ use Illuminate\Support\Facades\DB;
             $tiempo =  $a->tiempo;
         }
         if ($cuartel == 1) {
-            $query = "SELECT cuartel,cuartel_g FROM aldea where id = ".$idAldea;
+            $query = "SELECT cuartel,cuartel_g FROM aldea_edificios where id_aldea = ".$idAldea;
             $resultado=DB::select($query);
+            $nivel_cuartel = 0;
+            $nivel_cuartel_g =0;
             foreach ($resultado as $a){
                 $nivel_cuartel =  $a->cuartel;
                 $nivel_cuartel_g =  $a->cuartel_g;
@@ -418,6 +450,7 @@ use Illuminate\Support\Facades\DB;
             if($nivel_cuartel>=1){
                 $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Cuartel' and nivel = ".$nivel_cuartel;
                 $resultado=DB::select($query);
+                $valor_cuartel=1;
                 foreach ($resultado as $a){
                     $valor_cuartel =  $a->produccion;
                 }
@@ -454,8 +487,10 @@ use Illuminate\Support\Facades\DB;
            // echo "madera:".$madera."#".$madera_g;
         } elseif ($establo == 1) {
             //se busca los niveles del edificio
-            $query = "SELECT establo,establo_g FROM aldea where id = ".$idAldea;
+            $query = "SELECT establo,establo_g FROM aldea_edificios where id_aldea =  ".$idAldea;
             $resultado=DB::select($query);
+            $nivel_establo = 0;
+            $nivel_establo_g =0;
             foreach ($resultado as $a){
                 $nivel_establo =  $a->establo;
                 $nivel_establo_g =  $a->establo_g;
@@ -467,6 +502,7 @@ use Illuminate\Support\Facades\DB;
             if($nivel_establo>=1){
                 $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Establo' and nivel = ".$nivel_establo;
                 $resultado=DB::select($query);
+                $valor_establo = 1;
                 foreach ($resultado as $a){
                     $valor_establo =  $a->produccion;
                 }
@@ -487,6 +523,7 @@ use Illuminate\Support\Facades\DB;
             if($nivel_establo_g>=1){
                 $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Establo grande' and nivel = ".$nivel_establo_g;
                 $resultado=DB::select($query);
+                $valor_establo_grande = 1;
                 foreach ($resultado as $a){
                     $valor_establo_grande =  $a->produccion;
                 }
@@ -509,7 +546,7 @@ use Illuminate\Support\Facades\DB;
             //se calculan materias por hora ( normal y grande)
         } elseif ($taller == 1){
              //se busca los niveles del edificio
-             $query = "SELECT taller FROM aldea where id = ".$idAldea;
+             $query = "SELECT taller FROM aldea_edificios where id_aldea =  ".$idAldea;
              $resultado=DB::select($query);
              foreach ($resultado as $a){
                  $nivel_taller =  $a->taller;
@@ -521,6 +558,7 @@ use Illuminate\Support\Facades\DB;
              if($nivel_taller>=1){
                  $query = "SELECT produccion FROM `construcciones` where nombre_ed = 'Establo' and nivel = ".$nivel_taller;
                  $resultado=DB::select($query);
+                 $valor_taller =1;
                  foreach ($resultado as $a){
                      $valor_taller =  $a->produccion;
                  }
@@ -537,9 +575,8 @@ use Illuminate\Support\Facades\DB;
                      $cereal =  round($a->cereal,0,PHP_ROUND_HALF_UP);
                  }
              }
-             //echo "madera:".$madera;
-        }
-        $cantidad = array(
+         }
+        $cantidades = array(
             "idAldea" => $idAldea,
             "idTropa" => $idTropa,
             "cuartel" => floor($cantidad_cuartel),
@@ -552,9 +589,9 @@ use Illuminate\Support\Facades\DB;
             "hierro" => ($hierro+ $hierro_g),
             "cereal" => ($cereal+ $cereal_g),
         );
-        $query = "Insert into encole(id_aldea,id_tropa,tropa_cuartel,tropa_cuartel_g,tropa_establo,tropa_establo_g,taller,mat_madera,mat_barro,mat_hierro,mat_cereal) values(".$cantidades['idAldea'].",".$cantidades['idTropa'].",".$cantidades['cuartel'].",".$cantidades['cuartel_g'].",".$cantidades['establo'].",".$cantidades['establo_g'].",".$cantidades['taller'].",".$cantidades['madera'].",".$cantidades['barro'].",".$cantidades['hierro'].",".$cantidades['cereal'].")";
+        $query = "Insert into aldea_encole(id_aldea,id_tropa,tropa_cuartel,tropa_cuartel_g,tropa_establo,tropa_establo_g,taller,mat_madera,mat_barro,mat_hierro,mat_cereal) values(".$cantidades['idAldea'].",".$cantidades['idTropa'].",".$cantidades['cuartel'].",".$cantidades['cuartel_g'].",".$cantidades['establo'].",".$cantidades['establo_g'].",".$cantidades['taller'].",".$cantidades['madera'].",".$cantidades['barro'].",".$cantidades['hierro'].",".$cantidades['cereal'].")";
         $insert=DB::select($query);
-        return $cantidad;
+        return $cantidades;
     } 
         
     
