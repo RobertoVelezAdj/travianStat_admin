@@ -385,12 +385,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'NPC',
-                    'url'  => '#',
+                    'url'  => '/Calculos/npc',
                     'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Próxima fundación',
-                    'url'  => '#',
+                    'url'  => '/Calculos/fundación',
                     'can' => 'Usuario_travian',
                 ],
                 [
@@ -400,7 +400,22 @@ return [
                 ],
                 [
                     'text' => 'Tropas necesarias listas',
-                    'url'  => '#',
+                    'url'  => '/Calculos/listas',
+                    'can' => 'Usuario_travian',
+                ],
+                [
+                    'text' => 'Cáluclo intercepción',
+                    'url'  => '/Calculos/intercepcion',
+                    'can' => 'Usuario_travian',
+                ],
+                [
+                    'text' => 'Cáluclo tiempo de viaje',
+                    'url'  => '/Calculos/viaje',
+                    'can' => 'Usuario_travian',
+                ],
+                [
+                    'text' => 'Cáluclo plaza de torneos',
+                    'url'  => '/Calculos/pt',
                     'can' => 'Usuario_travian',
                 ],
             ],

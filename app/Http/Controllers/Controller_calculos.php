@@ -136,6 +136,118 @@ use Illuminate\Support\Facades\DB;
         $aux=$this->creacion_mensaje('success', "Ruta generada de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_calculos@rutas');
     }
-        
+    
+    public function npc(){   
+        $idUsu =auth()->id();
+        $sql = "select c.nivel, c.madera, c.barro, c.hierro, c.cereal, c.consumo, c.consumo, c.pc, c.nombre_ed, c.produccion  FROM construcciones c;";
+        $construcciones = DB::select($sql);
+         //echo $construcciones;
+        $query = "SELECT sum(madera) as madera,sum(barro) as barro,sum(hierro) as hierro,sum(cereal) as cereal FROM aldea a, aldea_producion p WHERE  a.id = p.id_aldea and a.id_usuario  =".$idUsu;
+        $sa=DB::select($query);
+        foreach ($sa as $a){
+            $ProduccionMadera =  $a->madera;
+            $ProduccionBarro =  $a->barro;
+            $ProduccionHierro =  $a->hierro;
+            $ProduccionCereal =  $a->cereal;
+        }
+        $ProducionTotal= 0;
+        $ProducionTotal= $ProduccionMadera+$ProduccionBarro+$ProduccionHierro+$ProduccionCereal;
+
+        $query = "SELECT coord_x,coord_y,nombre, madera, barro, hierro, cereal,(madera+ barro+ hierro+ cereal) AS total, 0 as elegido FROM aldea a, aldea_producion p where a.id = p.id_aldea and a.id_usuario  = ".$idUsu." ";
+        $ProdAldeas=DB::select($query);
+
+
+        $query = "SELECT a.*, tiempo_fiestas.tiempo_pequena, tiempo_fiestas.tiempo_grande , p.madera, p.barro, p.hierro, ( p.cereal -c.consumo_total )as cereal, e.ayuntamiento FROM aldea a, tiempo_fiestas, aldea_edificios e, aldea_producion p,consumo_aldeas c WHERE c.id_aldea = a.id and   p.id_aldea = a.id and a.id = e.id_aldea and  e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento AND  a.id_usuario = ".$idUsu;
+        $aldeas=DB::select($query);
+        $info_aldea = [
+            "foo" => "bar",
+            "bar" => "foo",
+        ];
+        $info_aldeas  = [];
+        foreach($aldeas as $aldea)
+        {
+            $madeera_produ = $aldea->madera;
+            $barro_produ = $aldea->barro;
+            $hierro_produ = $aldea->hierro;
+            $cereal_produ = $aldea->cereal;
+            $sql = "SELECT mat_madera, mat_barro, mat_hierro, mat_cereal FROM aldea_encole where id_aldea =".$aldea->id;
+            $encole = DB::select($sql);
+            $madera_encole = 0;  $madera_fiesta= 0;
+            $barro_encole = 0;  $barro_fiesta= 0;
+            $hierro_encole = 0;$hierro_fiesta= 0;
+            $cereal_encole = 0;$cereal_fiesta= 0;
+            $madera_rutas = 0;
+            $barro_rutas = 0;
+            $hierro_rutas = 0;
+            $cereal_rutas = 0;
+            foreach($encole as $e)
+            {
+                $madera_encole = $madera_encole + $e->mat_madera;
+                $barro_encole = $barro_encole + $e->mat_barro;
+                $hierro_encole = $hierro_encole + $e->mat_hierro;
+                $cereal_encole = $cereal_encole + $e->mat_cereal;
+            }
+
+            if($aldea->ayuntamiento >0){
+                if($aldea->fiesta_pequena ==1){
+                    $sql = "SELECT madera,barro,hierro,cereal FROM construcciones where nombre_ed = 'Fiesta pequeña';";
+                    $fiesta = DB::select($sql);
+                    foreach($fiesta as $e)
+                    {
+                        $madera_fiesta =  round(((1/$aldea->tiempo_pequena)*$e->madera)/24);
+                        $barro_fiesta = round(((1/$aldea->tiempo_pequena)*$e->barro)/24);
+                        $hierro_fiesta = round(((1/$aldea->tiempo_pequena)*$e->hierro)/24);
+                        $cereal_fiesta =  round(((1/$aldea->tiempo_pequena)*$e->cereal)/24);
+                    }
+                }elseif(($aldea->fiesta_grande ==1)){
+                    $sql = "SELECT madera,barro,hierro,cereal FROM construcciones where nombre_ed = 'Fiesta grande';";
+                    $fiesta = DB::select($sql);
+                    foreach($fiesta as $e)
+                    {
+                        $madera_fiesta =  round(((1/$aldea->tiempo_grande)*$e->madera)/24);
+                        $barro_fiesta = round(((1/$aldea->tiempo_grande)*$e->barro)/24);
+                        $hierro_fiesta = round(((1/$aldea->tiempo_grande)*$e->hierro)/24);
+                        $cereal_fiesta =  round(((1/$aldea->tiempo_grande)*$e->cereal)/24);
+                    }
+                }
+            }
+            
+            
+            $sql = "SELECT * FROM rutas_comercio where (id_aldea_envia = ".$aldea->id." or id_aldea_recibe = ".$aldea->id.");";
+                    $fiesta = DB::select($sql);
+                    foreach($fiesta as $e)
+                    {
+                        if($e->id_aldea_envia == $aldea->id){
+                            $madera_rutas = ($e->madera*-1) + $madera_rutas;
+                            $barro_rutas = ($e->barro*-1) + $barro_rutas;
+                            $hierro_rutas = ($e->hierro*-1) + $hierro_rutas;
+                            $cereal_rutas = ($e->cereal*-1) + $cereal_rutas;
+                        }else{
+                            $madera_rutas = $e->madera + $madera_rutas;
+                            $barro_rutas = $e->barro + $barro_rutas;
+                            $hierro_rutas = $e->hierro + $hierro_rutas;
+                            $cereal_rutas = $e->cereal + $cereal_rutas;
+                        }
+                    }
+            $a = [
+                "id_aldea" => $aldea->id,
+                "coord_x" => $aldea->coord_x,
+                "coord_y" => $aldea->coord_y,
+                "nombre" => $aldea->nombre."   (".$aldea->coord_x."/".$aldea->coord_y.")",
+                "madera" =>  (int)$madeera_produ - (int)$madera_encole -  (int)$madera_fiesta + (int)$madera_rutas,
+                "barro" => (int)$barro_produ -(int)$barro_encole - (int)$barro_fiesta +$barro_rutas,
+                "hierro" => (int)$hierro_produ - (int)$hierro_encole - (int)$hierro_fiesta + $hierro_rutas,
+                "cereal" => (int)$cereal_produ -(int)$cereal_encole - (int)$cereal_fiesta +$cereal_rutas,
+            ];
+            //coord_x,coord_y,nombre, madera, barro, hierro, cereal,(madera+ barro+ hierro+ cereal)
+            array_push($info_aldeas , $a);
+        }
+        //print_r($info_aldeas);
+         $info_aldea=$info_aldeas; 
+
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return  view('calculos.npc')->with('mensaje',$mensaje)->with('construcciones',$construcciones)->with('ProdAldeas',$info_aldea)->with('ProducionTotal',$ProducionTotal)->with('ProduccionMadera',$ProduccionMadera)->with('ProduccionBarro',$ProduccionBarro)->with('ProduccionHierro',$ProduccionHierro)->with('ProduccionCereal',$ProduccionCereal);
+
+    }
    
 }

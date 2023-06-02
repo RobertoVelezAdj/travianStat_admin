@@ -85,6 +85,10 @@ Route::get('/Calculos/rutas', [App\Http\Controllers\Controller_calculos::class, 
 Route::put('/Calculos/nuevaruta', [App\Http\Controllers\Controller_calculos::class, 'nuevaruta'])->middleware('can:Usuario_travian')->name('aldeas.encole'); 
 Route::put('/Calculos/editarruta', [App\Http\Controllers\Controller_calculos::class, 'editarruta'])->middleware('can:Usuario_travian')->name('aldeas.editarruta'); 
 Route::put('/Calculos/borrarruta', [App\Http\Controllers\Controller_calculos::class, 'borrarruta'])->middleware('can:Usuario_travian')->name('aldeas.borrarruta'); 
+
+Route::get('/Calculos/npc', [App\Http\Controllers\Controller_calculos::class, 'npc'])->middleware('can:Usuario_travian')->name('aldeas.npc'); 
+
+
  //Mi cuenta
 Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->middleware('can:Usuario_travian')->name('MiCuenta.Informacion'); 
 Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
