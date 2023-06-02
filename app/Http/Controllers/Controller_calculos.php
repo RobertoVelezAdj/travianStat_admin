@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
             $barro_produ = $aldea->barro;
             $hierro_produ = $aldea->hierro;
             $cereal_produ = $aldea->cereal;
-            $sql = "SELECT mat_madera, mat_barro, mat_hierro, mat_cereal FROM `encole` where id_aldea =".$aldea->id;
+            $sql = "SELECT mat_madera, mat_barro, mat_hierro, mat_cereal FROM aldea_encole where id_aldea =".$aldea->id;
             $encole = DB::select($sql);
             $madera_encole = 0;  $madera_fiesta= 0;
             $barro_encole = 0;  $barro_fiesta= 0;
