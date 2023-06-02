@@ -139,7 +139,7 @@ use Illuminate\Support\Facades\DB;
 
         $query = "UPDATE aldea_edificios SET cuartel='".$info->cuartel."',cuartel_g='".$info->cuartel_g."',establo='".$info->establo."',establo_g='".$info->establo_g."',taller='".$info->taller."',ayuntamiento='".$info->ayuntamiento."',p_torneos='".$info->p_torneos."',o_comercio='".$info->o_comercio."' WHERE id_aldea = ".$info->id_aldea;
         $aldeas=DB::select($query);
-        $query = "SELECT e.id , e.id_tropa, e.id_aldea FROM aldea_encole e, aldea a  where a.id = e.id_aldea and a.id_usuario = ".$idUs;
+        $query = "SELECT e.id , e.id_tropa, e.id_aldea FROM aldea_encole e, aldea a  where a.id = e.id_aldea and a.id_usuario = ".$idUsu;
         $resultado=DB::select($query);
         foreach ($resultado as $a){
 
