@@ -84,23 +84,29 @@
                 </tr>
               </thead>
               <tbody>
-               
+              
                 @foreach($encoles as $aldea)
+                  @php 
+                  $total_tropas = 0;
+                  $total_materias = 0;
+                    $total_tropas = $aldea->tropa_cuartel+$aldea->tropa_cuartel_g+$aldea->tropa_establo+$aldea->tropa_establo_g+$aldea->taller;
+                    $total_materias = $aldea->mat_madera+$aldea->mat_barro+$aldea->mat_hierro+$aldea->mat_cereal;
+                  @endphp
                   <tr>
-                  <th>{{$aldea->nombre}} ({{$aldea->coord_x}}/{{$aldea->coord_y}})</th>
-                  <th>{{$aldea->tipo}}</th> 
-                  <th>{{$aldea->nombre_tropa}}</th>
-                  <th>{{$aldea->tropa_cuartel}}</th>
-                  <th>{{$aldea->tropa_cuartel_g}}</th>
-                  <th>{{$aldea->tropa_establo}}</th>
-                  <th>{{$aldea->tropa_establo_g}}</th>
-                  <th>{{$aldea->taller}}</th>
-                  <th>suma tropas</th>
-                  <th>{{$aldea->mat_madera}}</th>
-                  <th>{{$aldea->mat_barro}}</th>
-                  <th>{{$aldea->mat_hierro}}</th>
-                  <th>{{$aldea->mat_cereal}}</th>
-                  <th>suma materias</th>
+                    <th>{{$aldea->nombre}} ({{$aldea->coord_x}}/{{$aldea->coord_y}})</th>
+                    <th>{{$aldea->tipo}}</th> 
+                    <th>{{$aldea->nombre_tropa}}</th>
+                    <th>{{$aldea->tropa_cuartel}}</th>
+                    <th>{{$aldea->tropa_cuartel_g}}</th>
+                    <th>{{$aldea->tropa_establo}}</th>
+                    <th>{{$aldea->tropa_establo_g}}</th>
+                    <th>{{$aldea->taller}}</th>
+                    <th>{{$total_tropas}}</th>
+                    <th>{{$aldea->mat_madera}}</th>
+                    <th>{{$aldea->mat_barro}}</th>
+                    <th>{{$aldea->mat_hierro}}</th>
+                    <th>{{$aldea->mat_cereal}}</th>
+                    <th>{{$total_materias}}</th>
                     <th> 
                       <div class="margin">
                         <div class="btn-group  ">
