@@ -395,7 +395,7 @@ return [
                 ],
                 [
                     'text' => 'Rutas de comercio',
-                    'url'  => '#',
+                    'url'  => '/Calculos/rutas',
                     'can' => 'Usuario_travian',
                 ],
                 [

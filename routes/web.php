@@ -80,7 +80,11 @@ Route::put('/Aldeas/eliminarencole', [App\Http\Controllers\Controller_aldeas::cl
 
 Route::get('/Aldeas/edificios', [App\Http\Controllers\Controller_aldeas::class, 'edificios'])->middleware('can:Usuario_travian')->name('aldeas.edificios'); 
 Route::put('/Aldeas/Editaredificios', [App\Http\Controllers\Controller_aldeas::class, 'editarEdificios'])->middleware('can:Usuario_travian')->name('aldeas.editarEdificios'); 
-
+//calculos
+Route::get('/Calculos/rutas', [App\Http\Controllers\Controller_calculos::class, 'rutas'])->middleware('can:Usuario_travian')->name('aldeas.encole'); 
+Route::put('/Calculos/nuevaruta', [App\Http\Controllers\Controller_calculos::class, 'nuevaruta'])->middleware('can:Usuario_travian')->name('aldeas.encole'); 
+Route::put('/Calculos/editarruta', [App\Http\Controllers\Controller_calculos::class, 'editarruta'])->middleware('can:Usuario_travian')->name('aldeas.editarruta'); 
+Route::put('/Calculos/borrarruta', [App\Http\Controllers\Controller_calculos::class, 'borrarruta'])->middleware('can:Usuario_travian')->name('aldeas.borrarruta'); 
  //Mi cuenta
 Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->middleware('can:Usuario_travian')->name('MiCuenta.Informacion'); 
 Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
