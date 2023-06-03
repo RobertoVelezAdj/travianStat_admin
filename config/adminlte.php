@@ -390,7 +390,7 @@ return [
                 ],
                 [
                     'text' => 'Próxima fundación',
-                    'url'  => '/Calculos/fundación',
+                    'url'  => '#',
                     'can' => 'Usuario_travian',
                 ],
                 [
@@ -400,22 +400,22 @@ return [
                 ],
                 [
                     'text' => 'Tropas necesarias listas',
-                    'url'  => '/Calculos/listas',
+                    'url'  => '#',
                     'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Cáluclo intercepción',
-                    'url'  => '/Calculos/intercepcion',
+                    'url'  => '#',
                     'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Cáluclo tiempo de viaje',
-                    'url'  => '/Calculos/viaje',
+                    'url'  => '#',
                     'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Cáluclo plaza de torneos',
-                    'url'  => '/Calculos/pt',
+                    'url'  => '#',
                     'can' => 'Usuario_travian',
                 ],
             ],
