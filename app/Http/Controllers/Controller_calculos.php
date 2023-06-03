@@ -142,7 +142,7 @@ use Illuminate\Support\Facades\DB;
         $sql = "select c.nivel, c.madera, c.barro, c.hierro, c.cereal, c.consumo, c.consumo, c.pc, c.nombre_ed, c.produccion  FROM construcciones c;";
         $construcciones = DB::select($sql);
          //echo $construcciones;
-        $query = "SELECT sum(madera) as madera,sum(barro) as barro,sum(hierro) as hierro,sum(cereal) as cereal FROM aldea a, aldea_producion p WHERE  a.id = p.id_aldea and a.id_usuario  =".$idUsu;
+        $query = "SELECT sum(madera) as madera,sum(barro) as barro,sum(hierro) as hierro,sum(cereal) as cereal FROM aldea a, aldea_producion p WHERE  a.id = p.id_aldea and a.id_usuario  =".$idUsu." ";
         $sa=DB::select($query);
         foreach ($sa as $a){
             $ProduccionMadera =  $a->madera;
@@ -238,6 +238,7 @@ use Illuminate\Support\Facades\DB;
                 "barro" => (int)$barro_produ -(int)$barro_encole - (int)$barro_fiesta +$barro_rutas,
                 "hierro" => (int)$hierro_produ - (int)$hierro_encole - (int)$hierro_fiesta + $hierro_rutas,
                 "cereal" => (int)$cereal_produ -(int)$cereal_encole - (int)$cereal_fiesta +$cereal_rutas,
+                "total"=>((int)$madeera_produ - (int)$madera_encole -  (int)$madera_fiesta + (int)$madera_rutas)+((int)$barro_produ -(int)$barro_encole - (int)$barro_fiesta +$barro_rutas)+((int)$hierro_produ - (int)$hierro_encole - (int)$hierro_fiesta + $hierro_rutas)+((int)$cereal_produ -(int)$cereal_encole - (int)$cereal_fiesta +$cereal_rutas)
             ];
             //coord_x,coord_y,nombre, madera, barro, hierro, cereal,(madera+ barro+ hierro+ cereal)
             array_push($info_aldeas , $a);
