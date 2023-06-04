@@ -36,7 +36,7 @@
                       </div>
                       <div class="modal-body">
                           <div class="form-group m-3">
-                            <form action="/Vacas/actualizar_pago" action="{{'submit'}}" method="post">
+                            <form action="/Vacas/actualizar_pago2" action="{{'submit'}}" method="post">
                               @method('PUT')
                               @csrf
                                 <label for="aldea">Aldea</label>
@@ -108,7 +108,7 @@
                                        <label for="madera">¿Está seguro de elimianr la aldea "{{$aldea->nombrealdeaVaca}}({{$aldea->aldeaLanzax}}/{{$aldea->aldeaLanzay}})" de la lista de vacas?:</label>
                                         <input  name="idvaca" type="hidden" value="{{$aldea->idvaca}}">    
                                         <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                                        <button type="submit" class="btn btn-info">Editar</button>
+                                        <button type="submit" class="btn btn-info">Eliminar vaca</button>
                                  </form>
                             </div>
                         </div>
