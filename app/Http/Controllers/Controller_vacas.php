@@ -37,7 +37,7 @@ class Controller_vacas extends Controller
         $poblacion = 1;
         $distancia = 2;
         $tropa = 3;
-        $resultado = 4;
+        $result = 4;
         for($i = 0; $i < sizeof($cadena);$i=$i+6)
         {
            // echo "". ."/".$cadena[$poblacion]."/".$cadena[$distancia]."/".$cadena[$tropa]."/".$cadena[$resultado]."\n";
@@ -62,7 +62,7 @@ class Controller_vacas extends Controller
             $poblacion = $poblacion+6;
             $distancia = $distancia+6;
             $tropa = $tropa +6;
-            $resultado = $resultado+6; 
+            $result = $result+6; 
         }
 
         //$aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
