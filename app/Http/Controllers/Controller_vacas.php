@@ -49,17 +49,15 @@ class Controller_vacas extends Controller
                 $query2 = "SELECT * FROM lista_vacas l where l.IdAldea = ".$a->id_aldea." and l.IdServer = ".$a->idServer." and l.IdAldeaVaca = ".$a->aldeaVaca;
                 $resultado2= DB::select($query2);
                 $aux = 0;
-                foreach ($resultado as $ab){
+                foreach ($resultado2 as $ab){
                     $aux = 1;
                 }
                 //si no existe se inserta
-                echo $aux;
-                if($aux==0){
+                 if($aux==0){
                     //se inserta la nueva vaca
                     $query3 ="INSERT INTO lista_vacas(IdAldea,IdServer,IdAldeaVaca) VALUES ('".$a->id_aldea."','".$a->idServer."','".$a->aldeaVaca."')";
                     $resultado3= DB::select($query3);
-                    echo "hola mundo";
-                }
+                 }
 
             }          
             $nombre_aldea=$nombre_aldea+6;
@@ -70,7 +68,7 @@ class Controller_vacas extends Controller
         }
 
         $aux=$this->creacion_mensaje('success', "Vacas almacenadas de forma correcta.",$idUsu);
-       // return redirect()->action('App\Http\Controllers\Controller_vacas@inicio');
+        return redirect()->action('App\Http\Controllers\Controller_vacas@inicio');
     }
 
 }
