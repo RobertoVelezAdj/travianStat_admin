@@ -104,7 +104,7 @@
             @else
          
             <h1>Búsqueda de vacas</h1>
-                <form action="/vacas/calculovacas"  action="{{'submit'}}" method="post">
+                <form action="/Vacas/calculovacas"  action="{{'submit'}}" method="post">
                             @method('PUT')
   @csrf
                     <div class="mb-3">
@@ -165,7 +165,7 @@
                     </div>  
                 </div>
 
-                <table id="taldeas" class="table table-striped  table-bordered table-hover table-responsive">
+                <table id="taldeas" class="table table-striped  table-bordered table-hover">
                     <thead>
                             <tr>
                                 <th>Distancia</th>

@@ -204,7 +204,7 @@ class Controller_vacas extends Controller
 
         $info=DB::select($query);
       //  print_r ($info);
-        return  view('LVacas')->with('info',$info);
+        return  view('vacas.LVacas')->with('info',$info);
     }
  
     
