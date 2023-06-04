@@ -55,6 +55,7 @@ class Controller_vacas extends Controller
                 if($aux==0){
                     //se inserta la nueva vaca
                     $query3 ="INSERT INTO lista_vacas(IdAldea,IdServer,IdAldeaVaca) VALUES ('".$a->id_aldea."','".$a->idServer."','".$a->aldeaVaca."')";
+                    $resultado3= DB::select($query);
                 }
 
             }          
@@ -65,8 +66,8 @@ class Controller_vacas extends Controller
             $result = $result+6; 
         }
 
-        //$aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-         //return  view('LVacas')->with('info',$info);
+        $aux=$this->creacion_mensaje('success', "Vacas almacenadas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_vacas@index');
     }
 
 }
