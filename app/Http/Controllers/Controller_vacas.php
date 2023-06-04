@@ -188,7 +188,7 @@ class Controller_vacas extends Controller
     public function listaVacas()
     {
         $idUsu =auth()->id() ;
-        $query = 'SELECT distinct l.id as idvaca,aldea_inac.poblacion, servidor.ruta,aldea.nombre as nombreLanza,cuenta_inac.IdCuenta as idcuentavaca, alianza_inac.IdAlianza AS alivaca,  aldea_inac.NombreAldea as nombrealdeaVaca,  aldea.coord_x as aldeaLanzax, aldea_inac.coord_x as vacax, aldea_inac.coord_y as vacay, aldea.coord_y as aldeaLanzay,cuenta_inac.NombreCuenta as cuentaVaca,alianza_inac.NombreAlianza as alianzaVaca, lista_vacas.created_at FROM `lista_vacas` l, servidor, users, aldea, aldea_inac, cuenta_inac, alianza_inac
+        $query = 'SELECT distinct lista_vacas.id as idvaca,aldea_inac.poblacion, servidor.ruta,aldea.nombre as nombreLanza,cuenta_inac.IdCuenta as idcuentavaca, alianza_inac.IdAlianza AS alivaca,  aldea_inac.NombreAldea as nombrealdeaVaca,  aldea.coord_x as aldeaLanzax, aldea_inac.coord_x as vacax, aldea_inac.coord_y as vacay, aldea.coord_y as aldeaLanzay,cuenta_inac.NombreCuenta as cuentaVaca,alianza_inac.NombreAlianza as alianzaVaca, lista_vacas.created_at FROM `lista_vacas` , servidor, users, aldea, aldea_inac, cuenta_inac, alianza_inac
         where  lista_vacas.IdServer = servidor.id
         and users.servidor = servidor.id
         and aldea.id_usuario = users.id
