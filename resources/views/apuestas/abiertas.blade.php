@@ -13,7 +13,7 @@
         <div class="col margin">
           <div class="text-center mb-7"> 
             <div class= "m-3">
-              <h1>Apuestas abiertas</h1>
+              <h1>Apuestas en curso</h1>
               <h4>Dinero en apuestas en curso: {{$pdte}}€</h4>
               <h4>Dinero de stack: {{$total}}€</h4>
             </div>
