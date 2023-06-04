@@ -95,6 +95,8 @@ Route::put('/Vacas/actualizar_pago', [App\Http\Controllers\Controller_vacas::cla
 Route::put('/Vacas/insertarVacas', [App\Http\Controllers\Controller_vacas::class, 'insertarVacas'])->name('insertarVacas');
 Route::put('/Vacas/calculovacas', [App\Http\Controllers\Controller_vacas::class, 'calculovacas'])->name('calculovacas');
 
+Route::get('/Vacas/mislistas', [App\Http\Controllers\Controller_vacas::class, 'listaVacas'])->middleware('can:Usuario_travian')->name('aldeas.listaVacas');
+
  //Mi cuenta
 Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->middleware('can:Usuario_travian')->name('MiCuenta.Informacion'); 
 Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 

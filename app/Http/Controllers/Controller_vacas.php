@@ -203,11 +203,11 @@ class Controller_vacas extends Controller
         and users.id = '.$idUsu;
 
         $info=DB::select($query);
-      //  print_r ($info);
-        return  view('vacas.LVacas')->with('info',$info);
+        $aldeas_usuario = DB::table('aldea')->where('id_usuario',$idUsu)->get();
+
+        return  view('vacas.LVacas')->with('info',$info)->with('aldeas',$aldeas_usuario);
     }
  
-    
     public function insertarVacas(request $info)
     {
         $idUsu =auth()->id();
