@@ -205,7 +205,8 @@ class Controller_vacas extends Controller
         $info=DB::select($query);
         $aldeas_usuario = DB::table('aldea')->where('id_usuario',$idUsu)->get();
 
-        return  view('vacas.LVacas')->with('info',$info)->with('aldeas',$aldeas_usuario);
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return  view('vacas.LVacas')->with('mensaje',$mensaje)->with('info',$info)->with('aldeas',$aldeas_usuario);
     }
  
     public function insertarVacas(request $info)
