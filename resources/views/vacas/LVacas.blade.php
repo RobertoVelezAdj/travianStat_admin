@@ -61,18 +61,61 @@
                                     <th>Nombre aldea vaca</th>
                                     <th>Nombre cuenta vaca</th>
                                     <th>Nombre alianza vaca</th>
-                                    <th>Población</th>                        
+                                    <th>Población</th>   
+                                    <th>Opciones</th>                     
                                 </tr>
                             </thead>
                         <tbody>
                             @foreach($info as $aldea)
                             <tr>
-                                    <td>{{$aldea->nombreLanza}} <a target="_blank" href="{{$aldea->ruta}}/position_details.php?x={{$aldea->aldeaLanzax}}&y={{$aldea->aldeaLanzay}}" >{{$aldea->aldeaLanzax }}{{ __('/') }}{{$aldea->aldeaLanzay }}</a></td>
-                                    <td>{{$aldea->nombrealdeaVaca}} <a target="_blank" href="{{$aldea->ruta}}/position_details.php?x={{$aldea->vacax}}&y={{$aldea->vacay}}" >{{$aldea->vacax }}{{ __('/') }}{{$aldea->vacay }}</a> </td>
-                                    <td><a target="_blank" href="{{$aldea->ruta}}/profile/{{$aldea->idcuentavaca}}" >{{$aldea->cuentaVaca}} </a></td>
-                                    <td><a target="_blank" href="{{$aldea->ruta}}/alliance/{{$aldea->alivaca}}" >{{$aldea->alianzaVaca}}</a> </td>
-                                    <td>{{$aldea->poblacion}}</td>
+                                <td>{{$aldea->nombreLanza}} <a target="_blank" href="{{$aldea->ruta}}/position_details.php?x={{$aldea->aldeaLanzax}}&y={{$aldea->aldeaLanzay}}" >{{$aldea->aldeaLanzax }}{{ __('/') }}{{$aldea->aldeaLanzay }}</a></td>
+                                <td>{{$aldea->nombrealdeaVaca}} <a target="_blank" href="{{$aldea->ruta}}/position_details.php?x={{$aldea->vacax}}&y={{$aldea->vacay}}" >{{$aldea->vacax }}{{ __('/') }}{{$aldea->vacay }}</a> </td>
+                                <td><a target="_blank" href="{{$aldea->ruta}}/profile/{{$aldea->idcuentavaca}}" >{{$aldea->cuentaVaca}} </a></td>
+                                <td><a target="_blank" href="{{$aldea->ruta}}/alliance/{{$aldea->alivaca}}" >{{$aldea->alianzaVaca}}</a> </td>
+                                <td>{{$aldea->poblacion}}</td>
+                                <td>
+                                    <div class="margin">
+                                        <div class="btn-group  ">
+                                            <button type="button" class="btn   btn-info btn-info">Acciones</button>
+                                            <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+
+                                            <div class="dropdown-menu" role="menu">
+                                                <button class="dropdown-item btn-info" data-toggle="modal" data-target="#eliminar-{{$aldea->idvaca}}">Eliminar vaca</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>                     
                             </tr>   
+
+
+
+                            <div class="modal fade" id="eliminar-{{$aldea->idvaca}}" tabindex="-1" role="dialog" aria-labelledby="eliminar-{{$aldea->idvaca}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar vaca {{$aldea->nombrealdeaVaca}}({{$aldea->aldeaLanzax}}/{{$aldea->aldeaLanzay}})</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <form action="/Vacas/eliminarlista" method="POST">
+                                    @method('PUT')
+                                    @csrf
+                                       <label for="madera">¿Está seguro de elimianr la aldea "{{$aldea->nombrealdeaVaca}}({{$aldea->aldeaLanzax}}/{{$aldea->aldeaLanzay}})" de la lista de vacas?:</label>
+                                        <input  name="idvaca" type="hidden" value="{{$aldea->idvaca}}">    
+                                        <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                        <button type="submit" class="btn btn-info">Editar</button>
+                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
                             @endforeach
                         </tbody>
                         </foot>
@@ -103,10 +146,10 @@
 
 <script>
  $(function () {
-    $("#example1").DataTable({
+    $("#taldeas").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('#taldeas_wrapper .col-md-6:eq(0)');
     
   });
   
