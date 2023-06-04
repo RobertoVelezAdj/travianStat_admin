@@ -191,7 +191,7 @@ class Controller_vacas extends Controller
         $query = 'SELECT distinct aldea_inac.poblacion, servidor.ruta,aldea.nombre as nombreLanza,cuenta_inac.IdCuenta as idcuentavaca, alianza_inac.IdAlianza AS alivaca,  aldea_inac.NombreAldea as nombrealdeaVaca,  aldea.coord_x as aldeaLanzax, aldea_inac.coord_x as vacax, aldea_inac.coord_y as vacay, aldea.coord_y as aldeaLanzay,cuenta_inac.NombreCuenta as cuentaVaca,alianza_inac.NombreAlianza as alianzaVaca, lista_vacas.created_at FROM `lista_vacas`, servidor, users, aldea, aldea_inac, cuenta_inac, alianza_inac
         where  lista_vacas.IdServer = servidor.id
         and users.servidor = servidor.id
-        and aldea.id_cuenta = users.id
+        and aldea.id_usuario = users.id
         and aldea.id = lista_vacas.IdAldea
         and aldea_inac.id_server = servidor.id
         and aldea_inac.idAldea = lista_vacas.IdAldeaVaca
