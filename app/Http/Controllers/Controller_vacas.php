@@ -192,7 +192,7 @@ class Controller_vacas extends Controller
         where  lista_vacas.IdServer = servidor.id
         and users.servidor = servidor.id
         and aldea.id_usuario = users.id
-        and aldea.id = lista_vacas.IdAldea
+        and aldea.id = lista_vacas.IdAldea 
         and aldea_inac.id_server = servidor.id
         and aldea_inac.idAldea = lista_vacas.IdAldeaVaca
         and aldea_inac.created_at = servidor.fch_mod
