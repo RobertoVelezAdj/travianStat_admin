@@ -181,7 +181,7 @@ class Controller_vacas extends Controller
        // echo $query;
         $aldeas=DB::select($query);
         //print_r ($info);
-        return  view('vacas')->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
+        return  view('vacas.index')->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
     } 
     
     public function listaVacas()
@@ -205,16 +205,7 @@ class Controller_vacas extends Controller
       //  print_r ($info);
         return  view('LVacas')->with('info',$info);
     }
-    public function listaVacas_pago()
-    {
-        $idUsu =auth()->id() ;
-        $query = "select ina.coord_x, ina.coord_y, ina.poblacion, ina.NombreAldea from aldea_inac ina, servidor s, users u where ina.NombreAldea = 'Aldea de elimgui' and calcular_distancia(59,8,ina.coord_x,ina.coord_y) = 13.6 and u.servidor = s.id and s.fch_mod = ina.created_at and u.id = 1;  ".$idUsu;
-
-        $info=DB::select($query);
-      //  print_r ($info);
-        return  view('LVacas')->with('info',$info);
-    }
-    
+ 
     
     public function insertarVacas(request $info)
     {
@@ -330,6 +321,6 @@ class Controller_vacas extends Controller
        // echo $query;
         $aldeas=DB::select($query);
         //print_r ($info);
-        return  view('vacas')->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
+        return  view('vacas.index')->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
     }
 }
