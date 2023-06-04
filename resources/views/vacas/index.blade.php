@@ -75,26 +75,26 @@
                     
                     <div class="mb-3">
                         <label class="form-label">Días inactivo</label>
-                        <input name="dias" type="number" min="2" pattern="^[0-9]+"  VALUE = "1"class="form-control"  >
+                        <input name="dias" type="number" min="2" pattern="^[0-9]+"  VALUE = "2" class="form-control"  >
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Max distancia</label>
-                        <input name="distancia" type="number" min="2" pattern="^[0-9]+" class="form-control" >
+                        <input name="distancia" type="number" min="2" pattern="^[0-9]+" VALUE = "0"class="form-control" >
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Max cambio de poblacion</label>
-                        <input name="poblacion" type="number" min="1" pattern="^[0-9]+" class="form-control" >
+                        <input name="poblacion" type="number" min="1" pattern="^[0-9]+" VALUE = "0" class="form-control" >
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mínima población de aldeas</label>
-                        <input name="pobAldeas" type="number" min="0" pattern="^[0-9]+" class="form-control" >
+                        <input name="pobAldeas" type="number" min="0" pattern="^[0-9]+" VALUE = "0"class="form-control" >
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" value="1" id ="" name="PerdidaPobl" checked>   
+                        <input class="form-check-input" type="checkbox" value="1" id ="" VALUE = "0"name="PerdidaPobl" checked>   
                         <label class="form-check-label" for="flexCheckChecked"> Mostrar cuentas sin perdida de población</label>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" value="1" name="sinAlianza" checked>   
+                        <input class="form-check-input" type="checkbox" value="1" VALUE = "0" name="sinAlianza" checked>   
                         <label class="form-check-label" for="flexCheckChecked"> Mostrar cuentas sin alianza</label>
                     </div>
                     <div class="mb-3">
