@@ -4,8 +4,8 @@ import urllib
 import ssl
 import mysql.connector
 context = ssl._create_unverified_context()
-conexion1=mysql.connector.connect(host="localhost", user="pansseritos2", passwd="P$ljl2406", database="travian_final")
-conexion2=mysql.connector.connect(host="localhost", user="pansseritos2", passwd="P$ljl2406", database="travian_final")
+conexion1=mysql.connector.connect(host="localhost", user=" ", passwd="P$ ", database="   ")
+conexion2=mysql.connector.connect(host="localhost", user=" ", passwd="P$ ", database=" ")
 cursor1=conexion1.cursor()
 cursor1.execute("select ruta_inac,nombre,id from servidor")
 informacion = list()
