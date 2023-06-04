@@ -427,12 +427,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'Mis listas',
-                    'url'  => '#',
+                    'url'  => '/Vacas/mislistas',
                     'can' => 'Usuario_travian',
                 ],
                 [
                     'text' => 'Buscador de vacas',
-                    'url'  => '#',
+                    'url'  => '/Vacas/busqueda',
                     'can' => 'Usuario_travian',
                 ],                
             ],

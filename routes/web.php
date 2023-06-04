@@ -88,6 +88,11 @@ Route::put('/Calculos/borrarruta', [App\Http\Controllers\Controller_calculos::cl
 
 Route::get('/Calculos/npc', [App\Http\Controllers\Controller_calculos::class, 'npc'])->middleware('can:Usuario_travian')->name('aldeas.npc'); 
 
+//vacas
+
+Route::get('/Vacas/busqueda', [App\Http\Controllers\Controller_vacas::class, 'inicio'])->middleware('can:Usuario_travian')->name('aldeas.inicio');
+Route::put('/Vacas/actualizar_pago', [App\Http\Controllers\Controller_vacas::class, 'actualizar_pago'])->middleware('can:Usuario_travian')->name('aldeas.actualizar_pago'); 
+
 
  //Mi cuenta
 Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->middleware('can:Usuario_travian')->name('MiCuenta.Informacion'); 
