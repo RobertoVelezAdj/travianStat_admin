@@ -181,7 +181,8 @@ class Controller_vacas extends Controller
        // echo $query;
         $aldeas=DB::select($query);
         //print_r ($info);
-        return  view('vacas.index')->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return  view('vacas.index')->with('mensaje',$mensaje)->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
     } 
     
     public function listaVacas()
@@ -228,8 +229,7 @@ class Controller_vacas extends Controller
             "sinAlianza"=>$info->sinAlianza,
         ];
 
-        echo $info->sinAlianza."sadasdasdasd".$info->PerdidaPobl;
-
+ 
          $aldeas_usuario = DB::table('aldea')->where('id_cuenta',$idUsu)->get();
         $dias = ($info->dias)-1;
          $vacio ='si';
@@ -321,6 +321,7 @@ class Controller_vacas extends Controller
        // echo $query;
         $aldeas=DB::select($query);
         //print_r ($info);
-        return  view('vacas.index')->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return  view('vacas.index')->with('mensaje',$mensaje)->with('info',$aldeas)->with('estado',$vacio)->with('aldeas',$aldeas_usuario)->with('busqueda',$busqueda);
     }
 }
