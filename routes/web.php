@@ -92,10 +92,17 @@ Route::get('/Calculos/npc', [App\Http\Controllers\Controller_calculos::class, 'n
 
 Route::get('/Vacas/busqueda', [App\Http\Controllers\Controller_vacas::class, 'inicio'])->middleware('can:Usuario_travian')->name('aldeas.inicio');
 Route::put('/Vacas/actualizar_pago', [App\Http\Controllers\Controller_vacas::class, 'actualizar_pago'])->middleware('can:Usuario_travian')->name('aldeas.actualizar_pago'); 
-
+Route::put('/Vacas/insertarVacas', [App\Http\Controllers\Controller_vacas::class, 'insertarVacas'])->name('insertarVacas');
+Route::put('/Vacas/calculovacas', [App\Http\Controllers\Controller_vacas::class, 'calculovacas'])->name('calculovacas');
 
  //Mi cuenta
 Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->middleware('can:Usuario_travian')->name('MiCuenta.Informacion'); 
 Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
 //historificacion
 Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->middleware('can:Usuario_travian')->name('historico'); 
+
+
+
+//AVISOS
+Route::get('/avisos', [App\Http\Controllers\avisosController::class, 'avisos'])->name('avisos');
+

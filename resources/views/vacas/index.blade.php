@@ -54,6 +54,171 @@
                     </div>
                 </div>
             </div>
+            @if($estado =='no')
+            <h1>Búsqueda de vacas</h1>
+            <form action="/Vacas/calculovacas"  action="{{'submit'}}" method="post">
+                @method('PUT')
+                @csrf
+             
+                <input type="hidden" name="_method" value="PUT">
+                    <div class="mb-3">
+                    <label class="form-label">Aldea lanzamiento</label>
+                    
+                    <select class="form-control" aria-label="Default select example" name = "idAldea">
+                            @foreach($aldeas as $aldea)
+                               
+                                    <option value="{{$aldea->id}}">{{$aldea->nombre}}</option>                    
+                            @endforeach
+                        </select>
+
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Días inactivo</label>
+                        <input name="dias" type="number" min="2" pattern="^[0-9]+"  VALUE = "1"class="form-control"  >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Max distancia</label>
+                        <input name="distancia" type="number" min="2" pattern="^[0-9]+" class="form-control" >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Max cambio de poblacion</label>
+                        <input name="poblacion" type="number" min="1" pattern="^[0-9]+" class="form-control" >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mínima población de aldeas</label>
+                        <input name="pobAldeas" type="number" min="0" pattern="^[0-9]+" class="form-control" >
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" value="1" id ="" name="PerdidaPobl" checked>   
+                        <label class="form-check-label" for="flexCheckChecked"> Mostrar cuentas sin perdida de población</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" value="1" name="sinAlianza" checked>   
+                        <label class="form-check-label" for="flexCheckChecked"> Mostrar cuentas sin alianza</label>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Búsqueda</button>
+                   </div>
+                </form> 
+            @else
+         
+            <h1>Búsqueda de vacas</h1>
+                <form action="/vacas/calculovacas"  action="{{'submit'}}" method="post">
+                            @method('PUT')
+  @csrf
+                    <div class="mb-3">
+                    <label class="form-label">Aldea lanzamiento</label>
+                    <select class="form-label" aria-label="Default select example" name = "idAldea">
+                        @foreach($aldeas as $aldea){
+                            @if($aldea->id==$busqueda['aldeaLanza'])
+                                <option value='{{$aldea->id}}' selected = 'selected'>{{$aldea->nombre}}</option>
+                            @else
+                                <option value='{{$aldea->id}}' >{{$aldea->nombre}}</option>
+                            @endif    
+                        @endforeach      
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Días desde el cambio</label>
+                        <input name="dias" type="number" min="2" pattern="^[0-9]+" class="form-control" value = "{{$busqueda['dias']}}" >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Max distancia</label>
+                        <input name="distancia" type="number" min="2" pattern="^[0-9]+" class="form-control"  value = "{{$busqueda['distancia']}}" >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Max cambio de poblacion</label>
+                        <input name="poblacion" type="number" min="1" pattern="^[0-9]+" class="form-control" value = "{{$busqueda['cambiopob']}}" >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mínima población de aldeas</label>
+                        <input name="pobAldeas" type="number" min="0" pattern="^[0-9]+" class="form-control" value = "{{$busqueda['minpob']}}"  >
+                    </div>
+                    <div class="form-check form-switch">
+                    
+                        @if( $busqueda['PerdidaPobl']=='1')
+                            <input class="form-check-input" type="checkbox" value="1" id ="" name="PerdidaPobl" checked>   
+                        @else
+                            <input class="form-check-input" type="checkbox" value="1" id ="" name="PerdidaPobl">   
+                        @endif    
+                        <label class="form-check-label" for="flexCheckChecked"> Mostrar cuentas sin perdida de población</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        
+                        @if( $busqueda['sinAlianza']=='1')
+                            <input class="form-check-input" type="checkbox" value="1" name="sinAlianza" checked>      
+                        @else
+                            <input class="form-check-input" type="checkbox" value="1" name="sinAlianza" >     
+                         @endif    
+                        
+                        <label class="form-check-label" for="flexCheckChecked"> Mostrar cuentas sin alianza</label>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Búsqueda</button>
+                   </div>
+                </form> 
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 text-center ">
+                    <div class="card-body "> 
+                        
+                    </div>  
+                </div>
+
+                <table id="taldeas" class="table table-striped  table-bordered table-hover table-responsive">
+                    <thead>
+                            <tr>
+                                <th>Distancia</th>
+                                <th>Nombre aldea</th>
+                                <th>Cuenta</th>
+                                <th>Raza</th>
+                                <th>Nombre alianza</th>
+                                <th>Población aldea</th> 
+                                <th>Población cuenta</th> 
+                                <th>Diferencia población cuenta</th> 
+                                <th>Opciones</th>                        
+                            </tr>
+                        </thead>
+                    <tbody>
+                        @foreach($info as $posibleVacas)
+                        <tr>
+                                <td>{{$posibleVacas->distancia}}  </td>
+                                <td>{{$posibleVacas->nombrealdea}} <a target="_blank" href="{{$posibleVacas->rutaServer}}/position_details.php?x={{$posibleVacas->coord_x}}&y={{$posibleVacas->coord_y}}"   >{{$posibleVacas->coord_x }}{{ __('/') }}{{$posibleVacas->coord_y }}</a></td>
+                                <td><a target="_blank" href="{{$posibleVacas->rutaServer}}/profile/{{$posibleVacas->idCuenta}}" >{{$posibleVacas->NombreCuenta}} </a></td>
+                                <td>{{$posibleVacas->raza}}</td>
+                                <td><a target="_blank"  href="{{$posibleVacas->rutaServer}}/alliance/{{$posibleVacas->idAlianza}}">{{$posibleVacas->NombreAlianza}} </a> </td>
+                                <td>{{$posibleVacas->poblacion_aldea}}</td>
+                                <td>{{$posibleVacas->hoy}}</td>
+                                <td>{{$posibleVacas->dif_poblacion_cuenta}}</td>
+                                <td>
+                                    <form action="/vacas/insertarVacas"  action="{{'submit'}}" method="post">
+                                        @method('PUT')
+                                        @csrf
+                                        <button type="submit" class="btn btn-success float-right" >Añadir</button>
+                                        <input  name="idAldeaVaca" type="hidden" value="{{$posibleVacas->id_aldea}}">
+                                        <input  name="idAldea" type="hidden" value="{{$busqueda['aldeaLanza']}}">
+                                        <input  name="dias" type="hidden" value="{{$busqueda['dias']}}">
+                                        <input  name="distancia" type="hidden" value="{{$busqueda['distancia']}}">
+                                        <input  name="poblacion" type="hidden" value="{{$busqueda['cambiopob']}}">
+                                        <input  name="pobAldeas" type="hidden" value="{{$busqueda['minpob']}}">
+                                        @if( $busqueda['PerdidaPobl']=='1')
+                                        <input  name="PerdidaPobl" type="hidden" value="1">
+                                        @else
+                                        <input  name="PerdidaPobl" type="hidden" value="">  
+                                        @endif 
+                                        @if( $busqueda['sinAlianza']=='1')
+                                            <input  name="sinAlianza" type="hidden" value="1">
+                                        @else
+                                         <input  name="sinAlianza" type="hidden" value="">  
+                                        @endif       
+                                    </form>
+                                    </td>
+                        </tr>   
+                        @endforeach
+                    </tbody>
+                </table>
+
+            @endif
           </div>
         </div>
       </div>
