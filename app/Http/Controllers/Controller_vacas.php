@@ -250,7 +250,7 @@ class Controller_vacas extends Controller
 
         $info=DB::select($query);
         $aldeas_usuario = DB::table('aldea')->where('id_usuario',$idUsu)->get();
-        $aux=$this->creacion_mensaje('success', "Vacas eliminada de forma correcta.",$idUsu);
+        
         $mensaje=$this->obtener_mensaje( $idUsu);
         return  view('vacas.LVacas')->with('mensaje',$mensaje)->with('info',$info)->with('aldeas',$aldeas_usuario);
     }
@@ -261,7 +261,7 @@ class Controller_vacas extends Controller
         $info=DB::select($query);
         
 
-        $mensaje=$this->obtener_mensaje( $idUsu);
+        $aux=$this->creacion_mensaje('success', "Vacas eliminada de forma correcta.",$idUsu);
         return redirect()->action('App\Http\Controllers\Controller_vacas@listaVacas');
     }
  
