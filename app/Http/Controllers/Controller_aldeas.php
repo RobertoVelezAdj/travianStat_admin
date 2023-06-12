@@ -167,8 +167,10 @@ use Illuminate\Support\Facades\DB;
     }
     public function actualizar(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update","‭","‬","\t");
+        $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
+        $cadena_limpia = str_replace("\t", " ", $cadena_limpia);
+
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
         $nombre = 0;
@@ -246,7 +248,7 @@ use Illuminate\Support\Facades\DB;
                 }
 
                 $query = "UPDATE aldea_tropas SET tropa_1='".$t1."',tropa_2='".$t2."',tropa_3='".$t3."',tropa_4='".$t4."',tropa_5='".$t5."',tropa_6='".$t6."',tropa_7='".$t7."',tropa_8='".$t8."',tropa_9='".$t9."',tropa_10='".$t10."',tropa_11='".$t11."' WHERE  ID_ALDEA= ".$id_aldea;
-                echo $query;
+                //echo $query;
                 $tipo_tropas= DB::select($query);
                 $t1 = 0;
                 $t2 = 0;
