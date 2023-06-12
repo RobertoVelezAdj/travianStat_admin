@@ -353,6 +353,8 @@ use Illuminate\Support\Facades\DB;
         $idUsu =auth()->id();
         $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
+        $cadena_limpia = str_replace("\t", " ", $cadena_limpia);
+
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
         $nombre = 0;
