@@ -167,7 +167,7 @@ use Illuminate\Support\Facades\DB;
     }
     public function actualizar(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update");
+        $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
@@ -214,7 +214,7 @@ use Illuminate\Support\Facades\DB;
         }
     public function actualizarprod(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update","‭");
+        $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
@@ -249,7 +249,7 @@ use Illuminate\Support\Facades\DB;
         }   
     public function actualizarpc(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update");
+        $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
