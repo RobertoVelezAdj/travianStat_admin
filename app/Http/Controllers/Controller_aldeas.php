@@ -396,8 +396,8 @@ use Illuminate\Support\Facades\DB;
             $slot = $slot+5;*/
         }
 
-        //$aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-        //return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         }
     public function tareas(){
         $idUsu =auth()->id();
