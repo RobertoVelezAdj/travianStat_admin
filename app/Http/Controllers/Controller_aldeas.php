@@ -351,7 +351,7 @@ use Illuminate\Support\Facades\DB;
         }   
     public function actualizarpc(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update","‭","‬","-");
+        $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
         $cadena_limpia = str_replace("\t", " ", $cadena_limpia);
 
@@ -361,7 +361,7 @@ use Illuminate\Support\Facades\DB;
         $pc_dia = 1;
         $fiestas = 2;
         $tropas = 3;
-        $slot = 5;
+        $slot = 4;
         $contador =-1;
         print_r($cadena);
         for($i = 0; $i < sizeof($cadena);$i=$i+1)
