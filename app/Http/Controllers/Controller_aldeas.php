@@ -225,28 +225,60 @@ use Illuminate\Support\Facades\DB;
         $cereal = 4;
         $punto = ".";
         print_r($cadena);
-        for($i = 0; $i < sizeof($cadena);$i=$i+5)
+        echo sizeof($cadena)."TmÑO!";
+        $nombrealdea ='';
+        $maderap = 0;
+        $barrop = 0;
+        $hierrop = 0;
+        $cerealp = 0;
+        $contador =-1;
+        for($i = 0; $i <sizeof($cadena);$i=$i+1)
         {
-            $id_aldea=0;
-            $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$cadena[$nombre]."'";
-            $resultado= DB::select($query);
-            foreach ($resultado as $a){
-                $id_aldea =  $a->id;
-            }
-    
-            $query = "UPDATE `aldea_producion` SET `madera`='".trim(str_replace($punto, "", $cadena[$madera]))."',`barro`='".trim(str_replace($punto, "", $cadena[$barro]))."',`hierro`='".trim(str_replace($punto, "", $cadena[$hierro]))."',`cereal`='".trim(str_replace($punto, "", $cadena[$cereal]))."' WHERE  ID_ALDEA= ".$id_aldea;
-            //echo $query;
-            $tipo_tropas= DB::select($query);
+            if(strlen($cadena[$i])>0){
+                $contador =(int)$contador+1;
 
-            $nombre=$nombre+5;
+                 
+            }
+            
+            if($contador==$nombre&& strlen($cadena[$i])>0){
+                $nombrealdea =$cadena[$i];
+            }else if($contador==$madera&& strlen($cadena[$i])>0){
+                $maderap =$cadena[$i];
+            }else if($contador==$barro&& strlen($cadena[$i])>0){
+                $barrop =$cadena[$i];
+            }else if($contador==$hierro&& strlen($cadena[$i])>0){
+                $hierrop =$cadena[$i];
+            }else if($contador==$cereal&& strlen($cadena[$i])>0){
+                $cerealp =$cadena[$i];
+                
+                $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$nombrealdea."'";
+                $resultado= DB::select($query);
+                foreach ($resultado as $a){
+                    $id_aldea =  $a->id;
+                }
+        
+                $query = "UPDATE `aldea_producion` SET `madera`='".trim(str_replace($punto, "", $maderap))."',`barro`='".trim(str_replace($punto, "", $barrop))."',`hierro`='".trim(str_replace($punto, "", $hierrop))."',`cereal`='".trim(str_replace($punto, "", $cerealp))."' WHERE  ID_ALDEA= ".$id_aldea;
+                //echo $query.";";
+                $tipo_tropas= DB::select($query);
+                $contador =-1;
+                $maderap = 0;
+                $barrop = 0;
+                $hierrop = 0;
+                $cerealp = 0;
+                $id_aldea=0;
+            }
+
+            
+
+          /*  $nombre=$nombre+5;
             $madera = $madera+5;
             $barro = $barro+5;
             $hierro = $hierro+5;
-            $cereal = $cereal+5;
+            $cereal = $cereal+5;*/
         }
 
-        //$aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-        //return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         }   
     public function actualizarpc(request $info){
         $idUsu =auth()->id();
