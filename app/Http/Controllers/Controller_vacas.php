@@ -95,7 +95,7 @@ class Controller_vacas extends Controller
                 $contador =(int)$contador+1;
             }
             
-            if($contador==$nombre&& strlen($cadena[$i])>0){
+            if($contador==$nombre_aldea&& strlen($cadena[$i])>0){
                 $nombrealdea =$cadena[$i];
             }
             else if($contador==$distancia&& strlen($cadena[$i])>0){
