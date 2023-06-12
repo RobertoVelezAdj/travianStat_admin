@@ -224,6 +224,7 @@ use Illuminate\Support\Facades\DB;
         $hierro = 3;
         $cereal = 4;
         $punto = ".";
+        print_r($cadena);
         for($i = 0; $i < sizeof($cadena);$i=$i+5)
         {
             $id_aldea=0;
@@ -244,8 +245,8 @@ use Illuminate\Support\Facades\DB;
             $cereal = $cereal+5;
         }
 
-        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        //$aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        //return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         }   
     public function actualizarpc(request $info){
         $idUsu =auth()->id();
