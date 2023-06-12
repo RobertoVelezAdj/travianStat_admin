@@ -351,7 +351,7 @@ use Illuminate\Support\Facades\DB;
         }   
     public function actualizarpc(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update","‭","‬","\t");
+        $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
