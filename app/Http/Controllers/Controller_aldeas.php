@@ -214,8 +214,8 @@ use Illuminate\Support\Facades\DB;
         }
     public function actualizarprod(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update","‭","‬");
-        $cadena_limpia = str_replace($vowels, "", $info->madera);
+        $vowels = array("select", "query", "insert", "update","‭","‬","\t");
+        $cadena_limpia = str_replace($vowels, " ", $info->madera);
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
         $nombre = 0;
