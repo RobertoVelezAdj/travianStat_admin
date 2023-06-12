@@ -199,7 +199,7 @@ use Illuminate\Support\Facades\DB;
         $t11 = 0;
         $nombrealdea ='';
         $contador =-1;
-        print_r($cadena);
+       // print_r($cadena);
         for($i = 0; $i <sizeof($cadena);$i=$i+1)
         {
             if(strlen($cadena[$i])>0){
@@ -281,8 +281,8 @@ use Illuminate\Support\Facades\DB;
             $tropa_11 =$tropa_11 +12;*/
         }
 
-       // $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-        //return redirect()->action('App\Http\Controllers\Controller_aldeas@mistropas');
+        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@mistropas');
         }
     public function actualizarprod(request $info){
         $idUsu =auth()->id();
