@@ -361,9 +361,9 @@ use Illuminate\Support\Facades\DB;
         $pc_dia = 1;
         $fiestas = 2;
         $tropas = 3;
-        $slot = 4;
+        $slot = 5;
         $contador =-1;
-        print_r($cadena);
+        //print_r($cadena);
         for($i = 0; $i < sizeof($cadena);$i=$i+1)
         {
             if(strlen($cadena[$i])>0){
@@ -382,7 +382,7 @@ use Illuminate\Support\Facades\DB;
                 }
     
                 $query = "UPDATE aldea_producion SET puntos_cultura='".$cadena[$i]."' WHERE  ID_ALDEA= ".$id_aldea;
-                echo $query;
+                //echo $query;
                 $tipo_tropas= DB::select($query);
             }else if($contador ==$slot){
                 $contador =-1;
@@ -397,7 +397,7 @@ use Illuminate\Support\Facades\DB;
         }
 
         $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-        //return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         }
     public function tareas(){
         $idUsu =auth()->id();
