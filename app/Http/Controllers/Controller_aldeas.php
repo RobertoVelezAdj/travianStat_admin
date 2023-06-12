@@ -167,7 +167,7 @@ use Illuminate\Support\Facades\DB;
     }
     public function actualizar(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update","‭","‬");
+        $vowels = array("select", "query", "insert", "update","‭","‬","\t");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
@@ -183,19 +183,88 @@ use Illuminate\Support\Facades\DB;
         $tropa_9 = 9;
         $tropa_10 = 10;
         $tropa_11 = 11;
-        for($i = 0; $i < sizeof($cadena);$i=$i+12)
+
+        $t1 = 0;
+        $t2 = 0;
+        $t3 = 0;
+        $t4 = 0;
+        $t5 = 0;
+        $t6 = 0;
+        $t7 = 0;
+        $t8 = 0;
+        $t9 = 0;
+        $t10  = 0;
+        $t11 = 0;
+        $nombrealdea ='';
+        $contador =-1;
+        for($i = 0; $i <sizeof($cadena);$i=$i+1)
         {
-            $id_aldea=0;
-            $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$cadena[$nombre]."'";
-            $resultado= DB::select($query);
-            foreach ($resultado as $a){
-                $id_aldea =  $a->id;
+            if(strlen($cadena[$i])>0){
+                $contador =(int)$contador+1;
             }
 
-            $query = "UPDATE aldea_tropas SET tropa_1='".$cadena[$tropa_1]."',tropa_2='".$cadena[$tropa_2]."',tropa_3='".$cadena[$tropa_3]."',tropa_4='".$cadena[$tropa_4]."',tropa_5='".$cadena[$tropa_5]."',tropa_6='".$cadena[$tropa_6]."',tropa_7='".$cadena[$tropa_7]."',tropa_8='".$cadena[$tropa_8]."',tropa_9='".$cadena[$tropa_9]."',tropa_10='".$cadena[$tropa_10]."',tropa_11='".$cadena[$tropa_11]."' WHERE  ID_ALDEA= ".$id_aldea;
-            $tipo_tropas= DB::select($query);
+            if($contador==$nombre&& strlen($cadena[$i])>0){
+                $nombrealdea =$cadena[$i];
+            }else if($contador==$tropa_1&& strlen($cadena[$i])>0){
+                $t1 = $cadena[$i];
+            }
+            else if($contador==$tropa_2&& strlen($cadena[$i])>0){
+                $t2 = $cadena[$i];
+            }
+            else if($contador==$tropa_3&& strlen($cadena[$i])>0){
+                $t3 = $cadena[$i];
+            }
+            else if($contador==$tropa_4&& strlen($cadena[$i])>0){
+                $t4 = $cadena[$i];
+            }
+            else if($contador==$tropa_5&& strlen($cadena[$i])>0){
+                $t5 = $cadena[$i];
+            }
+            else if($contador==$tropa_6&& strlen($cadena[$i])>0){
+                $t6 = $cadena[$i];
+            }
+            else if($contador==$tropa_7&& strlen($cadena[$i])>0){
+                $t7 = $cadena[$i];
+            }
+            else if($contador==$tropa_8&& strlen($cadena[$i])>0){
+                $t8 = $cadena[$i];
+            }
+            else if($contador==$tropa_9&& strlen($cadena[$i])>0){
+                $t9 = $cadena[$i];
+            }
+            else if($contador==$tropa_10&& strlen($cadena[$i])>0){
+                $t10 = $cadena[$i];
+            }else if($contador==$tropa_11&& strlen($cadena[$i])>0){
 
-            $nombre=$nombre+12;
+                $t11 = $cadena[$i];
+                $id_aldea=0;
+                $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$nombrealdea."'";
+                $resultado= DB::select($query);
+                foreach ($resultado as $a){
+                    $id_aldea =  $a->id;
+                }
+
+                $query = "UPDATE aldea_tropas SET tropa_1='".$t1."',tropa_2='".$t2."',tropa_3='".$t3."',tropa_4='".$t4."',tropa_5='".$t5."',tropa_6='".$t6."',tropa_7='".$t7."',tropa_8='".$t8."',tropa_9='".$t9."',tropa_10='".$t10."',tropa_11='".$t11."' WHERE  ID_ALDEA= ".$id_aldea;
+                echo $query;
+                $tipo_tropas= DB::select($query);
+                $t1 = 0;
+                $t2 = 0;
+                $t3 = 0;
+                $t4 = 0;
+                $t5 = 0;
+                $t6 = 0;
+                $t7 = 0;
+                $t8 = 0;
+                $t9 = 0;
+                $t10  = 0;
+                $t11 = 0;
+                $nombrealdea ='';
+                $contador =-1;
+            }
+
+           
+
+           /* $nombre=$nombre+12;
             $tropa_1 = $tropa_1+12;
             $tropa_2 = $tropa_2+12;
             $tropa_3 = $tropa_3+12;
@@ -206,7 +275,7 @@ use Illuminate\Support\Facades\DB;
             $tropa_8 = $tropa_8+12;
             $tropa_9 = $tropa_9+12;
             $tropa_10 =$tropa_10+12;
-            $tropa_11 =$tropa_11 +12;
+            $tropa_11 =$tropa_11 +12;*/
         }
 
         $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
@@ -224,9 +293,10 @@ use Illuminate\Support\Facades\DB;
         $hierro = 3;
         $cereal = 4;
         $punto = ".";
-        print_r($cadena);
-        echo sizeof($cadena)."TmÑO!";
+        //print_r($cadena);
+       // echo sizeof($cadena)."TmÑO!";
         $nombrealdea ='';
+        $contador =-1;
         $maderap = 0;
         $barrop = 0;
         $hierrop = 0;
@@ -236,8 +306,6 @@ use Illuminate\Support\Facades\DB;
         {
             if(strlen($cadena[$i])>0){
                 $contador =(int)$contador+1;
-
-                 
             }
             
             if($contador==$nombre&& strlen($cadena[$i])>0){
@@ -282,7 +350,7 @@ use Illuminate\Support\Facades\DB;
         }   
     public function actualizarpc(request $info){
         $idUsu =auth()->id();
-        $vowels = array("select", "query", "insert", "update","‭","‬");
+        $vowels = array("select", "query", "insert", "update","‭","‬","\t");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
         $cadena = explode(" ", $cadena_limpia);
         $id_aldea = 0;
@@ -291,23 +359,38 @@ use Illuminate\Support\Facades\DB;
         $fiestas = 2;
         $tropas = 3;
         $slot = 4;
-        for($i = 0; $i < sizeof($cadena);$i=$i+5)
+        $contador =-1;
+        for($i = 0; $i < sizeof($cadena);$i=$i+1)
         {
-            $id_aldea=0;
-            $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$cadena[$nombre]."'";
-            $resultado= DB::select($query);
-            foreach ($resultado as $a){
-                $id_aldea =  $a->id;
+            if(strlen($cadena[$i])>0){
+                $contador =(int)$contador+1;
+            }
+            
+            if($contador==$nombre&& strlen($cadena[$i])>0){
+                $nombrealdea =$cadena[$i];
+            }else if($contador==$pc_dia&& strlen($cadena[$i])>0){
+               
+                $id_aldea=0;
+                $query = "SELECT id FROM aldea a WHERE   a.nombre = '".$nombrealdea."'";
+                $resultado= DB::select($query);
+                foreach ($resultado as $a){
+                    $id_aldea =  $a->id;
+                }
+    
+                $query = "UPDATE aldea_producion SET puntos_cultura='".$cadena[$i]."' WHERE  ID_ALDEA= ".$id_aldea;
+                //echo $query;
+                $tipo_tropas= DB::select($query);
+            }
+            if($contador ==$slot){
+                $contador =-1;
             }
 
-            $query = "UPDATE aldea_producion SET puntos_cultura='".$cadena[$pc_dia]."' WHERE  ID_ALDEA= ".$id_aldea;
-            $tipo_tropas= DB::select($query);
-
-            $nombre=$nombre+5;
+           
+            /*$nombre=$nombre+5;
             $pc_dia = $pc_dia+5;
             $fiestas = $fiestas+5;
             $tropas = $tropas+5;
-            $slot = $slot+5;
+            $slot = $slot+5;*/
         }
 
         $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
