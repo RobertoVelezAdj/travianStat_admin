@@ -80,7 +80,7 @@ class Controller_vacas extends Controller
 
         $cadena = explode("\t", $cadena_limpia);
 
-        print_r($cadena);
+        //print_r($cadena);
         $nombre_aldea = 0;
         $poblacion = 1;
         $distancia = 2;
@@ -131,8 +131,8 @@ class Controller_vacas extends Controller
             $result = $result+6; */
         }
 
-        //$aux=$this->creacion_mensaje('success', "Vacas almacenadas de forma correcta.",$idUsu);
-        //return redirect()->action('App\Http\Controllers\Controller_vacas@listaVacas');
+        $aux=$this->creacion_mensaje('success', "Vacas almacenadas de forma correcta.",$idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_vacas@listaVacas');
     }
     public function calculovacas(request $info)
     {
