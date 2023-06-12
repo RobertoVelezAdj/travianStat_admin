@@ -76,9 +76,9 @@ class Controller_vacas extends Controller
 
         $vowels = array("select", "query", "insert", "update","‭","‬");
         $cadena_limpia = str_replace($vowels, "", $info->madera);
-        $cadena_limpia = str_replace("\t", " ", $cadena_limpia);
+         
 
-        $cadena = explode(" ", $cadena_limpia);
+        $cadena = explode("\t", $cadena_limpia);
 
         print_r($cadena);
         $nombre_aldea = 0;
