@@ -363,7 +363,7 @@ use Illuminate\Support\Facades\DB;
         $tropas = 3;
         $slot = 5;
         $contador =-1;
-        //print_r($cadena);
+        print_r($cadena);
         for($i = 0; $i < sizeof($cadena);$i=$i+1)
         {
             if(strlen($cadena[$i])>0){
@@ -396,8 +396,8 @@ use Illuminate\Support\Facades\DB;
             $slot = $slot+5;*/
         }
 
-        $aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
-        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+        //$aux=$this->creacion_mensaje('success', "Tropas de forma correcta.",$idUsu);
+        //return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
         }
     public function tareas(){
         $idUsu =auth()->id();
