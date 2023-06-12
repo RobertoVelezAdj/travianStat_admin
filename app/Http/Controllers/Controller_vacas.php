@@ -120,7 +120,8 @@ class Controller_vacas extends Controller
                         $resultado3= DB::select($query3);
                      }
     
-                }          
+                } 
+                $contador =-1;         
             }
 
             
