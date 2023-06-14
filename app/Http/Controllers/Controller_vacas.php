@@ -306,7 +306,7 @@ class Controller_vacas extends Controller
         ];
 
  
-         $aldeas_usuario = DB::table('aldea')->where('id_cuenta',$idUsu)->get();
+         $aldeas_usuario = DB::table('aldea')->where('id_usuario',$idUsu)->get();
         $dias = ($info->dias)-1;
          $vacio ='si';
 
