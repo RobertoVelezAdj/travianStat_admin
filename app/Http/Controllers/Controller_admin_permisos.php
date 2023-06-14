@@ -42,9 +42,9 @@ class Controller_admin_permisos extends Controller
         $userpermiso->revokePermissionTo($info->permiso);
         return redirect()->action('App\Http\Controllers\Controller_admin_permisos@index');
     }
-    public function EliminarPermisoTabla(request $info)
+    public function EliminarUsuario(request $info)
     {
-        $query = "DELETE FROM permissions WHERE name = '".$info->permiso."'";
+        $query = "DELETE FROM users WHERE id = ".$info->idUsu."";
         $tropas=DB::select($query);
         return redirect()->action('App\Http\Controllers\Controller_admin_permisos@index');
     }

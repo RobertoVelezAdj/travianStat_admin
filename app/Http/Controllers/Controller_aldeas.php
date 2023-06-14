@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
     
     public function index(){   
          $idUsu =auth()->id();
+
+        
         //se elee información de las aldeas  
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposAldea'  and nombre not in ('TITULO') order by valor";
         $tipos= DB::select($query);

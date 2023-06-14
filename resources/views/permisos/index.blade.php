@@ -133,11 +133,9 @@
                                 <div class="dropdown-menu" role="menu">
                                   <button class="dropdown-item btn-info" data-toggle="modal" data-target="#anadirP-{{$usuario['id']}}">Añadir permisos</button>
                                   <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EliminarP-{{$usuario['id']}}">Eliminar permisos</button>
+                                  <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EliminarU-{{$usuario['id']}}">Eliminar usuario</button>
                                 </div>
                               </div>
-                              <button type="button" class="btn-app bg-danger" data-toggle="modal" data-target="#EliminarP-{{$usuario['id']}}" >
-                                Eliminar Usuario
-                              </button>    
                             </th>
                             <div class="modal fade" id="anadirP-{{$usuario['id']}}" tabindex="-1" role="dialog" aria-labelledby="#anadirP-{{$usuario['id']}}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -200,6 +198,34 @@
                                                     <input  name="idUsu" type="hidden" value="{{$usuario['id']}}">
                                                     <button type="button"class="btn btn-outline-light bg-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
                                                     <button type="submit" class="btn btn-outline-ligh bg-black">Eliminar permiso</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="EliminarU-{{$usuario['id']}}" tabindex="-1" role="dialog" aria-labelledby="#EliminarU-{{$usuario['id']}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar usuario</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <form action="/AdminPermisos/EliminarUsuario" method="POST">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                       ¿Está seguro que desea eliminar al usuario {{$usuario['email']}}?
+                                                        </select>
+                                                    </div>
+                                                    <input  name="idUsu" type="hidden" value="{{$usuario['id']}}">
+                                                    <button type="button"class="btn btn-outline-light bg-danger" data-dismiss="modal" aria-label="Close">Cerrar</button>
+                                                    <button type="submit" class="btn btn-outline-ligh bg-black">Eliminar usuario</button>
                                                 </form>
                                             </div>
                                         </div>
