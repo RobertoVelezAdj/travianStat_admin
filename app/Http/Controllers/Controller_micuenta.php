@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT  * FROM users WHERE id =".$idUsu;
         $cuenta=DB::select($query);
 
-        $query = "SELECT * FROM parametrizaciones WHERE lista ='Razas' and nombre <>'TITULO'; ";
+        $query = "SELECT * FROM parametrizaciones WHERE lista ='Razas' and nombre <>'TITULO' and p.valor <3; ";
         $razas=DB::select($query);
         $mensaje=$this->obtener_mensaje( $idUsu);
-        $query ="SELECT id, nombre FROM servidor";
+        $query ="SELECT id, nombre FROM servidor and id>0";
         $servidor=DB::select($query);
         
         return view('cuenta.index')->with('mensaje',$mensaje)->with('info',$cuenta)->with('raza',$razas)->with('servidor',$servidor);
