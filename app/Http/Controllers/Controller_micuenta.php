@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT  * FROM users WHERE id =".$idUsu;
         $cuenta=DB::select($query);
 
-        $query = "SELECT * FROM parametrizaciones WHERE lista ='Razas' and nombre <>'TITULO' and p.valor <3; ";
+        $query = "SELECT * FROM parametrizaciones p WHERE lista ='Razas' and nombre <>'TITULO' and p.valor <3; ";
         $razas=DB::select($query);
         $mensaje=$this->obtener_mensaje( $idUsu);
         $query ="SELECT id, nombre FROM servidor and id>0";
