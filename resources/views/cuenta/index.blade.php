@@ -47,7 +47,7 @@
                 <input type="text" name="alianza" class="form-control" id ="nombre" value=" " disable>
                 <label for="nombreParam">ID de telegram</label>
                 <input type="text" name="telegram" class="form-control" id ="telegram" value="{{$a->id_telegram}}">                
-                <button type="submit" class="btn btn-outline-ligh bg-black m-3">Crear aldea</button>
+                <button type="submit" class="btn btn-outline-ligh bg-black m-3">Guardar datos</button>
             </form>
           @endforeach    
                    
