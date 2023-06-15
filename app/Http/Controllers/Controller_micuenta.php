@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
         $query = "SELECT * FROM parametrizaciones p WHERE lista ='Razas' and nombre <>'TITULO' and p.valor <3; ";
         $razas=DB::select($query);
         $mensaje=$this->obtener_mensaje( $idUsu);
-        $query ="SELECT id, nombre FROM servidor and id>0";
+        $query ="SELECT id, nombre FROM servidor s where s.id>0";
         $servidor=DB::select($query);
         
         return view('cuenta.index')->with('mensaje',$mensaje)->with('info',$cuenta)->with('raza',$razas)->with('servidor',$servidor);
