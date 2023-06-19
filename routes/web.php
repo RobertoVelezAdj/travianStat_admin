@@ -65,6 +65,7 @@ Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'bo
 Route::put('/Aldeas/actualizarprod', [App\Http\Controllers\Controller_aldeas::class, 'actualizarprod'])->middleware('can:Usuario_travian')->name('aldeas.actualizarprod'); 
 Route::put('/Aldeas/actualizarpc', [App\Http\Controllers\Controller_aldeas::class, 'actualizarpc'])->middleware('can:Usuario_travian')->name('aldeas.actualizarpc'); 
 
+
 Route::get('/Aldeas/tropas', [App\Http\Controllers\Controller_aldeas::class, 'mistropas'])->middleware('can:Usuario_travian')->name('aldeas.mistropas'); 
 Route::put('/Aldeas/actualizar', [App\Http\Controllers\Controller_aldeas::class, 'actualizar'])->middleware('can:Usuario_travian')->name('aldeas.actualizar'); 
 
@@ -111,4 +112,5 @@ Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class,
 
 //AVISOS
 Route::get('/avisos', [App\Http\Controllers\avisosController::class, 'avisos'])->name('avisos');
+Route::put('/Aldeas/actualizarNombres', [App\Http\Controllers\Controller_aldeas::class, 'actualizarNombres'])->name('aldeas.actualizarNombres'); 
 

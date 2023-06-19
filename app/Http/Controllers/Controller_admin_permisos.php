@@ -51,16 +51,14 @@ class Controller_admin_permisos extends Controller
         $resultado=DB::select($query);
         foreach ($resultado as $a){
             
-            $query = "DELETE FROM aldeas WHERE id = ".$a->id."";
+            $query = "DELETE FROM aldea WHERE id = ".$a->id."";
             $tropas=DB::select($query);
-            $query = "DELETE FROM aldea_edificios WHERE id_alde = ".$info->id."";
+            $query = "DELETE FROM aldea_edificios WHERE id_aldea = ".$a->id."";
             $tropas=DB::select($query);
-            $query = "DELETE FROM aldea_tropas WHERE id_alde = ".$info->id."";
+            $query = "DELETE FROM aldea_tropas WHERE id_aldea = ".$a->id."";
             $tropas=DB::select($query);
-            $query = "DELETE FROM aldea_producion WHERE id_alde = ".$info->id."";
+            $query = "DELETE FROM aldea_producion WHERE id_aldea = ".$a->id."";
             $tropas=DB::select($query);
-
-
         }
      
         return redirect()->action('App\Http\Controllers\Controller_admin_permisos@index');

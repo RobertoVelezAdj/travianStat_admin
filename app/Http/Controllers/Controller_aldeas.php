@@ -727,7 +727,50 @@ use Spatie\Permission\Traits\HasRoles;
         $insert=DB::select($query);
         return $cantidades;
     } 
+    public function actualizarNombres()
+    {
         
+        $query6 =  "select u.nombre_cuenta, u.servidor as id_server, u.id as id_usuario from users u";
+        $resultado6=DB::select($query6);
+        foreach ($resultado6 as $a){
+            $query2 = "select i.* from cuenta_inac c, aldea_inac i , servidor s where s.estado = 0 and i.IdCuenta = c.IdCuenta and i.id_server = s.id and s.fch_mod = i.updated_at and c.NombreCuenta ='".$a->nombre_cuenta."' and s.id = ".$a->id_server;
+            $resultado2=DB::select($query2);
+            foreach ($resultado2 as $a2){
+                $contador= 0;
+                //cuento si existe la aldea
+                $query3 =  "SELECT a.id, a.nombre FROM aldea  a WHERE  a.coord_x = and a.coord_y =  and a.id_usuario = ";
+                $resultado3=DB::select($query3);
+                foreach ($resultado3 as $a3){
+                    //si existe update nonbre
+                    if($a2->NombreAldea !== $a3->nombre){
+                        $query4 = "update aldea a set a.nombre = '".$a2->NombreAldea."'where a.id = ".$a3->id;
+                        $resultado4=DB::select($query4);
+                    }
+                    $contador = 1;
+                }
+                if( $contador<1) {
+                    //se crea la aldeaal usuario
+                    $query = "INSERT INTO aldea(id_usuario,coord_x,coord_y,nombre,tipo,fiesta_pequena,fiesta_grande,created_at)VALUES(".$idUsu.",".$a2->coor_x.",".$a2->coor_y.",'".$a2->NombreAldea."',8,0,0,current_timestamp())";
+                    $tipos= DB::select($query);
+            
+                    $query = "SELECT max(id) as id FROM aldea WHERE id_usuario = ".$idUsu;
+                    $r=DB::select($query);
+                    foreach ($r as $a){
+                        $id_aldea =  $a->id;
+                    }
+                    //con el id.. registro en edificios y produccion
+                    $query = "INSERT INTO aldea_edificios(id_aldea)VALUES(".$id_aldea.")";
+                    $r= DB::select($query);
+                    $query = "INSERT INTO aldea_tropas(id_aldea)VALUES(".$id_aldea.")";
+                    $r= DB::select($query);
+                    $query = "INSERT INTO aldea_producion(id_aldea)VALUES(".$id_aldea.")";
+                    $r= DB::select($query);
+                }
+            
+                
+            }
+        }
+    } 
     
 
 }

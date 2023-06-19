@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\DB;
         $id_aldea= 0;
         foreach ($resultado as $a){
             $contador =0;
-            $query = "SELECT coord_X, coord_y FROM aldea WHERE coord_X = ".$a->coor_x." and coord_y =".$a->coor_y." and aldea.id_usuario = ".$idUsu;//cambiar quert
+            $query = "SELECT coord_X, coord_y FROM aldea WHERE coord_X = ".$a->coord_x." and coord_y =".$a->coord_y." and aldea.id_usuario = ".$idUsu;//cambiar quert
             $resultado=DB::select($query);
             
             foreach ($resultado as $a){
@@ -49,7 +49,7 @@ use Illuminate\Support\Facades\DB;
             }
             if($contador<1){
                 //si no la tentgo en bbdd insert ()
-                $query = "INSERT INTO aldea(id_usuario,coord_x,coord_y,nombre,tipo,fiesta_pequena,fiesta_grande,created_at)VALUES(".$idUsu.",".$a->coor_x.",".$a->coor_y.",'".$a->NombreAldea."',8,0,0,current_timestamp())";
+                $query = "INSERT INTO aldea(id_usuario,coord_x,coord_y,nombre,tipo,fiesta_pequena,fiesta_grande,created_at)VALUES(".$idUsu.",".$a->coord_x.",".$a->coord_y.",'".$a->NombreAldea."',8,0,0,current_timestamp())";
                 $tipos= DB::select($query);
         
                 $query = "SELECT max(id) as id FROM aldea WHERE id_usuario = ".$idUsu;
