@@ -298,7 +298,7 @@ return [
                 [
                     'text' => 'Estado apuestas',
                     'url'  => '/Apuestas/Estado',
-                    'can' => 'Usuario_travian',
+                    'can' => 'Apuestas',
                 ],
                 [
                     'text' => 'Apuestas cerradas',
@@ -343,7 +343,7 @@ return [
             'text'    => 'Información de cuenta',
             'icon'    => 'fas fa-fw fa-home',
             'url'  => '/MiCuenta/Informacion',
-            'can' => 'Usuario_travian',
+            'can' => 'Usuario_travian','Administrador', 'Apuestas'
         ],
         [
             'text'    => 'Información de aldeas',
