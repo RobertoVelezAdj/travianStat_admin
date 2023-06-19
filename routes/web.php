@@ -114,3 +114,31 @@ Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class,
 Route::get('/avisos', [App\Http\Controllers\avisosController::class, 'avisos'])->name('avisos');
 Route::get('/Aldeas/actualizarNombres', [App\Http\Controllers\Controller_aldeas::class, 'actualizarNombres'])->name('aldeas.actualizarNombres'); 
 
+
+
+//alianzas
+
+Route::get('/datosalianza', [App\Http\Controllers\AlianzaController::class, 'index'])->middleware('can:Usuario_travian')->name('adminAlianza');
+Route::put('/datosalianza/crearAlianza', [App\Http\Controllers\AlianzaController::class, 'crearAli'])->middleware('can:Usuario_travian')->name('crearAli');
+Route::put('/datosalianza/editarAlianza', [App\Http\Controllers\AlianzaController::class, 'editarAli'])->middleware('can:lider_alianza')->name('editarAli');
+ 
+
+Route::get('/datosalianza/gestioncuentas', [App\Http\Controllers\AlianzaController::class, 'gestionUsuarios'])->middleware('can:lider_alianza')->name('gestionUsuarios');
+Route::put('/datosalianza/anadirUsu', [App\Http\Controllers\AlianzaController::class, 'anadirUsu'])->middleware('can:lider_alianza')->name('anadirUsu');
+Route::put('/datosalianza/AnadirPermiso', [App\Http\Controllers\AlianzaController::class, 'AnadirPermiso'])->middleware('can:lider_alianza')->name('datosalianza.AnadirPermiso');
+Route::put('/datosalianza/EliminarPermiso', [App\Http\Controllers\AlianzaController::class, 'EliminarPermiso'])->middleware('can:lider_alianza')->name('datosalianza.EliminarPermiso');
+Route::put('/datosalianza/eliminarPeticion', [App\Http\Controllers\AlianzaController::class, 'eliminarPeticion'])->middleware('can:lider_alianza')->name('datosalianza.eliminarPeticion');
+Route::put('/datosalianza/aceptarPeticion', [App\Http\Controllers\AlianzaController::class, 'aceptarpeticion'])->middleware('can:Usuario_travian')->name('datosalianza.eliminarPeticion');
+Route::put('/datosalianza/saliralianza', [App\Http\Controllers\AlianzaController::class, 'salirAianza'])->middleware('can:Usuario_travian')->name('datosalianza.aceptarPeticion');
+Route::put('/datosalianza/eliminarPeticion2', [App\Http\Controllers\AlianzaController::class, 'eliminarPeticion2'])->middleware('can:Usuario_travian')->name('datosalianza.eliminarPeticion2');
+Route::put('/datosalianza/dejarAli', [App\Http\Controllers\AlianzaController::class, 'dejarali'])->middleware('can:Usuario_travian')->name('datosalianza.dejarali');
+Route::put('/datosalianza/dejarAli2', [App\Http\Controllers\AlianzaController::class, 'dejarali2'])->middleware('can:Usuario_travian')->name('datosalianza.dejarali2');
+
+
+Route::put('/generarPush', [App\Http\Controllers\AlianzaController::class, 'generarPush'])->middleware('can:lider_alianza')->name('adminAlianza');
+
+Route::get('/gestionpush', [App\Http\Controllers\AlianzaController::class, 'gestionpush'])->middleware('can:lider_alianza')->name('adminAlianza');
+
+Route::get('/pushPendiente', [App\Http\Controllers\AlianzaController::class, 'pushPendiente'])->middleware('can:Usuario_travian')->name('pushPendiente');
+Route::put('/pushPendiente/cerrarpush', [App\Http\Controllers\AlianzaController::class, 'cierrepush'])->middleware('can:Usuario_travian')->name('pushPendiente');
+

@@ -437,6 +437,54 @@ return [
                 ],                
             ],
         ],
+        [
+            'text'    => 'Alianza',
+            'icon'    => 'fas fa-fw fa-share',
+            'can' => 'Usuario_travian',
+            'submenu' => [
+                [
+                    'text' => 'Datos alianza',
+                    'url'  => '/datosalianza',
+                    'can' => 'Usuario_travian',
+                ],
+                [
+                    'text' => 'Gestión cuentas',
+                    'url'  => '/datosalianza/gestioncuentas',
+                    'can' => 'lider_alianza','ministro_off','ministro_deff'
+                ],  
+                [
+                    'text' => 'Gestión de push',
+                    'url'  => '/gestionpush',
+                    'can' =>  'lider_alianza','ministro_off','ministro_deff'
+                ],  
+                [
+                    'text' => 'PUSH',
+                    'url'  => '/pushPendiente',
+                    'can' => 'soldado_raso'
+                ],  
+                
+                [
+                    'text' => 'Aldeas importantes',
+                    'url'  => '#',
+                    'can' => 'Pruebas'
+                ],  
+                [
+                    'text' => 'Defensas de la alianza',
+                    'url'  => '#',
+                    'can' => 'Pruebas'
+                ],   
+                [
+                    'text' => 'Defensas disponibles',
+                    'url'  => '#',
+                    'can' => 'Pruebas'
+                ],    
+                [
+                    'text' => 'Defensas alianza (total)',
+                    'url'  => '#',
+                    'can' => 'Pruebas'
+                ],             
+            ],
+        ],
         
     ],
 
