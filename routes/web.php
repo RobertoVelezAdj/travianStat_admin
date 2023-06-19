@@ -58,7 +58,7 @@ Route::put('/AdminServidores/borrar', [App\Http\Controllers\Controller_admin_ser
 
 
 //Aldeas
-Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.informacion'); 
+Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->middleware('auth')->name('aldeas.informacion'); 
 Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Crear'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
 Route::put('/Aldeas/editar', [App\Http\Controllers\Controller_aldeas::class, 'editar'])->middleware('can:Usuario_travian')->name('aldeas.editar'); 
 Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'borrar'])->middleware('can:Usuario_travian')->name('aldeas.borrar'); 

@@ -19,7 +19,7 @@
               </div>
               <div class="col  table-responsive">
                  
-                   <table id="example1" class="table table-bordered table-striped ">
+                   <table id="example1" class="table table-bordered">
                     <thead>
                       <tr>
                           <th>Día</th>
@@ -60,7 +60,7 @@
               </div>
               <div class="col  table-responsive">
                  
-                   <table id="example2" class="table table-bordered table-striped ">
+                   <table id="example2" class="table table-bordered  ">
                     <thead>
                       <tr>
                           <th>Deporte</th>
