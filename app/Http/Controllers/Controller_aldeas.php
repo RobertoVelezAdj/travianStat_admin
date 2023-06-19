@@ -10,12 +10,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\HTTP\Controllers\funciones\funciones;
 use Illuminate\Support\Facades\DB;
+
+
+use Spatie\Permission\Traits\HasRoles;
+
  class Controller_aldeas extends Controller{
     
     public function index(){   
-         $idUsu =auth()->id();
+       
+        $idUsu =auth()->id();
+        $usu = User::whereId($idUsu)->first(); 
+        if($usu->hasPermissionTo('Administrador')){
+            return redirect()->action('App\Http\Controllers\Controller_admin_permisos@index');
+        }
 
-        
+        if($usu->hasPermissionTo('Apuestas')){
+            return redirect()->action('App\Http\Controllers\Controller_admin_apuestas@Abiertas');
+        }
         //se elee información de las aldeas  
         $query = "SELECT * FROM parametrizaciones WHERE lista = 'TiposAldea'  and nombre not in ('TITULO') order by valor";
         $tipos= DB::select($query);

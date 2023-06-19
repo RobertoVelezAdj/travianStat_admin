@@ -58,7 +58,7 @@ Route::put('/AdminServidores/borrar', [App\Http\Controllers\Controller_admin_ser
 
 
 //Aldeas
-Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->middleware('can:Usuario_travian')->name('aldeas.informacion'); 
+Route::get('/Aldeas/informacion', [App\Http\Controllers\Controller_aldeas::class, 'index'])->name('aldeas.informacion'); 
 Route::put('/Aldeas/crear', [App\Http\Controllers\Controller_aldeas::class, 'Crear'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
 Route::put('/Aldeas/editar', [App\Http\Controllers\Controller_aldeas::class, 'editar'])->middleware('can:Usuario_travian')->name('aldeas.editar'); 
 Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'borrar'])->middleware('can:Usuario_travian')->name('aldeas.borrar'); 
@@ -92,8 +92,8 @@ Route::get('/Calculos/npc', [App\Http\Controllers\Controller_calculos::class, 'n
 
 Route::get('/Vacas/busqueda', [App\Http\Controllers\Controller_vacas::class, 'inicio'])->middleware('can:Usuario_travian')->name('aldeas.inicio');
 Route::put('/Vacas/actualizar_pago', [App\Http\Controllers\Controller_vacas::class, 'actualizar_pago'])->middleware('can:Usuario_travian')->name('aldeas.actualizar_pago'); 
-Route::put('/vacas/insertarVacas', [App\Http\Controllers\Controller_vacas::class, 'insertarVacas'])->name('insertarVacas');
-Route::put('/Vacas/calculovacas', [App\Http\Controllers\Controller_vacas::class, 'calculovacas'])->name('calculovacas');
+Route::put('/vacas/insertarVacas', [App\Http\Controllers\Controller_vacas::class, 'insertarVacas'])->middleware('can:Usuario_travian')->name('insertarVacas');
+Route::put('/Vacas/calculovacas', [App\Http\Controllers\Controller_vacas::class, 'calculovacas'])->middleware('can:Usuario_travian')->name('calculovacas');
 
 Route::get('/Vacas/mislistas', [App\Http\Controllers\Controller_vacas::class, 'listaVacas'])->middleware('can:Usuario_travian')->name('aldeas.listaVacas');
 Route::put('/Vacas/eliminarlista', [App\Http\Controllers\Controller_vacas::class, 'eliminarVaca'])->middleware('can:Usuario_travian')->name('aldeas.eliminarVaca');
@@ -102,8 +102,10 @@ Route::put('/Vacas/actualizar_pago2', [App\Http\Controllers\Controller_vacas::cl
  //Mi cuenta
 Route::get('/MiCuenta/Informacion', [App\Http\Controllers\Controller_micuenta::class, 'index'])->middleware('can:Usuario_travian')->name('MiCuenta.Informacion'); 
 Route::put('/MiCuenta/Modificar', [App\Http\Controllers\Controller_micuenta::class, 'modificar'])->middleware('can:Usuario_travian')->name('aldeas.crear'); 
+
+
 //historificacion
-Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->middleware('can:Usuario_travian')->name('historico'); 
+Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class, 'historificacion'])->name('historico'); 
 
 
 
