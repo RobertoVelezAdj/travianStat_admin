@@ -112,5 +112,5 @@ Route::get('/historico', [App\Http\Controllers\Controller_admin_apuestas::class,
 
 //AVISOS
 Route::get('/avisos', [App\Http\Controllers\avisosController::class, 'avisos'])->name('avisos');
-Route::put('/Aldeas/actualizarNombres', [App\Http\Controllers\Controller_aldeas::class, 'actualizarNombres'])->name('aldeas.actualizarNombres'); 
+Route::get('/Aldeas/actualizarNombres', [App\Http\Controllers\Controller_aldeas::class, 'actualizarNombres'])->name('aldeas.actualizarNombres'); 
 
