@@ -738,6 +738,7 @@ use Spatie\Permission\Traits\HasRoles;
             foreach ($resultado2 as $a2){
                 $contador= 0;
                 //cuento si existe la aldea
+                print_r($a);
                 $query3 =  "SELECT a.id, a.nombre FROM aldea  a WHERE  a.coord_x = ".$a2->coord_x." and a.coord_y =  ".$a2->coord_y." and a.id_usuario = ".$a->id_usuario;
                 $resultado3=DB::select($query3);
                 foreach ($resultado3 as $a3){
