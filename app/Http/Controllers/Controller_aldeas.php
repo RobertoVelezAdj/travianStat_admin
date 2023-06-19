@@ -750,10 +750,10 @@ use Spatie\Permission\Traits\HasRoles;
                 }
                 if( $contador<1) {
                     //se crea la aldeaal usuario
-                    $query = "INSERT INTO aldea(id_usuario,coord_x,coord_y,nombre,tipo,fiesta_pequena,fiesta_grande,created_at)VALUES(".$idUsu.",".$a2->coor_x.",".$a2->coor_y.",'".$a2->NombreAldea."',8,0,0,current_timestamp())";
+                    $query = "INSERT INTO aldea(id_usuario,coord_x,coord_y,nombre,tipo,fiesta_pequena,fiesta_grande,created_at)VALUES(".$a->id_usuario.",".$a2->coor_x.",".$a2->coor_y.",'".$a2->NombreAldea."',8,0,0,current_timestamp())";
                     $tipos= DB::select($query);
             
-                    $query = "SELECT max(id) as id FROM aldea WHERE id_usuario = ".$idUsu;
+                    $query = "SELECT max(id) as id FROM aldea WHERE id_usuario = ".$a->id_usuario;
                     $r=DB::select($query);
                     foreach ($r as $a){
                         $id_aldea =  $a->id;
