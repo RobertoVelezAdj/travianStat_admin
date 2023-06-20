@@ -138,7 +138,7 @@ Route::put('/datosalianza/dejarAli2', [App\Http\Controllers\AlianzaController::c
 Route::put('/generarPush', [App\Http\Controllers\AlianzaController::class, 'generarPush'])->middleware('can:lider_alianza')->name('adminAlianza');
 
 Route::get('/gestionpush', [App\Http\Controllers\AlianzaController::class, 'gestionpush'])->middleware('can:lider_alianza')->name('adminAlianza');
-Route::get('/gestionpush/estadopush', [App\Http\Controllers\AlianzaController::class, 'informacionPush'])->middleware('can:lider_alianza')->name('adminAlianza');
+Route::put('/gestionpush/estadopush', [App\Http\Controllers\AlianzaController::class, 'informacionPush'])->middleware('can:lider_alianza')->name('adminAlianza');
 
 Route::get('/pushPendiente', [App\Http\Controllers\AlianzaController::class, 'pushPendiente'])->middleware('can:Usuario_travian')->name('pushPendiente');
 Route::put('/pushPendiente/cerrarpush', [App\Http\Controllers\AlianzaController::class, 'cierrepush'])->middleware('can:Usuario_travian')->name('pushPendiente');
