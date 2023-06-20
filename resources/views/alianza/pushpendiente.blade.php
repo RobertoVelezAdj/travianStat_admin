@@ -30,10 +30,10 @@
               <tbody>
                 @foreach($push as $p)
                   <tr>
-                     <th>{{$p->coord_x_recibe}}/{{$p->coord_y_recibe}}</th>
+                    <th>{{$p->NombreAldea}} 
+                        <a target="_blank" href="{{$p->rutaServer}}/position_details.php?x={{$p->coord_x_recibe}}&y={{$p->coord_y_recibe}}">({{$p->coord_x_recibe}}/{{$p->coord_y_recibe}})</a> 
+                    </th>
                     <th>{{$p->cantidad}}</th>
-                
-                 
                     <th> 
                       <button type="button" class="btn   btn-info btn-info" data-toggle="modal" data-target="#Resultado-{{$p->id}}">Confirmar envío</button>  
                     </th>
