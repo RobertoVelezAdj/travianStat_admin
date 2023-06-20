@@ -487,7 +487,7 @@ class AlianzaController extends Controller
        
         return  view('alianza.gestionpush')->with('push',$tropas_germanas)->with('mensaje','')->with('numAlianza',$numAlianza); 
     }
-    public function informacionPush(){
+    public function informacionPush(request $info){
         //Saco usuario 
         $idUsu=auth()->id();
         $query = "SELECT u.nombre_cuenta, p.estado, p.cantidad FROM users u, push p, push_alianzas pa WHERE u.id = p.usuario_envio and p.id_push_alianza = pa.id and pa.id = ".$idpush;
