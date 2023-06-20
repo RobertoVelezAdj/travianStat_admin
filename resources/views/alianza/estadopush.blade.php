@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+a@extends('adminlte::page')
 
 @section('title', 'Apuestas')
 
@@ -14,38 +14,38 @@
           <div class="text-center mb-7"> 
             <div class= "m-3">
               <h1>Push pendientes</h1>
-             
-            </div>
-            
+               
+        </div>
+       
         <div class="col table-responsive">
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">
                 <tr>
-                  <th>Aldea destino</th>
-                  <th>Cantidad unitaria</th>
-                  <th>Cantidad total</th>
-                  <th>Cantidad pendiente</th>
-                  <th>Número cuentas pendientes de enviar</th>
-                 
+                  <th>Nombre cuenta</th>
+                  <th>Estado</th>
+                  <th>Cantidad</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($push as $p)
                   <tr>
-                    <th>{{$p->NombreAldea}} 
-                        <a target="_blank" href="{{$p->rutaServer}}/position_details.php?x={{$p->coord_x_recibe}}&y={{$p->coord_y_recibe}}">({{$p->coord_x_recibe}}/{{$p->coord_y_recibe}})</a> 
+                    <th>{{$p->nombre_cuenta}} </th>
+                    <th> 
+                      
+                        <?php
+                        if ($p->estado>0) {
+                            echo "Pendiente envío";
+ 
+                        } else {
+                            echo "Enviado";
+                        }
+                        ?>
+
                     </th>
                     <th>{{$p->cantidad}}</th>
-                    @php 
-                      $pendeinte = $p->pendientes*$p->cantidad;
-                      $total = $numAlianza*$p->cantidad;
-                    @endphp 
-                    <th>{{$total}}</th>
-                    <th>{{$pendeinte}}</th>
-                    <th>{{$p->pendientes}}/{{$numAlianza}}</th>
-                     
+                    
                   </tr>
-                   
+                    
                 @endforeach
               </tbody>
             </table>

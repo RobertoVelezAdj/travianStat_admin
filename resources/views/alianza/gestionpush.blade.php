@@ -14,75 +14,38 @@
           <div class="text-center mb-7"> 
             <div class= "m-3">
               <h1>Push pendientes</h1>
-              <div class="margin">
-                <div class="btn-group  ">
-                  <button type="button" class="btn   btn-info btn-info">Acciones</button>
-                  <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
-                  <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div class="dropdown-menu" role="menu">
-                   <button class="dropdown-item btn-info" data-toggle="modal" data-target="#Push">Push de alianza</button>
-
-                </div>
+             
             </div>
-        </div>
-        <div class="modal fade" id="Push" tabindex="-1" role="dialog" aria-labelledby="Push" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Push alianza</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <div class="form-group">
-                          <form action="/generarPush" action="{{'submit'}}" method="post">
-                              @method('PUT')
-                              @csrf
-                              <label for="nombreParam">Coordenada x</label>
-                              <input type="number" name="coor_x" class="form-control" id ="coor_x"   value = "0" pattern="[-]*[0-9]+"required>
-                              <label for="nombreParam">Coordenada y</label>
-                              <input type="number" name="coor_y" class="form-control" id ="coor_y" value = "0" pattern="[-]*[0-9]+" required>
-                              <label for="nombreParam">Cantidad Materias</label>
-                              <input type="number" name="cantidad" class="form-control" id ="coor_y" value = "0" required>
-                              <button type="submit" class="btn btn-danger">Realizar push</button>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          </div>      
-      </div>
-    </div> 
+            
         <div class="col table-responsive">
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">
                 <tr>
-                  <th>Nombre cuenta</th>
-                  <th>Estado</th>
-                  <th>Cantidad</th>
+                  <th>Aldea destino</th>
+                  <th>Cantidad unitaria</th>
+                  <th>Cantidad total</th>
+                  <th>Cantidad pendiente</th>
+                  <th>Número cuentas pendientes de enviar</th>
+                 
                 </tr>
               </thead>
               <tbody>
                 @foreach($push as $p)
                   <tr>
-                    <th>{{$p->nombre_cuenta}} </th>
-                    <th> 
-                      
-                        <?php
-                        if ($p->estado>0) {
-                            echo "Pendiente envío";
- 
-                        } else {
-                            echo "Enviado";
-                        }
-                        ?>
-
+                    <th>{{$p->NombreAldea}} 
+                        <a target="_blank" href="{{$p->rutaServer}}/position_details.php?x={{$p->coord_x_recibe}}&y={{$p->coord_y_recibe}}">({{$p->coord_x_recibe}}/{{$p->coord_y_recibe}})</a> 
                     </th>
                     <th>{{$p->cantidad}}</th>
-                    
+                    @php 
+                      $pendeinte = $p->pendientes*$p->cantidad;
+                      $total = $numAlianza*$p->cantidad;
+                    @endphp 
+                    <th>{{$total}}</th>
+                    <th>{{$pendeinte}}</th>
+                    <th>{{$p->pendientes}}/{{$numAlianza}}</th>
+                     
                   </tr>
-                    
+                   
                 @endforeach
               </tbody>
             </table>
