@@ -490,7 +490,7 @@ class AlianzaController extends Controller
     public function informacionPush(request $info){
         //Saco usuario 
         $idUsu=auth()->id();
-        $query = "SELECT u.nombre_cuenta, p.estado, p.cantidad FROM users u, push p, push_alianzas pa WHERE u.id = p.usuario_envio and p.id_push_alianza = pa.id and pa.id = ".$idpush;
+        $query = "SELECT u.nombre_cuenta, p.estado, p.cantidad FROM users u, push p, push_alianzas pa WHERE u.id = p.usuario_envio and p.id_push_alianza = pa.id and pa.id = ".$info->idpush;
         $tropas_germanas=DB::select($query);
 
        
