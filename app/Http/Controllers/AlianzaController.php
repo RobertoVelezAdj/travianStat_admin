@@ -439,7 +439,7 @@ class AlianzaController extends Controller
     public function pushPendiente(){
         //SAco usuario 
         $idUsu=auth()->id();
-        $query = "SELECT s.ruta as rutaServer,  i.NombreAldea,pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , p.id FROM `push` p, push_alianzas pa, aldea_inac i, servidor s, users u  WHERE p.id_push_alianza = pa.id  and p.estado >0 and pa.coord_x_recibe = i.coord_x and pa.coord_y_recibe = i.coord_y and u.servidor = i.id_server and i.created_at = s.fch_mod and  p.usuario_envio = u.id  and u.id = ".$idUsu;
+        $query = "SELECT s.ruta as rutaServer,  i.NombreAldea,pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , p.id FROM `push` p, push_alianzas pa, aldea_inac i, servidor s, users u  WHERE pa.estado>0 and p.id_push_alianza = pa.id  and p.estado >0 and pa.coord_x_recibe = i.coord_x and pa.coord_y_recibe = i.coord_y and u.servidor = i.id_server and i.created_at = s.fch_mod and  p.usuario_envio = u.id  and u.id = ".$idUsu;
         $tropas_germanas=DB::select($query);
 
        
@@ -453,20 +453,39 @@ class AlianzaController extends Controller
         $query = "update push set estado = 0 where id= ".$info->identificador;
         $tropas_germanas=DB::select($query);
 
+        //si es el último pone estado a 0 como acabado en push
        
         return redirect()->action('App\Http\Controllers\AlianzaController@pushPendiente');   
 
  
     }
-    /*public function cerrarpush(){
-        //SAco usuario 
+    public function gestionpush(){
+        //Saco usuario 
         $idUsu=auth()->id();
-        $query = "SELECT pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , p.id FROM `push` p, push_alianzas pa  WHERE p.id_push_alianza = pa.id and p.usuario_envio = ".$idUsu." and p.estado >0";
+        $query = "SELECT distinct s.ruta as rutaServer, i.NombreAldea,pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , pa.id, (select count(*) from push p2 where p2.id_push_alianza = pa.id and p2.estado >0 ) as pendientes FROM `push` p, push_alianzas pa, aldea_inac i, servidor s, users u WHERE p.id_push_alianza = pa.id and p.estado >0 and pa.coord_x_recibe = i.coord_x and pa.coord_y_recibe = i.coord_y and u.servidor = i.id_server and i.created_at = s.fch_mod and p.usuario_envio = u.id and u.id = ".$idUsu;
         $tropas_germanas=DB::select($query);
 
        
-        return  view('alianza.pushpendiente')->with('push',$tropas_germanas)->with('mensaje',''); 
-    }*/
+        return  view('alianza.gestionpush')->with('push',$tropas_germanas)->with('mensaje',''); 
+    }
+    public function informacionPush(){
+        //Saco usuario 
+        $idUsu=auth()->id();
+        $query = "SELECT distinct s.ruta as rutaServer, i.NombreAldea,pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , pa.id, (select count(*) from push p2 where p2.id_push_alianza = pa.id and p2.estado >0 ) as pendientes FROM `push` p, push_alianzas pa, aldea_inac i, servidor s, users u WHERE p.id_push_alianza = pa.id and p.estado >0 and pa.coord_x_recibe = i.coord_x and pa.coord_y_recibe = i.coord_y and u.servidor = i.id_server and i.created_at = s.fch_mod and p.usuario_envio = u.id and u.id = ".$idUsu;
+        $tropas_germanas=DB::select($query);
+
+       
+        return  view('alianza.gestionpush')->with('push',$tropas_germanas)->with('mensaje',''); 
+    }
+    public function cancelarpush(){
+        //Saco usuario 
+        $idUsu=auth()->id();
+        $query = "SELECT distinct s.ruta as rutaServer, i.NombreAldea,pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , pa.id, (select count(*) from push p2 where p2.id_push_alianza = pa.id and p2.estado >0 ) as pendientes FROM `push` p, push_alianzas pa, aldea_inac i, servidor s, users u WHERE p.id_push_alianza = pa.id and p.estado >0 and pa.coord_x_recibe = i.coord_x and pa.coord_y_recibe = i.coord_y and u.servidor = i.id_server and i.created_at = s.fch_mod and p.usuario_envio = u.id and u.id = ".$idUsu;
+        $tropas_germanas=DB::select($query);
+
+       
+        return  view('alianza.gestionpush')->with('push',$tropas_germanas)->with('mensaje',''); 
+    }
     
     
 }
