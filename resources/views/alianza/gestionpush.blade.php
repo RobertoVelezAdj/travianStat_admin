@@ -58,28 +58,19 @@
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">
                 <tr>
-                  <th>Aldea destino</th>
-                  <th>Cantidad unitaria</th>
-                  <th>Cantidad total</th>
-                  <th>Cantidad pendiente</th>
-                  <th>Número cuentas pendientes de enviar</th>
-                  <th>Opciones</th>
+                  <th>Nombre cuenta</th>
+                  <th>Estado</th>
+                  <th>Cantidad</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($push as $p)
                   <tr>
-                    <th>{{$p->NombreAldea}} 
+                    <th>{{$p->nombre_cuenta}} 
                         <a target="_blank" href="{{$p->rutaServer}}/position_details.php?x={{$p->coord_x_recibe}}&y={{$p->coord_y_recibe}}">({{$p->coord_x_recibe}}/{{$p->coord_y_recibe}})</a> 
                     </th>
+                    <th>{{$p->estado}}</th>
                     <th>{{$p->cantidad}}</th>
-                    @php 
-                      $pendeinte = $p->pendientes*$p->cantidad;
-                      $total = $numAlianza*$p->cantidad;
-                    @endphp 
-                    <th>{{$total}}</th>
-                    <th>{{$pendeinte}}</th>
-                    <th>{{$p->pendientes}}/{{$numAlianza}}</th>
                     <th> 
                     <form action="/gestionpush/estadopush" method="POST">
                       @method('PUT')
