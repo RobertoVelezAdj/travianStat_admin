@@ -439,7 +439,7 @@ class AlianzaController extends Controller
     public function pushPendiente(){
         //SAco usuario 
         $idUsu=auth()->id();
-        $query = "SELECT s.ruta as rutaServer,  i.NombreAldea,pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , p.id FROM `push` p, push_alianzas pa, aldea_inac i, servidor s, users u  WHERE pa.estado>0 and p.id_push_alianza = pa.id  and p.estado >0 and pa.coord_x_recibe = i.coord_x and pa.coord_y_recibe = i.coord_y and u.servidor = i.id_server and i.created_at = s.fch_mod and  p.usuario_envio = u.id  and u.id = ".$idUsu;
+        $query = "SELECT s.ruta as rutaServer,  i.NombreAldea,pa.coord_x_recibe, pa.coord_y_recibe, p.cantidad , p.id FROM `push` p, push_alianzas pa, aldea_inac i, servidor s, users u  WHERE  p.id_push_alianza = pa.id  and p.estado >0 and pa.coord_x_recibe = i.coord_x and pa.coord_y_recibe = i.coord_y and u.servidor = i.id_server and i.created_at = s.fch_mod and  p.usuario_envio = u.id  and u.id = ".$idUsu;
         $tropas_germanas=DB::select($query);
 
        
