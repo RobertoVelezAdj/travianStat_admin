@@ -156,8 +156,7 @@
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
                                                     <button class="dropdown-item btn-info" data-toggle="modal" data-target="#exampleModalCenter2">Dejar Alianza</button>
-                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#Push">Push de alianza</button>
-                            
+                             
                                                     </div>
                                                 </div>
                                     </div>
@@ -190,34 +189,7 @@
                                             </div>      
                                        </div>
                                    </div>  
-                                   <div class="modal fade" id="Push" tabindex="-1" role="dialog" aria-labelledby="Push" aria-hidden="true">
-                                           <div class="modal-dialog modal-dialog-centered" role="document">
-                                               <div class="modal-content">
-                                                   <div class="modal-header">
-                                                       <h5 class="modal-title" id="exampleModalLongTitle">Push alianza</h5>
-                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                       <span aria-hidden="true">&times;</span>
-                                                       </button>
-                                                   </div>
-                                                   <div class="modal-body">
-                                                       <div class="form-group">
-                                                           <form action="/generarPush" action="{{'submit'}}" method="post">
-                                                               @method('PUT')
-                                                               @csrf
-                                                               <label for="nombreParam">Coordenada x</label>
-                                                                <input type="number" name="coor_x" class="form-control" id ="coor_x"   value = "0" pattern="[-]*[0-9]+"required>
-                                                                <label for="nombreParam">Coordenada y</label>
-                                                                <input type="number" name="coor_y" class="form-control" id ="coor_y" value = "0" pattern="[-]*[0-9]+" required>
-                                                                <label for="nombreParam">Cantidad Materias</label>
-                                                                <input type="number" name="cantidad" class="form-control" id ="coor_y" value = "0" required>
-                                                               <button type="submit" class="btn btn-danger">Realizar push</button>
-                                                           </form>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                            </div>      
-                                       </div>
-                                   </div>  
+                                    
                                      
                                        <form action="/datosalianza/editarAlianza"  action="{{'submit'}}" method="post">
                                            @method('PUT')
