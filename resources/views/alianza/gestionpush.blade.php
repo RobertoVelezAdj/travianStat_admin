@@ -80,15 +80,7 @@
 
                     </th>
                     <th>{{$p->cantidad}}</th>
-                    <th> 
-                    <form action="/gestionpush/estadopush" method="POST">
-                      @method('PUT')
-                      @csrf
-                      <input  name="idpush" type="hidden" value="{{$p->id}}">
-
-                      <button type="submit" class="btn btn-primary">Revisar estado</button>
-                     </form>
-                     </th>
+                    
                   </tr>
                     
                 @endforeach
