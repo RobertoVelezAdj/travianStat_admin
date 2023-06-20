@@ -70,7 +70,7 @@
                     <th> 
                       
                         <?php
-                        if ($p->estado<1) {
+                        if ($p->estado>0) {
                             echo "Pendiente envío";
  
                         } else {
