@@ -66,10 +66,19 @@
               <tbody>
                 @foreach($push as $p)
                   <tr>
-                    <th>{{$p->nombre_cuenta}} 
-                        <a target="_blank" href="{{$p->rutaServer}}/position_details.php?x={{$p->coord_x_recibe}}&y={{$p->coord_y_recibe}}">({{$p->coord_x_recibe}}/{{$p->coord_y_recibe}})</a> 
+                    <th>{{$p->nombre_cuenta}} </th>
+                    <th> 
+                      
+                        <?php
+                        if ($p->estado<1) {
+                            echo "Pendiente envío";
+ 
+                        } else {
+                            echo "Enviado";
+                        }
+                        ?>
+
                     </th>
-                    <th>{{$p->estado}}</th>
                     <th>{{$p->cantidad}}</th>
                     <th> 
                     <form action="/gestionpush/estadopush" method="POST">
