@@ -38,11 +38,11 @@
                     <th>{{$p->cantidad}}</th>
                     @php 
                       $pendeinte = $p->pendientes*$p->cantidad;
-                      $total = $p->numAlianza*$p->cantidad;
+                      $total = $numAlianza*$p->cantidad;
                     @endphp 
                     <th>{{$total}}</th>
                     <th>{{$pendeinte}}</th>
-                    <th>{{$p->pendientes}}/{{$p->numAlianza}}</th>
+                    <th>{{$p->pendientes}}/{{$numAlianza}}</th>
                     <th> 
                       <button type="button" class="btn   btn-info btn-info" data-toggle="modal" data-target="#Resultado-{{$p->id}}">Confirmar envío</button>  
                     </th>
