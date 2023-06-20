@@ -27,8 +27,7 @@ class avisosController extends Controller
             $id_chat = $a->id_chat;
             $texto = $a->texto;
             $link = $a->link;
-            echo $mensaje."/".$id_notificacion;
-            $mensaje = new mensaje ([
+             $mensaje = new mensaje ([
                 'telegramid' => $id_chat,
                 'texto' =>$texto,
                 'link' => $link ,
