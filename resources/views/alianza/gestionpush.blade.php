@@ -21,8 +21,10 @@
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">
                 <tr>
-                   <th>Aldea destino</th>
-                  <th>Cantidad</th>
+                  <th>Aldea destino</th>
+                  <th>Cantidad unitaria</th>
+                  <th>Cantidad total</th>
+                  <th>Cantidad pendiente</th>
                   <th>Número cuentas pendientes de enviar</th>
                   <th>Opciones</th>
                 </tr>
@@ -34,7 +36,13 @@
                         <a target="_blank" href="{{$p->rutaServer}}/position_details.php?x={{$p->coord_x_recibe}}&y={{$p->coord_y_recibe}}">({{$p->coord_x_recibe}}/{{$p->coord_y_recibe}})</a> 
                     </th>
                     <th>{{$p->cantidad}}</th>
-                    <th>{{$p->pendientes}}</th>
+                    @php 
+                      $pendeinte = $p->pendientes*$p->cantidad;
+                      $total = $p->numAlianza*$p->cantidad;
+                    @endphp 
+                    <th>{{$total}}</th>
+                    <th>{{$pendeinte}}</th>
+                    <th>{{$p->pendientes}}/{{$p->numAlianza}}</th>
                     <th> 
                       <button type="button" class="btn   btn-info btn-info" data-toggle="modal" data-target="#Resultado-{{$p->id}}">Confirmar envío</button>  
                     </th>
