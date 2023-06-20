@@ -20,7 +20,7 @@ class avisosController extends Controller
 
     public function avisos()
     {
-        $query ='SELECT n.id, c.id_telegram as id_chat, n.texto, link FROM  n , users c WHERE ano = YEAR(NOW()) and mes = MONTH (NOW()) and dia = DAY(NOW()) and hora = DATE_FORMAT(NOW( ), "%H" ) and minuto = DATE_FORMAT(NOW( ), "%i" ) and n.id_usuario = c.id and enviado = 0';
+        $query ='SELECT n.id, c.id_telegram as id_chat, n.texto, link FROM  notificaciones_telegram n , users c WHERE ano = YEAR(NOW()) and mes = MONTH (NOW()) and dia = DAY(NOW()) and hora = DATE_FORMAT(NOW( ), "%H" ) and minuto = DATE_FORMAT(NOW( ), "%i" ) and n.id_usuario = c.id and enviado = 0';
         $sa=DB::select($query);
         foreach ($sa as $a){
             $id_notificacion =  $a->id;
