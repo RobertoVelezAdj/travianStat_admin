@@ -82,9 +82,11 @@
                     <th>{{$p->pendientes}}/{{$numAlianza}}</th>
                     <th> 
                     <form action="/gestionpush/estadopush" method="POST">
-                    <input  name="idpush" type="hidden" value="{{$p->id}}">
+                      @method('PUT')
+                      @csrf
+                      <input  name="idpush" type="hidden" value="{{$p->id}}">
 
-                    <button type="submit" class="btn btn-primary">Revisar estado</button>
+                      <button type="submit" class="btn btn-primary">Revisar estado</button>
                      </form>
                      </th>
                   </tr>
