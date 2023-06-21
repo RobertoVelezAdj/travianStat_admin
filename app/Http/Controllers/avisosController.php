@@ -34,9 +34,9 @@ class avisosController extends Controller
                 'parse_mode' =>  'HTML'
             ]);
     
-            
+            $query = "UPDATE notificaciones_telegram SET enviado = 1 WHERE id = ".$id_notificacion;
              $mensaje->notify(new SendNotification());
-             $query = "UPDATE notificaciones_telegram SET enviado = 1 WHERE id = ".$id_notificacion;
+             
             $sa=DB::select($query);
         }
        

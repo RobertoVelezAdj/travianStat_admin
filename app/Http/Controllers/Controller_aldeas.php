@@ -60,12 +60,12 @@ use Spatie\Permission\Traits\HasRoles;
         }
         //Se calcula el bono de pc de alianza
         $filosofia = 1;
-        /*$query = "SELECT alianzas.filosofia FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
+        $query = "SELECT alianzas.filosofia FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
         $filo=DB::select($query);
         foreach($filo as $s)
         {
             $filosofia = $s->filosofia;
-        } */
+        } 
         $mensaje=$this->obtener_mensaje( $idUsu);
        
         
