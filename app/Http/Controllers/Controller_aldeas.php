@@ -543,12 +543,12 @@ use Spatie\Permission\Traits\HasRoles;
         }
         //se calcula el bono de alianza
         $reclutamiento = 1;
-        /*$query = "SELECT alianzas.reclutamiento FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
+        $query = "SELECT alianzas.reclutamiento FROM users, alianzas where alianzas.id = users.alianza and users.id = ".$idUsu;
         $rec=DB::select($query);
         foreach($rec as $s)
         {
             $reclutamiento = $s->reclutamiento;
-        } */
+        } 
         $madera =0;$madera_g =0;
         $barro =  0;$barro_g =  0;
         $hierro =  0;$hierro_g =  0;
