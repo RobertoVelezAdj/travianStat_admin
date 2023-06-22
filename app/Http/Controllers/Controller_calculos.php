@@ -339,6 +339,43 @@ use Carbon\Carbon;
         echo "tiempo:".$horas.":".$minutos.":".$segundos."|"."lanzamiento".$fecha_lanzamiento;*/
         $query ="INSERT INTO lanzamientos(servidor, id_aldea_lanza, coord_x_recibe, coord_y_recibe, fecha_llegada, fecha_lanzamiento, distancia, id_usuario,tropa_lenta) VALUES ('".$servidor."','".$info->idAldea."',".$info->coord_x.",".$info->coord_y.",'".$fecha_llegada."','".$fecha_lanzamiento."','".$distancia."','".$idUsu."',".$info->idtropa.")";
         $ataque= DB::select($query);
+
+
+        /////Envio mensaje nuevo usuario
+        $mensaje = "Ataque próximo, por favor verifique el plan ofensivo";
+        $link='travianstat.es/login';
+        $query ="SELECT YEAR(NOW()) as ano,MONTH (NOW())as mes ,DAY(NOW()) as dia,DATE_FORMAT(NOW( ), '%H' ) as hora,DATE_FORMAT(NOW( ), '%i' ) +2 as minuto FROM dual;";
+        $q=DB::select($query);
+        foreach($q as $s)
+        {
+            $minuto = $s->minuto;
+            $hora = $s->hora;
+            $dia = $s->dia;
+            $mes = $s->mes;
+            $ano = $s->ano;
+            if($minuto>59){
+                $minuto = $minuto -60; 
+                $hora = $hora +1;
+            }
+            if($hora >23){
+                $hora = $hora-24;
+                $dia = $dia +1;
+            }
+            if($dia> cal_days_in_month(CAL_GREGORIAN, $mes, $ano)){
+                $dia = $dia - cal_days_in_month(CAL_GREGORIAN, $mes, $ano);
+                $mes = $mes +1;
+            }
+            if($mes >12){
+                $mes = $mes-12;
+                $ano = $ano +1;
+            }
+        } 
+            
+            
+        $query = "INSERT INTO notificaciones_telegram( id_usuario, texto, link, `ano`, `mes`, `dia`, `hora`, `minuto`, `enviado`) VALUES ('7','".$mensaje."','".$link."','".date("Y", $fecha_lanzamiento)."','".date("m", $fecha_lanzamiento)."','".date("d", $fecha_lanzamiento)."','".date("H", $fecha_lanzamiento)."','".date("i", $fecha_lanzamiento)."','0')";
+        $aldea=DB::select($query);
+
+
         return redirect()->action('App\Http\Controllers\Controller_calculos@planoff');
     }
    

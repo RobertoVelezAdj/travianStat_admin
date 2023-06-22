@@ -95,8 +95,8 @@
                     <th>{{$a->nombreRecibe}} ({{$a->xRecibe}}/{{$a->yRecibe}})</th>
                     <th>{{$a->distancia}}</th>
                     <th>{{$a->nombre_tropa}}</th>
-                    <th>{{$a->fecha_llegada}}</th>
                     <th>{{$a->fecha_lanzamiento}}</th>
+                    <th>{{$a->fecha_llegada}}</th>
                     <th>Opciones</th>
                    @endforeach
                 </tr>
