@@ -344,32 +344,14 @@ use Carbon\Carbon;
         /////Envio mensaje nuevo usuario
         $mensaje = "Ataque próximo, por favor verifique el plan ofensivo";
         $link='travianstat.es/login';
-      
-            $minuto = ($fecha_lanzamiento->minute-5);
+        $fecha_lanzamiento = $fecha_lanzamiento->Hour(2);
+        $fecha_lanzamiento = $fecha_lanzamiento->Minute(5);
+            $minuto = $fecha_lanzamiento->minute;
             $hora = $fecha_lanzamiento->hour;
             $dia = $fecha_lanzamiento->day;
             $mes = $fecha_lanzamiento->month;
             $ano = $fecha_lanzamiento->year;
-            if($minuto>59){
-                $minuto = $minuto -60; 
-                $hora = $hora +1;
-            }
-            if($minuto<0){
-                $minuto =0; 
-                $hora = $hora -1;
-            }
-            if($hora >23){
-                $hora = $hora-24;
-                $dia = $dia +1;
-            }
-            if($dia> cal_days_in_month(CAL_GREGORIAN, $mes, $ano)){
-                $dia = $dia - cal_days_in_month(CAL_GREGORIAN, $mes, $ano);
-                $mes = $mes +1;
-            }
-            if($mes >12){
-                $mes = $mes-12;
-                $ano = $ano +1;
-            }
+            
        
             
             
