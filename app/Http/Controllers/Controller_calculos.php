@@ -261,7 +261,7 @@ use Carbon\Carbon;
         $query = "SELECT t.nombre_tropa , t.id FROM tropas t, users u WHERE   t.raza = u.raza and u.id = ".$idUsu." order by t.orden";
         $tipo_tropas= DB::select($query);
         
-        $query = "SELECT * FROM lanzamientos WHERE fecha_lanzamiento< CURRENT_TIMESTAMP() and id_usuario = ".$idUsu;
+        $query = "SELECT a.nombre as nombreLanza, a.coord_x as xlanza, a.coord_y as ylanza, i.NombreAldea as nombreRecibe, i.coord_x as xRecibe, i.coord_y as yRecibe, l.distancia, p.nombre_tropa, l.fecha_llegada, l.fecha_lanzamiento FROM lanzamientos l , aldea a, users u, aldea_inac i, servidor s, tropas p where a.id = l.id_aldea_lanza and u.id = l.id_usuario and i.coord_x = l.coord_x_recibe and i.coord_y = l.coord_y_recibe and i.id_server = u.servidor and s.id = u.servidor and i.created_at = s.fch_mod and p.id = l.tropa_lenta and  fecha_lanzamiento< CURRENT_TIMESTAMP() and id_usuario = ".$idUsu;
         $ataque= DB::select($query);
 
         $mensaje=$this->obtener_mensaje( $idUsu);

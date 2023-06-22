@@ -91,12 +91,12 @@
               <tbody>
                 <tr>
                   @foreach($ataque as $a)
-                    <th>Aldea lanzamiento</th>
-                    <th>Aldea destino</th>
-                    <th>Distancia</th>
-                    <th>Tropa más lenta</th>
-                    <th>Hora lanzamiento</th>
-                    <th>Hora llegada</th>
+                    <th>{{$a->nombreLanza}} ({{$a->xlanza}}/{{$a->ylanza}})</th>
+                    <th>{{$a->nombreRecibe}} ({{$a->xRecibe}}/{{$a->yRecibe}})</th>
+                    <th>{{$a->distancia}}</th>
+                    <th>{{$a->nombre_tropa}}</th>
+                    <th>{{$a->fecha_llegada}}</th>
+                    <th>{{$a->fecha_lanzamiento}}</th>
                     <th>Opciones</th>
                    @endforeach
                 </tr>
