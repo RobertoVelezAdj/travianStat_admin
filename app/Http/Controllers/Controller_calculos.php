@@ -330,7 +330,7 @@ use Carbon\Carbon;
         echo "Distancia:".$distancia."|";
         echo "fecha llegada:".$fecha_llegada."|";
         echo "tiempo:".$horas.":".$minutos.":".$segundos."|"."lanzamiento".$fecha_lanzamiento;*/
-        $query ="INSERT INTO lanzamientos(servidor, id_aldea_lanza, coord_x_recibe, coord_y_recibe, fecha_llegada, fecha_lanzamiento, distancia, id_usuario) VALUES ('".$servidor."','".$info->idAldea."',".$info->coord_x.",".$info->coord_y.",'".$fecha_llegada."','".$fecha_lanzamiento."','".$distancia."','".$idUsu."')";
+        $query ="INSERT INTO lanzamientos(servidor, id_aldea_lanza, coord_x_recibe, coord_y_recibe, fecha_llegada, fecha_lanzamiento, distancia, id_usuario,tropa_lenta) VALUES ('".$servidor."','".$info->idAldea."',".$info->coord_x.",".$info->coord_y.",'".$fecha_llegada."','".$fecha_lanzamiento."','".$distancia."','".$idUsu."',".$info->idtropa.")";
         $ataque= DB::select($query);
         return redirect()->action('App\Http\Controllers\Controller_calculos@planoff');
     }
