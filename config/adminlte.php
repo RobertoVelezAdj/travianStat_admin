@@ -356,7 +356,7 @@ return [
                     'can' => 'Usuario_travian',
                 ],
                 [
-                    'text' => 'Edificios',
+                    'text' => 'Mis   Edificios',
                     'url'  => '/Aldeas/edificios',
                     'can' => 'Usuario_travian',
                 ],
@@ -383,6 +383,11 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'can' => 'Usuario_travian',
             'submenu' => [
+                [
+                    'text' => 'Plan ofensivo',
+                    'url'  => '/Planofensivo',
+                    'can' => 'Usuario_pago',
+                ],
                 [
                     'text' => 'NPC',
                     'url'  => '/Calculos/npc',
@@ -448,7 +453,7 @@ return [
                     'can' => 'Usuario_travian',
                 ],
                 [
-                    'text' => 'Gestión cuentas',
+                    'text' => 'Gestión de alianza',
                     'url'  => '/datosalianza/gestioncuentas',
                     'can' => 'lider_alianza','ministro_off','ministro_deff'
                 ],  

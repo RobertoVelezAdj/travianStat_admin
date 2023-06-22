@@ -89,6 +89,10 @@ Route::put('/Calculos/borrarruta', [App\Http\Controllers\Controller_calculos::cl
 
 Route::get('/Calculos/npc', [App\Http\Controllers\Controller_calculos::class, 'npc'])->middleware('can:Usuario_travian')->name('aldeas.npc'); 
 
+
+Route::get('/Planofensivo', [App\Http\Controllers\Controller_calculos::class, 'planoff'])->middleware('can:Usuario_travian')->name('adminAlianza');
+Route::put('/Planofensivo/nuevoAtaque', [App\Http\Controllers\Controller_calculos::class, 'nuevoataque'])->middleware('can:Usuario_travian')->name('adminAlianza');
+
 //vacas
 
 Route::get('/Vacas/busqueda', [App\Http\Controllers\Controller_vacas::class, 'inicio'])->middleware('can:Usuario_travian')->name('aldeas.inicio');
@@ -121,7 +125,10 @@ Route::get('/Aldeas/actualizarNombres', [App\Http\Controllers\Controller_aldeas:
 Route::get('/datosalianza', [App\Http\Controllers\AlianzaController::class, 'index'])->middleware('can:Usuario_travian')->name('adminAlianza');
 Route::put('/datosalianza/crearAlianza', [App\Http\Controllers\AlianzaController::class, 'crearAli'])->middleware('can:Usuario_travian')->name('crearAli');
 Route::put('/datosalianza/editarAlianza', [App\Http\Controllers\AlianzaController::class, 'editarAli'])->middleware('can:lider_alianza')->name('editarAli');
- 
+Route::put('/datosalianza/crearConfederacion', [App\Http\Controllers\AlianzaController::class, 'crearAli'])->middleware('can:Usuario_travian')->name('crearAli');
+Route::put('/datosalianza/UnirConfederacion', [App\Http\Controllers\AlianzaController::class, 'crearAli'])->middleware('can:Usuario_travian')->name('crearAli');
+Route::put('/datosalianza/dejarConfederacion', [App\Http\Controllers\AlianzaController::class, 'crearAli'])->middleware('can:Usuario_travian')->name('crearAli');
+
 
 Route::get('/datosalianza/gestioncuentas', [App\Http\Controllers\AlianzaController::class, 'gestionUsuarios'])->middleware('can:lider_alianza')->name('gestionUsuarios');
 Route::put('/datosalianza/anadirUsu', [App\Http\Controllers\AlianzaController::class, 'anadirUsu'])->middleware('can:lider_alianza')->name('anadirUsu');

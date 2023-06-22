@@ -10,6 +10,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\HTTP\Controllers\funciones\funciones;
 use Illuminate\Support\Facades\DB;
+
+use Carbon\Carbon;
+
  class Controller_calculos extends Controller{
     
     public function rutas(){   
@@ -249,6 +252,87 @@ use Illuminate\Support\Facades\DB;
         $mensaje=$this->obtener_mensaje( $idUsu);
         return  view('calculos.npc')->with('mensaje',$mensaje)->with('construcciones',$construcciones)->with('ProdAldeas',$info_aldea)->with('ProducionTotal',$ProducionTotal)->with('ProduccionMadera',$ProduccionMadera)->with('ProduccionBarro',$ProduccionBarro)->with('ProduccionHierro',$ProduccionHierro)->with('ProduccionCereal',$ProduccionCereal);
 
+    }
+    public function planoff(){
+        $idUsu =auth()->id();
+        $query = "SELECT a.id as id_aldea, a.coord_x, a.coord_y,a.nombre ,a.tipo, p.nombre as tipo_aldea,a.fiesta_pequena, a.fiesta_grande, ap.madera, ap.barro, ap.hierro,( ap.cereal -c.consumo_total )as cereal,ap.puntos_cultura , e.ayuntamiento FROM aldea a,aldea_producion ap, aldea_edificios e, parametrizaciones p,tiempo_fiestas,consumo_aldeas c WHERE c.id_aldea = a.id and e.ayuntamiento = tiempo_fiestas.nivel_ayuntamiento and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and p.valor = a.tipo and  e.id_aldea = a.id and ap.id_aldea = a.id and  a.id_usuario = ".$idUsu;
+        $aldeas= DB::select($query);
+
+        $query = "SELECT t.nombre_tropa , t.id FROM tropas t, users u WHERE   t.raza = u.raza and u.id = ".$idUsu." order by t.orden";
+        $tipo_tropas= DB::select($query);
+        
+        $query = "SELECT * FROM lanzamientos WHERE fecha_lanzamiento< CURRENT_TIMESTAMP() and id_usuario = ".$idUsu;
+        $ataque= DB::select($query);
+
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return  view('calculos.planoff')->with('mensaje',$mensaje)->with('tipo_tropas',$tipo_tropas)->with('aldeas',$aldeas)->with('ataque',$ataque);
+    }
+
+    public function nuevoataque(request $info){
+        $idUsu =auth()->id();
+        $hora_llegada = $info->dia." ".$info->hora;
+        $hora_llegada = $info->dia." ".$info->hora;
+        $tz = 'Europe/Madrid';
+        $fecha_llegada = new Carbon($hora_llegada);
+
+        $fecha_lanzamiento = new Carbon($hora_llegada);
+
+        $query ="SELECT calcular_distancia2(coord_x,coord_y,".$info->coord_x.",".$info->coord_y.") as distancia, e.p_torneos  FROM aldea a, aldea_edificios e where a.id = e.id_aldea and a.id = ".$info->idAldea;
+        $logi=DB::select($query);
+        $distancia = 0;
+        foreach($logi as $s)
+        {
+            $distancia = $s->distancia;
+            $ptAldea =$s->p_torneos;
+        }
+       
+        
+        $query =" SELECT velocidad FROM tropas WHERE id =".$info->idtropa;
+        $logi=DB::select($query);
+        foreach($logi as $s)
+        {
+            $velocidad = $s->velocidad;
+        }
+
+        $query =" SELECT  * FROM users u WHERE u.id =".$idUsu;
+        $logi=DB::select($query);
+        foreach($logi as $s)
+        {
+            $servidor = $s->servidor;
+        }
+
+         //2.1 si es menor de 20*/
+       /* $velocidad = $info->velocidadVagones;*/
+        $velocidad_aux = $velocidad;//*$info->arteoff;
+        if($distancia <=20){
+            //sin pt
+            $tiempo_restante =  ($distancia/($velocidad_aux)*3600);
+            
+        }else{
+            //echo "|velocidad_aux:".$velocidad_aux."|";
+            $tiempo_restante = round(20/($velocidad_aux)*3600);
+            $velocidad_aux = $velocidad_aux* (1+($ptAldea*0.2)+$info->heroe_botas);
+            $distancia_aux =$distancia-20;
+            $tiempo_restante = round($tiempo_restante+ floor($distancia_aux/($velocidad_aux)*3600));
+            /*Después de los primeros 20 campos: velocidad base * 2 (bonificación por artefacto) * 1,2 (bonificación estandartes) * (1 + 0,25 (botas) + 2 (plaza del torneo)) = velocidad base * 5,65*/
+        
+        }
+        $horas = floor($tiempo_restante / 3600);
+        $minutos = floor(($tiempo_restante - ($horas * 3600)) / 60);
+        $segundos = round($tiempo_restante - ($horas * 3600) - ($minutos * 60));
+   
+        //2.2 si es mayor de 20
+        $fecha_lanzamiento->subHours($horas);
+        $fecha_lanzamiento->subMinute($minutos);
+        $fecha_lanzamiento->subSecond($segundos);
+
+        /*echo "Velocidad:".$velocidad_aux."|";
+        echo "Distancia:".$distancia."|";
+        echo "fecha llegada:".$fecha_llegada."|";
+        echo "tiempo:".$horas.":".$minutos.":".$segundos."|"."lanzamiento".$fecha_lanzamiento;*/
+        $query ="INSERT INTO lanzamientos(servidor, id_aldea_lanza, coord_x_recibe, coord_y_recibe, fecha_llegada, fecha_lanzamiento, distancia, id_usuario) VALUES ('".$servidor."','".$info->idAldea."',".$info->coord_x.",".$info->coord_y.",'".$fecha_llegada."','".$fecha_lanzamiento."','".$distancia."','".$idUsu."')";
+        $ataque= DB::select($query);
+        return redirect()->action('App\Http\Controllers\Controller_calculos@planoff');
     }
    
 }
