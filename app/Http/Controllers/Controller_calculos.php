@@ -344,7 +344,7 @@ use Carbon\Carbon;
         /////Envio mensaje nuevo usuario
         $mensaje = "Ataque próximo, por favor verifique el plan ofensivo";
         $link='travianstat.es/login';
-        $fecha_lanzamiento = $fecha_lanzamiento->subHour(2);
+        $fecha_lanzamiento = $fecha_lanzamiento->subHour(1); //del horario del servidor menos 1 hora
         $fecha_lanzamiento = $fecha_lanzamiento->subMinute(5);
             $minuto = $fecha_lanzamiento->minute;
             $hora = $fecha_lanzamiento->hour;
