@@ -89,8 +89,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                
                   @foreach($ataque as $a)
+                  <tr>
                     <th>{{$a->nombreLanza}} ({{$a->xlanza}}/{{$a->ylanza}})</th>
                     <th>{{$a->nombreRecibe}} ({{$a->xRecibe}}/{{$a->yRecibe}})</th>
                     <th>{{$a->distancia}}</th>
@@ -98,8 +99,9 @@
                     <th>{{$a->fecha_lanzamiento}}</th>
                     <th>{{$a->fecha_llegada}}</th>
                     <th>Opciones</th>
+                    </tr>
                    @endforeach
-                </tr>
+                
               </tbody>
             </table>
         </div>
