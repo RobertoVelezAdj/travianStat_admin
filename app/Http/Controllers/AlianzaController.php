@@ -106,8 +106,18 @@ class AlianzaController extends Controller
     }
     public function editarAli(request $info){
         
-        $query = "UPDATE alianzas SET nombre = '".$info->nombre."',metalurgia = '".$info->metalurgia."',reclutamiento = '".$info->reclutamiento."' ,filosofia = '".$info->filosofia."' ,comercio = '".$info->comercio."'  WHERE id =". $info->idAli;
+        $query = "UPDATE alianzas SET nombre = '".$info->nombre."',metalurgia = '".$info->metalurgia."',reclutamiento = '".$info->reclutamiento."' ,filosofia = '".$info->filosofia."' ,comercio = '".$info->comercio."'  WHERE id =".$info->idAli;
         $t=DB::select($query);
+
+        $query = "SELECT e.id , e.id_tropa, e.id_aldea FROM aldea_encole e, aldea a, users u  where a.id = e.id_aldea and u.id = a.id_usuario and u.alianza = ".$info->idAli;
+        $resultado=DB::select($query);
+        foreach ($resultado as $a){
+
+            $cantidades = $this->cantidad($a->id_tropa, $a->id_aldea);
+            //borro el registro anterior
+            $query = "DELETE FROM aldea_encole WHERE id =  ".$a->id;
+            $t=DB::select($query);
+        }
         return redirect()->action('App\Http\Controllers\AlianzaController@index');
     }
     

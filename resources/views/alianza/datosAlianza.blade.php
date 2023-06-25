@@ -146,9 +146,9 @@
                              @if(auth()->user()->hasPermissionTo('lider_alianza')==1)
                              <div class="text-center mb-7"> 
                                 <div class= "m-3">
-                                    <div class="col table-responsive">
-                                    <div class="card-body "> 
-                                            <div class="margin">
+                                   
+                                    
+                                           
                                                     <div class="btn-group  ">
                                                     <button type="button" class="btn   btn-info btn-info">Acciones</button>
                                                     <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
@@ -156,9 +156,12 @@
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
                                                     <button class="dropdown-item btn-info" data-toggle="modal" data-target="#exampleModalCenter2">Dejar Alianza</button>
-                             
-                                                    </div>
-                                                </div>
+                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#crearConfe">Crear coalición</button>
+                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EntrarConfe">Entrar coalición</button>
+                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#DejarCoa">Dejar coalición</button>
+
+                                                    
+                                            
                                     </div>
                                 </div>
                                             
@@ -188,9 +191,88 @@
                                                </div>
                                             </div>      
                                        </div>
+                                  
+
+                                   
+                                   <div class="modal fade" id="crearConfe" tabindex="-1" role="dialog" aria-labelledby="crearConfe" aria-hidden="true">
+                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                               <div class="modal-content">
+                                                   <div class="modal-header">
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Entrar confederación</h5>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                       <div class="form-group">
+                                                           <form action="/datosalianza/crearConfederacion" action="{{'submit'}}" method="post">
+                                                               @method('PUT')
+                                                               @csrf
+                                                               <h2>
+                                                                   ¿Quieres crear una confederación?
+                                                               </h2>
+                                                               Input para poner algún valor
+                                                               <button type="submit" class="btn btn-primary">Crear Alianza</button>
+                                                           </form>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                            </div>      
+                                       </div>
                                    </div>  
-                                    
-                                     
+                                 
+                                   <div class="modal fade" id="DejarCoa" tabindex="-1" role="dialog" aria-labelledby="DejarCoa" aria-hidden="true">
+                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                               <div class="modal-content">
+                                                   <div class="modal-header">
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Dejar confederación</h5>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                       <div class="form-group">
+                                                           <form action="/datosalianza/crearConfederacion" action="{{'submit'}}" method="post">
+                                                               @method('PUT')
+                                                               @csrf
+                                                               <h2>
+                                                                   ¿Quieres dejar la confederación?
+                                                               </h2>
+                                                               <button type="submit" class="btn btn-primary">Crear Alianza</button>
+                                                           </form>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                            </div>      
+                                       </div>
+                                   </div>  
+
+                                   <div class="modal fade" id="EntrarConfe" tabindex="-1" role="dialog" aria-labelledby="EntrarConfe" aria-hidden="true">
+                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                               <div class="modal-content">
+                                                   <div class="modal-header">
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Entrar confederación</h5>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                       <div class="form-group">
+                                                           <form action="/datosalianza/crearConfederacion" action="{{'submit'}}" method="post">
+                                                               @method('PUT')
+                                                               @csrf
+                                                               <h2>
+                                                                   ¿Quieres entrar la confederación?
+                                                               </h2>
+                                                               input con algo para elegir en cual entrar
+                                                               <button type="submit" class="btn btn-primary">Crear Alianza</button>
+                                                           </form>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                            </div>      
+                                       </div>
+                                      
                                        <form action="/datosalianza/editarAlianza"  action="{{'submit'}}" method="post">
                                            @method('PUT')
                                            @csrf

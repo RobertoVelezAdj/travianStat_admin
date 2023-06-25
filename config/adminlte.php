@@ -396,7 +396,7 @@ return [
                 [
                     'text' => 'Próxima fundación',
                     'url'  => '#',
-                    'can' => 'Usuario_travian',
+                    'can' => 'desarrollo',
                 ],
                 [
                     'text' => 'Rutas de comercio',
@@ -406,22 +406,22 @@ return [
                 [
                     'text' => 'Tropas necesarias listas',
                     'url'  => '#',
-                    'can' => 'Usuario_travian',
+                    'can' => 'desarrollo',
                 ],
                 [
                     'text' => 'Cáluclo intercepción',
                     'url'  => '#',
-                    'can' => 'Usuario_travian',
+                    'can' => 'desarrollo',
                 ],
                 [
                     'text' => 'Cáluclo tiempo de viaje',
                     'url'  => '#',
-                    'can' => 'Usuario_travian',
+                    'can' => 'desarrollo',
                 ],
                 [
                     'text' => 'Cáluclo plaza de torneos',
                     'url'  => '#',
-                    'can' => 'Usuario_travian',
+                    'can' => 'desarrollo',
                 ],
             ],
         ],
@@ -471,22 +471,22 @@ return [
                 [
                     'text' => 'Aldeas importantes',
                     'url'  => '#',
-                    'can' => 'Pruebas'
+                    'can' => 'desarrollo'
                 ],  
                 [
                     'text' => 'Defensas de la alianza',
                     'url'  => '#',
-                    'can' => 'Pruebas'
+                    'can' => 'desarrollo'
                 ],   
                 [
                     'text' => 'Defensas disponibles',
                     'url'  => '#',
-                    'can' => 'Pruebas'
+                    'can' => 'desarrollo'
                 ],    
                 [
                     'text' => 'Defensas alianza (total)',
                     'url'  => '#',
-                    'can' => 'Pruebas'
+                    'can' => 'desarrollo'
                 ],             
             ],
         ],
