@@ -109,7 +109,7 @@ class AlianzaController extends Controller
         $query = "UPDATE alianzas SET nombre = '".$info->nombre."',metalurgia = '".$info->metalurgia."',reclutamiento = '".$info->reclutamiento."' ,filosofia = '".$info->filosofia."' ,comercio = '".$info->comercio."'  WHERE id =".$info->idAli;
         $t=DB::select($query);
 
-        $query = "SELECT e.id , e.id_tropa, e.id_aldea FROM aldea_encole e, aldea a, users u  where a.id = e.id_aldea and u.id = a.id_usuario and u.alianza = ".$info->idAli;
+        $query = "SELECT e.id , e.id_tropa, e.id_aldea FROM aldea_encole e, aldea a, users u  where a.id = e.id_aldea and u.id = a.id_usuario and u.alianza =  ".$info->idAli;
         $resultado=DB::select($query);
         foreach ($resultado as $a){
 
@@ -120,17 +120,111 @@ class AlianzaController extends Controller
         }
         return redirect()->action('App\Http\Controllers\AlianzaController@index');
     }
+
+    public function crearConfe(request $info){
+        $idUsu =auth()->id();
+        
+        $query = "SELECT servidor,alianza FROM users WHERE ID = ".$idUsu;
+        $t=DB::select($query);
+        $id_ali = -1;
+        foreach($t as $s)
+        {
+            $server = $s->servidor;
+            $id_ali = $s->alianza;
+        }
+       
+       
+
+        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $password = substr(str_shuffle($permitted_chars), 0, 10);
+        $query = "INSERT INTO confederacion(NOMBRE, ID_SERVIDOR,PASSWORD)values('".$info->nombre."',".$server.",'".$password."')";
+        $t=DB::select($query);
+
+        $query = "SELECT id FROM confederacion WHERE password = '".$password ."' and id_servidor =".$server." and nombre='".$info->nombre."'";
+        $t=DB::select($query);
+        foreach($t as $s)
+        {
+            $id_confe = $s->id;
+        }
+        
+        $query = "INSERT INTO confederacion_ali(ID_ALIANZA, ID_CONFEDERACION)values('".$id_ali."',".$id_confe.")";
+        $t=DB::select($query);
+        
+        return redirect()->action('App\Http\Controllers\AlianzaController@gestionUsuarios');
+    }
+
+    public function dejarConfederacion(request $info){
+        $idUsu =auth()->id();
+        
+        $query = "DELETE FROM `confederacion_ali` WHERE id_alianza = ".$info->idAli." and id_confederacion = ".$info->idCoa;
+        $t=DB::select($query);
+ 
+        return redirect()->action('App\Http\Controllers\AlianzaController@gestionUsuarios');
+    }
+    public function entrarConfe(request $info){
+        $idUsu =auth()->id();
+        
+
+        $query = "SELECT id FROM confederacion WHERE password = '".$info->password."'";
+        $t=DB::select($query);
+        foreach($t as $s)
+        {
+            $id_confe = $s->id;
+        }
+
+        $query = "INSERT INTO confederacion_invitaciones(ID_ALIANZA,ID_CONFEDERACION) VALUES(".$info->idAli.",".$id_confe.")";
+        $t=DB::select($query);
+ 
+        return redirect()->action('App\Http\Controllers\AlianzaController@gestionUsuarios');
+    }
+
+    public function eliminarPeticionCOA(request $info){
+        $idUsu =auth()->id();
+        
+
+        $query = "DELETE FROM `confederacion_invitaciones` WHERE id = ".$info->id;
+        $t=DB::select($query);
+        
+ 
+        return redirect()->action('App\Http\Controllers\AlianzaController@gestionUsuarios');
+    }
+    public function AceptarPeticionCOA(request $info){
+        $idUsu =auth()->id();
+        
+        $query = "SELECT * FROM confederacion_invitaciones WHERE id = '".$info->id."'";
+        $t=DB::select($query);
+        foreach($t as $s)
+        {
+            $id_alianza = $s->id_alianza;
+            $id_confe = $s->id_confederacion;
+            
+            $query = "INSERT INTO confederacion_ali(ID_ALIANZA, ID_CONFEDERACION)values('".$id_alianza."',".$id_confe.")";
+            $t=DB::select($query);
+            $query = "DELETE FROM `confederacion_invitaciones` WHERE id = ".$info->id;
+            $t=DB::select($query);
+        }
+       
+        
+        
+        
+        
+ 
+        return redirect()->action('App\Http\Controllers\AlianzaController@gestionUsuarios');
+    }
+    
+    
     
     public function gestionUsuarios(request $info){
         $usuarios = [];
         $idUsu =auth()->id();
         $users = DB::table('users')->get();
         $todos_permisos = "";
-        $query = "SELECT alianza from users where id =".$idUsu ;
+        $query = "SELECT alianza,nombre from users u,alianzas a where a.id = u.alianza and u.id =".$idUsu ;
         $t=DB::select($query);
         foreach($t as $s)
         {
             $alianzausu = $s->alianza;
+            $nombre_ali = $s->nombre;
         }
          foreach($users as $usuario)
         {
@@ -143,11 +237,33 @@ class AlianzaController extends Controller
         $query = "SELECT valor FROM parametrizaciones WHERE  lista = 'PermisosAlianzas' and valor <>'TITULO';";
         $todos_permisos=DB::select($query);
         
-        $query = "SELECT users.email,peticiones_aldea.fecha, peticiones_aldea.id FROM peticiones_aldea, users WHERE  users.id = id_usuario;";
+        $query = "SELECT users.email,peticiones_aldea.fecha, peticiones_aldea.id FROM peticiones_aldea, users WHERE  users.id = id_usuario and alianza = ".$alianzausu;
         $pendientes=DB::select($query);
 
-        return  view('alianza.alianza')->with('usuarios',$usuarios)->with('permisos',$todos_permisos)->with('pendientes',$pendientes);
+        $query = "SELECT id_confederacion, c.* FROM confederacion_ali com, confederacion c where c.id = com.id_confederacion and  id_alianza = ".$alianzausu;
+        $t=DB::select($query);
+        $id_coa =0;
+        $nombrecoa = '';
+        $pass ='';
+        foreach($t as $s)
+        {
+            $id_coa = $s->id_confederacion;
+            $nombrecoa = $s->nombre;
+            $pass = $s->password;
+           
+        }
+
+        $query = "SELECT a.* FROM confederacion_ali ca, alianzas a where ca.id_alianza = a.id and ca.id_confederacion = ".$id_coa;
+        $info_coa=DB::select($query);
+
+        $query = "SELECT a.nombre , c.id FROM `confederacion_invitaciones` c, alianzas a where a.id = c.id_alianza and  id_confederacion = ".$id_coa;
+        $invitaciones_coa=DB::select($query);
+
+        
+        return  view('alianza.alianza')->with('usuarios',$usuarios)->with('permisos',$todos_permisos)->with('pendientes',$pendientes)->with('nombre_ali',$nombre_ali)->with('id_coa',$id_coa)->with('info_coa',$info_coa)->with('pass',$pass)->with('nombrecoa',$nombrecoa)->with('idAli',$alianzausu)->with('invitaciones_coa',$invitaciones_coa);
     }
+
+
     public function AnadirPermiso(request $info)
     {
         $userpermiso = User::whereId($info->idUsu)->first(); 

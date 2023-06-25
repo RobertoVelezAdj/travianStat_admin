@@ -12,10 +12,121 @@
           <div class="card-body">
             <div class="container">
               <div class="col margin">
+
+              <div class="text-center mb-7"> 
+                  <div class= "m-3">
+                    <div class="col table-responsive">
+                        <h1>{{$nombre_ali}}</h1>
+                    </div>
+                 </div>
+              <div class="text-center mb-7"> 
+                                <div class= "m-3">
+                                   
+                                    
+                                           
+                                <div class="btn-group  ">
+                                <button type="button" class="btn   btn-info btn-info">Acciones</button>
+                                <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
+                                <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" role="menu">
+                                @if($id_coa ==0)
+                                                                 <button class="dropdown-item btn-info" data-toggle="modal" data-target="#crearConfe">Crear coalición</button>
+                                 <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EntrarConfe">Entrar coalición</button>
+                                @else
+                                <button class="dropdown-item btn-info" data-toggle="modal" data-target="#DejarCoa">Dejar coalición</button> 
+                                @endif      
+                                    </div>
+                                </div>
+
+
+
+                                <div class="modal fade" id="crearConfe" tabindex="-1" role="dialog" aria-labelledby="crearConfe" aria-hidden="true">
+                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                               <div class="modal-content">
+                                                   <div class="modal-header">
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Crear confederación</h5>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                       <div class="form-group">
+                                                           <form action="/datosalianza/crearConfederacion" action="{{'submit'}}" method="post">
+                                                               @method('PUT')
+                                                               @csrf
+                                                               
+                                                                <label for="madera">Nombre de la nueva confederacion:</label>
+                                                                <input type="text" name="nombre" class="form-control" id ="nombre" >
+                                                               <button type="submit" class="btn btn-primary">Crear confederación</button>
+                                                           </form>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                            </div>      
+                                       </div>
+                                   </div>  
+
+                                   <div class="modal fade" id="EntrarConfe" tabindex="-1" role="dialog" aria-labelledby="EntrarConfe" aria-hidden="true">
+                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                               <div class="modal-content">
+                                                   <div class="modal-header">
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Entrar en confederación</h5>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                       <div class="form-group">
+                                                           <form action="/datosalianza/UnirConfederacion" action="{{'submit'}}" method="post">
+                                                               @method('PUT')
+                                                               @csrf
+                                                               
+                                                                <label for="madera">Identificador de la confederacion:</label>
+                                                                <input type="text" name="password" class="form-control" id ="password" >
+                                                                <input  name="idAli" type="hidden" value="{{$idAli}}">
+                                                               <button type="submit" class="btn btn-primary">Crear confederación</button>
+                                                           </form>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                            </div>      
+                                       </div>
+                                   </div>  
+
+                                   <div class="modal fade" id="DejarCoa" tabindex="-1" role="dialog" aria-labelledby="DejarCoa" aria-hidden="true">
+                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                               <div class="modal-content">
+                                                   <div class="modal-header">
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Dejar confederación</h5>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                       <div class="form-group">
+                                                           <form action=" /datosalianza/dejarConfederacion" action="{{'submit'}}" method="post">
+                                                               @method('PUT')
+                                                               @csrf
+                                                               
+                                                                <h3>¿Está seguro de dejar la coalición?</h3>
+                                                                <input  name="idCoa" type="hidden" value="{{$id_coa}}">
+                                                                <input  name="idAli" type="hidden" value="{{$idAli}}">
+                                                                
+                                                               <button type="submit" class="btn btn-primary">Dejar confederación</button>
+                                                           </form>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                            </div>      
+                                       </div>
+                                   </div>  
+                                 
+                                  
                 <div class="text-center mb-7"> 
                   <div class= "m-3">
                     <div class="col table-responsive">
-                        <h1>Permisos disponibles</h1>
+                        <h2>Permisos disponibles</h2>
                     </div>
                  </div>
                 
@@ -216,10 +327,11 @@
                     <tfoot>
                     </tfoot> 
                 </table>
+                
 
                 <div class= "m-3">
                     <div class="col table-responsive">
-                        <h1>Invitaciones pendientes</h1>
+                        <h2>Invitaciones pendientes de nuevos miembros</h2>
                     </div>
                  </div>
                  
@@ -272,8 +384,136 @@
                     </tbody>
                     <tfoot>
                     </tfoot> 
+                </table>     
+
+                @if($id_coa >0)
+                <div class= "m-3">
+                    <div class="col table-responsive">
+                        <h1>Nombre COA:{{$nombrecoa}}</h1> <h2> PASS:{{$pass}}</h2>
+                    </div>
+                 </div>
+                <div class= "m-3">
+                    <div class="col table-responsive">
+                        <h2>Miembros coalianza</h2>
+                    </div>
+                 </div>
+                 
+                 <table id="example1" class="table table-bordered table-striped ">
+                   <thead>
+                    <tr>
+                      <th>Nombre alianza miembro</th>  
+                    </tr>
+                    </thead>
+                    <tbody>
+                     @foreach($info_coa as $ali)
+                        <tr>
+                            <th>{{$ali->nombre}}</th>     
+                        </tr>   
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                    </tfoot> 
+                </table>                   
+                <div class= "m-3">
+                    <div class="col table-responsive">
+                        <h2>Invitaciones pendientes de la coalianza</h2>
+                    </div>
+                 </div>
+                 
+                 <table id="example1" class="table table-bordered table-striped ">
+                   <thead>
+                    <tr>
+                        <th>Nombre invitación</th>
+                         <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                     @foreach($invitaciones_coa as $invi)
+                        <tr>
+                            <th>{{$invi->nombre}}</th>
+
+                            <th>
+                            <div class="margin">
+                                    <div class="btn-group  ">
+                                    <button type="button" class="btn   btn-info btn-info">Acciones</button>
+                                    <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu" role="menu">
+                                     <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EliminarInvi-{{$invi->id}}">Eliminar invitacion</button>
+                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#AceptarInvi-{{$invi->id}}">Aceptar invitacion</button>
+            
+                                    </div>
+                                </div>
+                            </th>
+
+
+                            <div class="modal fade" id="EliminarInvi-{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="#EliminarInvi-{{$invi->id}}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar invitación COA</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <form action="/datosalianza/eliminarPeticionCOA" method="POST">
+                                                        @method('PUT')
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            ¿Está seguro que quiere eliminarla la invitación?
+                                                        </div>
+                                                        <input  name="id" type="hidden" value="{{$invi->id}}">
+                                                        <div class="modal-footer">
+                                                            <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                                            <button type="submit" class="btn btn-danger">Eliminar invitación</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="AceptarInvi-{{$invi->id}}" tabindex="-1" role="dialog" aria-labelledby="#AceptarInvi-{{$invi->id}}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Acteptar invitación COA</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <form action="/datosalianza/AceptarPeticionCOA" method="POST">
+                                                        @method('PUT')
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            ¿Está seguro que quiere aceptar la invitación?
+                                                        </div>
+                                                        <input  name="id" type="hidden" value="{{$invi->id}}">
+                                                        <div class="modal-footer">
+                                                            <button type="button"class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                                            <button type="submit" class="btn btn-primary">Aceptar invitación</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                        </tr>   
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                    </tfoot> 
                 </table>                        
-                    
+                @endif 
                 </div>
             </div>
         </div>

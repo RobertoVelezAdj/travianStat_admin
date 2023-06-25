@@ -149,16 +149,14 @@
                                    
                                     
                                            
-                                                    <div class="btn-group  ">
-                                                    <button type="button" class="btn   btn-info btn-info">Acciones</button>
-                                                    <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <div class="dropdown-menu" role="menu">
-                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#exampleModalCenter2">Dejar Alianza</button>
-                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#crearConfe">Crear coalición</button>
-                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#EntrarConfe">Entrar coalición</button>
-                                                    <button class="dropdown-item btn-info" data-toggle="modal" data-target="#DejarCoa">Dejar coalición</button>
+                                <div class="btn-group  ">
+                                <button type="button" class="btn   btn-info btn-info">Acciones</button>
+                                <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
+                                <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" role="menu">
+                                <button class="dropdown-item btn-info" data-toggle="modal" data-target="#exampleModalCenter2">Dejar Alianza</button>
+                              
 
                                                     
                                             
@@ -198,7 +196,7 @@
                                            <div class="modal-dialog modal-dialog-centered" role="document">
                                                <div class="modal-content">
                                                    <div class="modal-header">
-                                                       <h5 class="modal-title" id="exampleModalLongTitle">Entrar confederación</h5>
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Crear confederación</h5>
                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                        <span aria-hidden="true">&times;</span>
                                                        </button>
@@ -208,11 +206,10 @@
                                                            <form action="/datosalianza/crearConfederacion" action="{{'submit'}}" method="post">
                                                                @method('PUT')
                                                                @csrf
-                                                               <h2>
-                                                                   ¿Quieres crear una confederación?
-                                                               </h2>
-                                                               Input para poner algún valor
-                                                               <button type="submit" class="btn btn-primary">Crear Alianza</button>
+                                                               
+                                                                <label for="madera">Nombre de la nueva confederacion:</label>
+                                                                <input type="text" name="nombre" class="form-control" id ="nombre" >
+                                                               <button type="submit" class="btn btn-primary">Crear confederación</button>
                                                            </form>
                                                        </div>
                                                    </div>
