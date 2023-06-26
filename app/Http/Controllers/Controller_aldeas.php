@@ -503,8 +503,11 @@ use Spatie\Permission\Traits\HasRoles;
     {
         $idUsu =auth()->id();
         $date = Carbon::now();
-        $fecha_llegada = Carbon::now();
-        $date->subHour(1);
+        $hora_llegada = $info->diaImpacto." ".$info->horaImpacto;
+      
+        $tz = 'Europe/Madrid';
+        $fecha_llegada = new Carbon($hora_llegada);
+         $date->subHour(1);
         //1.- Distancia
         $query ="SELECT calcular_distancia2(coord_x,coord_y,".$info->coord_x.",".$info->coord_y.") as distancia, e.p_torneos  FROM aldea a, aldea_edificios e where a.id = e.id_aldea and a.id = ".$info->idAldea;
         $logi=DB::select($query);
@@ -543,8 +546,7 @@ use Spatie\Permission\Traits\HasRoles;
             }
         }
        
-        $fecha_llegada =  $fecha_llegada->addSecond($SegPendiente);
-        $lanzamientoMax =$date->subSecond($SegTotal);
+         $lanzamientoMax =$date->subSecond($SegTotal);
         $idAldeaatacante =$date->subSecond($SegPendiente);
 
         $query ="select nombre_cuenta,users.alianza, aldea.nombre, aldea.coord_x, aldea.coord_y, aldea.tipo, users.servidor from users, aldea where aldea.id_usuario= users.id  and aldea.id = ".$info->idAldea;
@@ -617,7 +619,7 @@ use Spatie\Permission\Traits\HasRoles;
             
 
         ///INSERT EN ATAQUE
-        $query= "INSERT INTO ataque( id_aldea_deff, id_aldea_at, llegada, id_alianza,vagones,intercalada) VALUES (".$info->idAldea.",".$idAldeaatacante.",'".$fecha_llegada->toDateTimeString()."',".$idAli.",".$info->Nvagones.",'".$info->intercalada."')";
+        $query= "INSERT INTO ataque( id_aldea_deff, id_aldea_at, llegada, id_alianza,vagones,intercalada) VALUES (".$info->idAldea.",".$idAldeaatacante.",'".$fecha_llegada."',".$idAli.",".$info->Nvagones.",'".$info->intercalada."')";
         $q=DB::select($query);
         /////
             

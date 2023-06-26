@@ -289,6 +289,12 @@
                                             <input type="number" name="coord_y" class="form-control" id ="coord_y" vallue = "0">
                                         </div>
                                         <div>
+                                            <label for="aldeas_interes">Día impacto </label>  
+                                            <input type="date" name="diaImpacto" >
+                                            <label for="aldeas_interes">Hora impacto </label>  
+                                            <input type="time" name="horaImpacto" step="1">
+                                        </div>
+                                        <div>
                                             <label for="aldeas_interes">¿Hace cuanto no viste el ataque?</label>  
                                             <input type="time" name="horaMax" step="1">
                                             <label for="aldeas_interes">Tiempo de viaje pendiente</label>  
@@ -301,7 +307,7 @@
                                         </div>
                                         <div>
                                             <label for="aldeas_interes">Número de ataques a la vez: </label>  
-                                            <input type="text" name="Nvagones" class="form-control" vallue = "0" id ="Nvagones"  pattern="^[0-9]+">
+                                            <input type="text" name="Nvagones" class="form-control" vallue = "1" id ="Nvagones"  pattern="^[0-9]+">
                                         </div>
                                         <div>
                                             <label for="aldeas_interes">Posibilidad de intercalada: </label>  

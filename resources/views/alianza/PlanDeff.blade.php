@@ -37,18 +37,17 @@
               </thead>
               <tbody>
               @foreach($aldeas as $aldea)
-              <th>Cuenta atacada</th>
-                  <th>{{$aldea->n_cuenta_atacada}} </th>
+                   <th>{{$aldea->n_cuenta_atacada}} </th>
                   <th>{{$aldea->aldea_atacada}} </th>
                   <th>Tipo aldea</th>
-                  <th>>{{$aldea->nombreCuentaLanza}}</th>
-                  <th>>{{$aldea->aldea_atante}}</th>
-                  <th>>{{$aldea->nombreAlianza}}</th> 
+                  <th>{{$aldea->nombreCuentaLanza}}</th>
+                  <th>{{$aldea->aldea_atante}}</th>
+                  <th>{{$aldea->nombreAlianza}}</th> 
                   <th>Cambio Heroe </th> 
-                  <th>>{{$aldea->intercalada}}</th>
-                  <th>>{{$aldea->llegada}}</th>
-                  <th>>{{$aldea->visto}}</th>
-                  <th>>{{$aldea->vagones}}</th>
+                  <th>{{$aldea->intercalada}}</th>
+                  <th>{{$aldea->llegada}}</th>
+                  <th>{{$aldea->visto}}</th>
+                  <th>{{$aldea->vagones}}</th>
                   <th>Opciones</th>       
               @endforeach
               </tbody>
