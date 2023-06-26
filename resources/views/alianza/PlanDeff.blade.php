@@ -24,19 +24,33 @@
                   <th>Cuenta atacada</th>
                   <th>Aldea atacada </th>
                   <th>Tipo aldea</th>
-                  <th>Aldea atacante</th>
                   <th>Cuenta atacante</th>
+                  <th>Aldea atacante</th>
                   <th>Alianza atacante</th> 
                   <th>Cambio Heroe </th> 
                   <th>Posibilidad de intercalada</th> 
                   <th>Fecha llegada ataque</th> 
                   <th>Fecha visto ataque</th> 
-                  <th>Vagones</th> xx
+                  <th>Vagones</th>  
                   <th>Opciones</th>       
                 </tr>
               </thead>
               <tbody>
-               
+              @foreach($aldeas as $aldea)
+              <th>Cuenta atacada</th>
+                  <th>{{$aldea->n_cuenta_atacada}} </th>
+                  <th>{{$aldea->aldea_atacada}} </th>
+                  <th>Tipo aldea</th>
+                  <th>>{{$aldea->nombreCuentaLanza}}</th>
+                  <th>>{{$aldea->aldea_atante}}</th>
+                  <th>>{{$aldea->nombreAlianza}}</th> 
+                  <th>Cambio Heroe </th> 
+                  <th>>{{$aldea->intercalada}}</th>
+                  <th>>{{$aldea->llegada}}</th>
+                  <th>>{{$aldea->visto}}</th>
+                  <th>>{{$aldea->vagones}}</th>
+                  <th>Opciones</th>       
+              @endforeach
               </tbody>
             </table>
         </div>

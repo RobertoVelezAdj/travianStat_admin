@@ -435,11 +435,11 @@ class AlianzaController extends Controller
           
         }
         $date = Carbon::now();
-        /*$query = "SELECT ataque.id_ataque as idAtaque, heroe.fecha_cambio as cambio_heroe, cuenta_inac.NombreCuenta as cuenta_ata,aldea_inac.NombreAldea as nombre_ata, aldea_inac.coord_x as x_ata, aldea_inac.coord_y y_ata, alianza_inac.NombreAlianza,ataque.salida, ataque.llegada,ataque.velocidad, ataque.pt, users.login as cuenta_deff, aldea.tipo, aldea.nombre as nombre_deff, aldea.coord_x as x_deff, aldea.coord_y as x_deff , ataque.intercalada, ataque.vagones FROM ataque, aldea,users , alianza_inac ,cuenta_inac , aldea_inac, servidor, heroe WHERE  heroe.id_cuenta = cuenta_inac.IdCuenta  and heroe.id_alianza = ataque.id_alianza  and cuenta_inac.IdCuenta = aldea_inac.IdCuenta and aldea_inac.id_server = users.servidor and aldea_inac.created_at = servidor.fch_mod and alianza_inac.id_Server = servidor.id and cuenta_inac.IdAlianza = alianza_inac.IdAlianza and servidor.id = users.servidor and ataque.id_aldea_at = aldea_inac.idAldea and cuenta_inac.IdServer = servidor.id and users.id = aldea.id_cuenta and ataque.id_alianza =".$alianza." and aldea.id = ataque.id_aldea_deff and llegada >= '".$date->toDateTimeString()."'";
-        $t=DB::select($query); */
+        $query = "select u.nombre_cuenta as n_cuenta_atacada, concat(a.nombre ,' (', a.coord_x ,'/', a.coord_y,')') as aldea_atacada, ci.NombreCuenta as nombreCuentaLanza,concat(ai.NombreAldea ,' (', ai.coord_x ,'/', ai.coord_y,')') as aldea_atante, ali.NombreAlianza as nombreAlianza,ata.intercalada, ata.llegada, ata.visto, ata.vagones from ataque ata, aldea a, users u, servidor s, aldea_inac ai, cuenta_inac ci, alianza_inac ali,  users user_ali  where ata.id_aldea_deff = a.id and a.id_usuario = u.id and s.id = u.servidor and ai.idAldea = ata.id_aldea_at and ai.id_server = s.id and ai.created_at = s.fch_mod and ci.IdServer = s.id and ci.IdCuenta = ai.IdCuenta and ali.IdAlianza = ci.IdAlianza and ali.id_Server = s.id  and u.alianza = user_ali.alianza and user_ali.id = ".$idUsu;
+        $aldeas=DB::select($query); 
         //echo $query;
         $mensaje='';
-        return  view('alianza.PlanDeff')->with('mensaje',$mensaje);
+        return  view('alianza.PlanDeff')->with('mensaje',$mensaje)->with('aldeas',$aldeas);
     }
     public function deffdisponible(request $info){
         $idUsu =auth()->id();
