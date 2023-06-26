@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\HTTP\Controllers\funciones\funciones;
 use Illuminate\Support\Facades\DB;
 
-
+use Carbon\Carbon;
 use Spatie\Permission\Traits\HasRoles;
 
  class Controller_aldeas extends Controller{
@@ -499,6 +499,175 @@ use Spatie\Permission\Traits\HasRoles;
        
         return redirect()->action('App\Http\Controllers\Controller_aldeas@tareas');
     }
+    public function Reportarataque(request $info)
+    {
+        $idUsu =auth()->id();
+        $date = Carbon::now();
+        $fecha_llegada = Carbon::now();
+        $date->subHour(1);
+        //1.- Distancia
+        $query ="SELECT calcular_distancia2(coord_x,coord_y,".$info->coord_x.",".$info->coord_y.") as distancia, e.p_torneos  FROM aldea a, aldea_edificios e where a.id = e.id_aldea and a.id = ".$info->idAldea;
+        $logi=DB::select($query);
+        
+        $distancia = 0;
+        
+        foreach($logi as $s)
+        {
+            $distancia = $s->distancia;
+        }
+        $pendiente = explode(":",$info->horaMin);
+        $Sinentrar = explode(":",$info->horaMax);
+        $SegPendiente = $pendiente[0]*3600+$pendiente[1]*60+$pendiente[2];
+        $SegSinentrar = $Sinentrar[0]*3600+$Sinentrar[1]*60+$Sinentrar[2];
+        $SegTotal = $SegPendiente+$SegSinentrar;
+        
+        
+        $velocidad = 3;
+        $velocidad_aux = $velocidad*$info->arteoff;
+        $catas =0;
+        for ($i = 1; $i<21; $i++) {
+            if($distancia <=20){
+                //sin pt
+                $tiempo_restante = ($distancia/($velocidad_aux)*3600);
+               
+            }else{
+    
+                $tiempo_restante = floor(20/($velocidad_aux)*3600);
+                $velocidad_aux = $velocidad_aux* (1+($i*0.2)+$info->heroe_botas);
+                $distancia_aux =$distancia-20;
+                $tiempo_restante = $tiempo_restante+ floor($distancia_aux/($velocidad_aux)*3600);
+    
+            }
+            if($tiempo_restante <$SegTotal ){
+                $catas = 1;
+            }
+        }
+       
+        $fecha_llegada =  $fecha_llegada->addSecond($SegPendiente);
+        $lanzamientoMax =$date->subSecond($SegTotal);
+        $idAldeaatacante =$date->subSecond($SegPendiente);
+
+        $query ="select nombre_cuenta,users.alianza, aldea.nombre, aldea.coord_x, aldea.coord_y, aldea.tipo, users.servidor from users, aldea where aldea.id_usuario= users.id  and aldea.id = ".$info->idAldea;
+        $logi=DB::select($query);
+        foreach($logi as $s)
+        {
+            $login = $s->nombre_cuenta;
+            $idAli = $s->alianza;
+            $aldea = "".$s->nombre." (".$s->coord_x."/".$s->coord_y.") ".$s->tipo;
+            $servidor = $s->servidor;
+        } 
+        
+        $query ="SELECT a.NombreAldea, a.coord_x, a.coord_y, c.NombreCuenta,  ai.NombreAlianza, c.IdCuenta as idCuenta, a.idAldea as idaldea FROM aldea_inac a, cuenta_inac c, servidor s, alianza_inac ai WHERE s.id = a.id_server and a.coord_x = ".$info->coord_x." and a.coord_y = ".$info->coord_y." and s.id = ".$servidor." and s.fch_mod = a.created_at and c.IdCuenta = a.IdCuenta and c.IdServer = s.id  and ai.IdAlianza = c.IdAlianza and ai.id_Server = s.id;";
+        $logi=DB::select($query);
+        $idCuenta=0;
+        $idAldeaatacante=0;
+        $atacante ='';
+        foreach($logi as $s)
+        {
+            $idAldeaatacante = $s->idaldea;
+            $idCuenta = $s->idCuenta;
+            $atacante = $s->NombreCuenta. " desde ".$s->NombreAldea."(".$s->coord_x."/".$s->coord_y.")";
+        } 
+        
+        ///
+            //Insertar el heroe
+            //ser revisa si ya está reportado
+            $query ="SELECT count(*) as existe FROM heroe WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor;
+            $logi=DB::select($query);
+            $existe = 0;
+            foreach($logi as $s)
+            {
+              $existe =  $s->existe;
+              
+                
+            }
+            if($existe==1){
+                //se revisa si se tienen cambios
+                $query ="SELECT count(*) as existe FROM heroe WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor." and link ='".$info->link_heroe."' and id_alianza=".$idAli ;
+                $logi=DB::select($query);
+                $cambios = 0;
+                foreach($logi as $s)
+                {
+                   
+                    $cambios = $s->existe;
+                     
+                }
+                if($cambios==0){
+                    $query ="select count(*) as contador from ataque where ataque.id_aldea_at in (select   aldea_inac.idaldea from cuenta_inac,aldea_inac,servidor where cuenta_inac.IdCuenta = ".$idCuenta." and aldea_inac.IdCuenta = cuenta_inac.IdCuenta and cuenta_inac.IdServer = aldea_inac.id_server and servidor.id = cuenta_inac.IdServer and servidor.fch_mod = aldea_inac.created_at and cuenta_inac.IdServer = ".$servidor.") and ataque.id_alianza = ".$idAli." and ataque.llegada >'".$date->toDateTimeString()."'";
+                    $logi=DB::select($query);
+                    $existe = 0;
+                    foreach($logi as $s)
+                    {
+                        $contador =  $s->contador;
+                    //echo "existe : ".$existe;
+                        
+                    }
+                    if($contador ==0){
+                        $query ="UPDATE heroe SET link='".$info->link_heroe."',fecha_cambio=current_timestamp() WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor;
+                    }else{
+                        $query ="UPDATE heroe SET link='".$info->link_heroe."',fecha_cambio=current_timestamp() WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor;
+                    }
+                
+                    $logi=DB::select($query);
+                }     
+            }else{
+                 $query ="INSERT INTO heroe(id_cuenta,link,id_server,id_alianza) VALUES (".$idCuenta.",'".$info->link_heroe."',".$servidor.",".$idAli.")";
+                $logi=DB::select($query);
+            }
+            
+
+        ///INSERT EN ATAQUE
+        $query= "INSERT INTO ataque( id_aldea_deff, id_aldea_at, llegada, id_alianza,vagones,intercalada) VALUES (".$info->idAldea.",".$idAldeaatacante.",'".$fecha_llegada->toDateTimeString()."',".$idAli.",".$info->Nvagones.",'".$info->intercalada."')";
+        $q=DB::select($query);
+        /////
+            
+        $mensaje = "El jugador ".$login." está recibiendo un ataque en la aldea ".$aldea." por el  jugador ".$atacante." con hora de llegada ".$fecha_llegada;
+        
+        $query ="SELECT YEAR(NOW()) as ano,MONTH (NOW())as mes ,DAY(NOW()) as dia,DATE_FORMAT(NOW( ), '%H' ) as hora,DATE_FORMAT(NOW( ), '%i' ) +2 as minuto FROM dual;";
+        $q=DB::select($query);
+        foreach($q as $s)
+        {
+            $minuto = $s->minuto;
+            $hora = $s->hora;
+            $dia = $s->dia;
+            $mes = $s->mes;
+            $ano = $s->ano;
+            if($minuto>59){
+                $minuto = $minuto -60; 
+                $hora = $hora +1;
+            }
+            if($hora >23){
+                $hora = $hora-24;
+                $dia = $dia +1;
+            }
+            if($dia> cal_days_in_month(CAL_GREGORIAN, $mes, $ano)){
+                $dia = $dia - cal_days_in_month(CAL_GREGORIAN, $mes, $ano);
+                $mes = $mes +1;
+            }
+            if($mes >12){
+                $mes = $mes-12;
+                $ano = $ano +1;
+            }
+        } 
+        $link = 'travianstat.es/reporteAtaquesAli';
+        $idUsu =auth()->id();
+        $users = DB::table('users')->where('alianza', '=', $idAli)->get();
+        foreach($users as $usuario)
+        {
+            $usu = User::whereId($usuario->id)->first(); 
+            
+            if($usu->hasPermissionTo('ministro_deff')==1){
+                $query = "INSERT INTO notificaciones_telegram( id_usuario, texto, link, `ano`, `mes`, `dia`, `hora`, `minuto`, `enviado`) VALUES ('".$usu->id."','".$mensaje."','".$link."','".$ano."','".$mes."','".$dia."','".$hora."','".$minuto."','0')";
+                $aldea=DB::select($query);
+            }
+        }
+
+        
+        //print_r($encole);
+        $mensaje=$this->obtener_mensaje( $idUsu);
+        return redirect()->action('App\Http\Controllers\Controller_aldeas@index');
+    }
+    
     public function encole()
     {
         $idUsu =auth()->id();

@@ -122,7 +122,7 @@
                                 </select>  
  
                                 <div class="form-check form-switch" >
-                                  <input class="form-check-input" name = "check"type="checkbox" id="flexSwitchCheckDefault" checked>
+                                  <input class="form-check-input" name = "check"type="checkbox" id="flexSwitchCheckDefault" >
                                   <label class="form-check-label" for="flexSwitchCheckDefault">Generación automática de tareas</label>
                                 </div>
                                 <label for="nombreParam">Tareas</label>
@@ -260,6 +260,7 @@
                         <div class="dropdown-menu" role="menu">
                           <button class="dropdown-item btn-info" data-toggle="modal" data-target="#editarAldea-{{$aldea->id_aldea}}">Editar aldea</button>
                           <button class="dropdown-item btn-info" data-toggle="modal" data-target="#eliminarAldeas-{{$aldea->id_aldea}}">Eliminar aldea</button>
+                          <button class="dropdown-item btn-info" data-toggle="modal" data-target="#reportar-{{$aldea->id_aldea}}">Reportar ataque</button>
 
                         </div>
                       </div>
@@ -276,22 +277,22 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <form action="/aldeas/reporte" method="POST">
+                                <form action="/Aldeas/reportarAtaque" method="POST">
                                     @method('PUT')
                                     @csrf
                                     <div class="modal-body">
                                         <div>
                                             <label for="madera">ATACANTE (COORD X):</label>
-                                            <input type="text" name="coord_x" class="form-control" id ="coord_x"  vallue = "0" pattern="^[0-9]+">
+                                            <input type="number" name="coord_x" class="form-control" id ="coord_x"  vallue = "0">
                                         
                                             <label for="madera">ATACANTE (COORD Y):</label>
-                                            <input type="text" name="coord_y" class="form-control" id ="coord_y" vallue = "0" pattern="^[0-9]+">
+                                            <input type="number" name="coord_y" class="form-control" id ="coord_y" vallue = "0">
                                         </div>
                                         <div>
-                                            <label for="aldeas_interes">Día impacto </label>  
-                                            <input type="date" name="dia" >
-                                            <label for="aldeas_interes">Hora impacto </label>  
-                                            <input type="time" name="hora" step="1">
+                                            <label for="aldeas_interes">¿Hace cuanto no viste el ataque?</label>  
+                                            <input type="time" name="horaMax" step="1">
+                                            <label for="aldeas_interes">Tiempo de viaje pendiente</label>  
+                                            <input type="time" name="horaMin" step="1">
                                         </div>
                                         <div>
                                             <label for="aldeas_interes">Artefacto en tu poder: </label>  
@@ -310,18 +311,13 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <label for="aldeas_interes">Velocidad vagones: </label>  
-                                            <input type="text" name="velocidadVagones" vallue = "0" class="form-control" id ="velocidadVagones"  pattern="^[0-9]+">
-                                        </div>
-                                        <div>
-                                            <label for="aldeas_interes">PT agresor:  </label>  
-                                            <input type="text" name="ptAgresor" vallue = "0" class="form-control" id ="ptAgresor"  pattern="^[0-9]+">
+                                            <label for="aldeas_interes">Número de vagones: </label>  
+                                            <input type="number" name="Nvagones" value = "0" class="form-control" id ="Nvagones"  pattern="^[0-9]+">
                                         </div>
                                         <div>
                                             <label for="aldeas_interes">Artefacto agresor:  </label>  
                                             <select  name="arteoff" class="form-control" id ="arteoff">
                                                 <option value='1'>Sin artefacto</option>
-                                               
                                             </select>
                                         </div>
                                         <div>
@@ -452,6 +448,8 @@
                     </div>
                 </div>
             </div>
+
+            
                   @endforeach
               </tbody>
               <tfoot>

@@ -65,6 +65,9 @@ Route::put('/Aldeas/borrar', [App\Http\Controllers\Controller_aldeas::class, 'bo
 Route::put('/Aldeas/actualizarprod', [App\Http\Controllers\Controller_aldeas::class, 'actualizarprod'])->middleware('can:Usuario_travian')->name('aldeas.actualizarprod'); 
 Route::put('/Aldeas/actualizarpc', [App\Http\Controllers\Controller_aldeas::class, 'actualizarpc'])->middleware('can:Usuario_travian')->name('aldeas.actualizarpc'); 
 
+Route::put('/Aldeas/reportarAtaque', [App\Http\Controllers\Controller_aldeas::class, 'Reportarataque'])->middleware('can:Usuario_travian')->name('aldeas.actualizarpc'); 
+
+
 
 Route::get('/Aldeas/tropas', [App\Http\Controllers\Controller_aldeas::class, 'mistropas'])->middleware('can:Usuario_travian')->name('aldeas.mistropas'); 
 Route::put('/Aldeas/actualizar', [App\Http\Controllers\Controller_aldeas::class, 'actualizar'])->middleware('can:Usuario_travian')->name('aldeas.actualizar'); 
@@ -144,6 +147,7 @@ Route::put('/datosalianza/eliminarPeticionCOA', [App\Http\Controllers\AlianzaCon
 
 Route::put('/datosalianza/AceptarPeticionCOA', [App\Http\Controllers\AlianzaController::class, 'AceptarPeticionCOA'])->middleware('can:lider_alianza')->name('datosalianza.eliminarPeticion');
 
+Route::get('/alianza/Plandeff', [App\Http\Controllers\AlianzaController::class, 'plan_Deff'])->middleware('can:lider_alianza')->name('datosalianza.eliminarPeticion');
 
 
 

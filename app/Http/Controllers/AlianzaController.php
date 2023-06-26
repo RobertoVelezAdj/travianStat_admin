@@ -203,12 +203,7 @@ class AlianzaController extends Controller
             $query = "DELETE FROM `confederacion_invitaciones` WHERE id = ".$info->id;
             $t=DB::select($query);
         }
-       
         
-        
-        
-        
- 
         return redirect()->action('App\Http\Controllers\AlianzaController@gestionUsuarios');
     }
     
@@ -429,7 +424,7 @@ class AlianzaController extends Controller
         return redirect()->action('App\Http\Controllers\AlianzaController@round');   
 
     }
-    public function plan_Deff(request $info){
+    public function plan_Deff(){
         //SAco usuario 
         $idUsu =auth()->id();
         $query = "SELECT alianza FROM users WHERE ID = ".$idUsu;
@@ -440,11 +435,11 @@ class AlianzaController extends Controller
           
         }
         $date = Carbon::now();
-        $query = "SELECT ataque.id_ataque as idAtaque, heroe.fecha_cambio as cambio_heroe, cuenta_inac.NombreCuenta as cuenta_ata,aldea_inac.NombreAldea as nombre_ata, aldea_inac.coord_x as x_ata, aldea_inac.coord_y y_ata, alianza_inac.NombreAlianza,ataque.salida, ataque.llegada,ataque.velocidad, ataque.pt, users.login as cuenta_deff, aldea.tipo, aldea.nombre as nombre_deff, aldea.coord_x as x_deff, aldea.coord_y as x_deff , ataque.intercalada, ataque.vagones FROM ataque, aldea,users , alianza_inac ,cuenta_inac , aldea_inac, servidor, heroe WHERE  heroe.id_cuenta = cuenta_inac.IdCuenta  and heroe.id_alianza = ataque.id_alianza  and cuenta_inac.IdCuenta = aldea_inac.IdCuenta and aldea_inac.id_server = users.servidor and aldea_inac.created_at = servidor.fch_mod and alianza_inac.id_Server = servidor.id and cuenta_inac.IdAlianza = alianza_inac.IdAlianza and servidor.id = users.servidor and ataque.id_aldea_at = aldea_inac.idAldea and cuenta_inac.IdServer = servidor.id and users.id = aldea.id_cuenta and ataque.id_alianza =".$alianza." and aldea.id = ataque.id_aldea_deff and llegada >= '".$date->toDateTimeString()."'";
-        $t=DB::select($query); 
+        /*$query = "SELECT ataque.id_ataque as idAtaque, heroe.fecha_cambio as cambio_heroe, cuenta_inac.NombreCuenta as cuenta_ata,aldea_inac.NombreAldea as nombre_ata, aldea_inac.coord_x as x_ata, aldea_inac.coord_y y_ata, alianza_inac.NombreAlianza,ataque.salida, ataque.llegada,ataque.velocidad, ataque.pt, users.login as cuenta_deff, aldea.tipo, aldea.nombre as nombre_deff, aldea.coord_x as x_deff, aldea.coord_y as x_deff , ataque.intercalada, ataque.vagones FROM ataque, aldea,users , alianza_inac ,cuenta_inac , aldea_inac, servidor, heroe WHERE  heroe.id_cuenta = cuenta_inac.IdCuenta  and heroe.id_alianza = ataque.id_alianza  and cuenta_inac.IdCuenta = aldea_inac.IdCuenta and aldea_inac.id_server = users.servidor and aldea_inac.created_at = servidor.fch_mod and alianza_inac.id_Server = servidor.id and cuenta_inac.IdAlianza = alianza_inac.IdAlianza and servidor.id = users.servidor and ataque.id_aldea_at = aldea_inac.idAldea and cuenta_inac.IdServer = servidor.id and users.id = aldea.id_cuenta and ataque.id_alianza =".$alianza." and aldea.id = ataque.id_aldea_deff and llegada >= '".$date->toDateTimeString()."'";
+        $t=DB::select($query); */
         //echo $query;
-
-        return  view('plandeff')->with('aldeas',$t);
+        $mensaje='';
+        return  view('alianza.PlanDeff')->with('mensaje',$mensaje);
     }
     public function deffdisponible(request $info){
         $idUsu =auth()->id();

@@ -467,7 +467,11 @@ return [
                     'url'  => '/pushPendiente',
                     'can' => 'soldado_raso'
                 ],  
-                
+                [
+                    'text' => 'Plan defensivo',
+                    'url'  => '/alianza/Plandeff',
+                    'can' => 'ministro_deff','lider_alianza'
+                ],
                 [
                     'text' => 'Aldeas importantes',
                     'url'  => '#',
