@@ -507,7 +507,7 @@ use Spatie\Permission\Traits\HasRoles;
       
         $tz = 'Europe/Madrid';
         $fecha_llegada = new Carbon($hora_llegada);
-         $date->subHour(1);
+        
         //1.- Distancia
         $query ="SELECT calcular_distancia2(coord_x,coord_y,".$info->coord_x.",".$info->coord_y.") as distancia, e.p_torneos  FROM aldea a, aldea_edificios e where a.id = e.id_aldea and a.id = ".$info->idAldea;
         $logi=DB::select($query);

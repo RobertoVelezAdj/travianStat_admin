@@ -37,7 +37,8 @@
               </thead>
               <tbody>
               @foreach($aldeas as $aldea)
-                   <th>{{$aldea->n_cuenta_atacada}} </th>
+              <tr>
+                  <th>{{$aldea->n_cuenta_atacada}} </th>
                   <th>{{$aldea->aldea_atacada}} </th>
                   <th>Tipo aldea</th>
                   <th>{{$aldea->nombreCuentaLanza}}</th>
@@ -48,7 +49,8 @@
                   <th>{{$aldea->llegada}}</th>
                   <th>{{$aldea->visto}}</th>
                   <th>{{$aldea->vagones}}</th>
-                  <th>Opciones</th>       
+                  <th>Opciones</th>   
+               </tr>    
               @endforeach
               </tbody>
             </table>
