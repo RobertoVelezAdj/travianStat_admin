@@ -502,11 +502,13 @@ use Spatie\Permission\Traits\HasRoles;
     public function Reportarataque(request $info)
     {
         $idUsu =auth()->id();
+        date_default_timezone_set('Europe/London');
         $date = Carbon::now();
         $hora_llegada = $info->diaImpacto." ".$info->horaImpacto;
       
-        $tz = 'Europe/Madrid';
+       
         $fecha_llegada = new Carbon($hora_llegada);
+        $visto  = Carbon::now();
         
         //1.- Distancia
         $query ="SELECT calcular_distancia2(coord_x,coord_y,".$info->coord_x.",".$info->coord_y.") as distancia, e.p_torneos  FROM aldea a, aldea_edificios e where a.id = e.id_aldea and a.id = ".$info->idAldea;
@@ -619,7 +621,7 @@ use Spatie\Permission\Traits\HasRoles;
             
 
         ///INSERT EN ATAQUE
-        $query= "INSERT INTO ataque( id_aldea_deff, id_aldea_at, llegada, id_alianza,vagones,intercalada) VALUES (".$info->idAldea.",".$idAldeaatacante.",'".$fecha_llegada."',".$idAli.",".$info->Nvagones.",'".$info->intercalada."')";
+        $query= "INSERT INTO ataque( id_aldea_deff, id_aldea_at, llegada, id_alianza,vagones,intercalada, visto) VALUES (".$info->idAldea.",".$idAldeaatacante.",'".$fecha_llegada."',".$idAli.",".$info->Nvagones.",'".$info->intercalada."','".$visto."')";
         $q=DB::select($query);
         /////
             
