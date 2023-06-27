@@ -32,7 +32,8 @@
                   <th>Fecha llegada ataque</th> 
                   <th>Fecha visto ataque</th> 
                   <th>Vagones</th>
-                  <th>Catas</th>  
+                  <th>¿Posibles catas?
+                  </th>  
                   <th>Opciones</th>       
                 </tr>
               </thead>
@@ -56,12 +57,23 @@
                   <th>{{$aldea->visto}}</th>
                   <th>{{$aldea->vagones}}</th>
                   <th>@if($aldea->catas>0)
-                    {{__('NO')}}
+                    {{__('SI')}}
                     @else
-                      {{__('SI')}}
+                      {{__('NO')}}
                     @endif
                   </th>
-                  <th>Opciones</th>   
+                  <th> 
+                      <div class="margin">
+                        <div class="btn-group  ">
+                          <button type="button" class="btn   btn-info btn-info">Acciones</button>
+                          <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                          <button class="dropdown-item btn-info" data-toggle="modal" data-target="#editarAldea-{{$aldea->id_aldea}}">Defensas disponibles</button> 
+                        </div>
+                      </div>
+                    </th>
                </tr>    
               @endforeach
               </tbody>
