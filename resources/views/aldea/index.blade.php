@@ -217,7 +217,7 @@
                 }
 
 
-                $pc_alianza = round(($filosofia*$aldea->puntos_cultura)-$aldea->puntos_cultura);
+                $pc_alianza = round(((int$filosofia*$aldea->puntos_cultura)-$aldea->puntos_cultura);
                 $pc_totales_aldea = $pc_aldea_fiesta+$aldea->puntos_cultura;
                 $pc_todos = $pc_todos + $aldea->puntos_cultura+$pc_aldea_fiesta+$pc_alianza;
                 $suma_puntosc_total =$suma_puntosc_total + $aldea->puntos_cultura;
@@ -305,10 +305,7 @@
                                             <select  name="tipo" class="form-control" id ="artedeff"> 
                                             </select>
                                         </div>
-                                        <div>
-                                            <label for="aldeas_interes">Número de ataques a la vez: </label>  
-                                            <input type="text" name="Nvagones" class="form-control" vallue = "1" id ="Nvagones"  pattern="^[0-9]+">
-                                        </div>
+                                        
                                         <div>
                                             <label for="aldeas_interes">Posibilidad de intercalada: </label>  
                                             <select  name="intercalada" class="form-control" id ="intercalada">
@@ -318,7 +315,7 @@
                                         </div>
                                         <div>
                                             <label for="aldeas_interes">Número de vagones: </label>  
-                                            <input type="number" name="Nvagones" value = "0" class="form-control" id ="Nvagones"  pattern="^[0-9]+">
+                                            <input type="number" name="Nvagones" value = "1" class="form-control" id ="Nvagones"  pattern="^[0-9]+">
                                         </div>
                                         <div>
                                             <label for="aldeas_interes">Artefacto agresor:  </label>  

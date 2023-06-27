@@ -607,21 +607,21 @@ use Spatie\Permission\Traits\HasRoles;
                         
                     }
                     if($contador ==0){
-                        $query ="UPDATE heroe SET link='".$info->link_heroe."',fecha_cambio=current_timestamp() WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor;
+                        $query ="UPDATE heroe SET link='".$info->link_heroe."',fecha_cambio='". $visto."' WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor;
                     }else{
-                        $query ="UPDATE heroe SET link='".$info->link_heroe."',fecha_cambio=current_timestamp() WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor;
+                        $query ="UPDATE heroe SET link='".$info->link_heroe."',fecha_cambio='". $visto."' WHERE id_cuenta= ".$idCuenta." and id_Server = ".$servidor;
                     }
                 
                     $logi=DB::select($query);
                 }     
             }else{
-                 $query ="INSERT INTO heroe(id_cuenta,link,id_server,id_alianza) VALUES (".$idCuenta.",'".$info->link_heroe."',".$servidor.",".$idAli.")";
+                 $query ="INSERT INTO heroe(id_cuenta,link,id_server,id_alianza, visto) VALUES (".$idCuenta.",'".$info->link_heroe."',".$servidor.",".$idAli.",'". $visto."')";
                 $logi=DB::select($query);
             }
             
 
         ///INSERT EN ATAQUE
-        $query= "INSERT INTO ataque( id_aldea_deff, id_aldea_at, llegada, id_alianza,vagones,intercalada, visto) VALUES (".$info->idAldea.",".$idAldeaatacante.",'".$fecha_llegada."',".$idAli.",".$info->Nvagones.",'".$info->intercalada."','".$visto."')";
+        $query= "INSERT INTO ataque( id_aldea_deff, id_aldea_at, llegada, id_alianza,vagones,intercalada, visto,catas) VALUES (".$info->idAldea.",".$idAldeaatacante.",'".$fecha_llegada."',".$idAli.",".$info->Nvagones.",'".$info->intercalada."','".$visto."',".$catas.")";
         $q=DB::select($query);
         /////
             

@@ -31,7 +31,8 @@
                   <th>Posibilidad de intercalada</th> 
                   <th>Fecha llegada ataque</th> 
                   <th>Fecha visto ataque</th> 
-                  <th>Vagones</th>  
+                  <th>Vagones</th>
+                  <th>Catas</th>  
                   <th>Opciones</th>       
                 </tr>
               </thead>
@@ -40,15 +41,26 @@
               <tr>
                   <th>{{$aldea->n_cuenta_atacada}} </th>
                   <th>{{$aldea->aldea_atacada}} </th>
-                  <th>Tipo aldea</th>
+                  <th>{{$aldea->tipo}} </th>
                   <th>{{$aldea->nombreCuentaLanza}}</th>
                   <th>{{$aldea->aldea_atante}}</th>
                   <th>{{$aldea->nombreAlianza}}</th> 
-                  <th>Cambio Heroe </th> 
+                  <th>@if($aldea->visto>$aldea->fecha_cambio)
+                    {{__('NO')}}
+                    @else
+                      {{__('SI')}}
+                    @endif
+                  </th>
                   <th>{{$aldea->intercalada}}</th>
                   <th>{{$aldea->llegada}}</th>
                   <th>{{$aldea->visto}}</th>
                   <th>{{$aldea->vagones}}</th>
+                  <th>@if($aldea->catas>0)
+                    {{__('NO')}}
+                    @else
+                      {{__('SI')}}
+                    @endif
+                  </th>
                   <th>Opciones</th>   
                </tr>    
               @endforeach
