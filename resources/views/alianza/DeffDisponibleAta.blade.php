@@ -27,7 +27,7 @@
                   <th>Cuenta</th>
                   <th>Aldea</th>
                   <th>PT</th>
-                  @foreach($tropas_romanas as $tropas)
+                  @foreach($tropas_galas as $tropas)
                   <th>{{@tropas->nombre_tropa}}</th>
                   @endforeach
                   <th>Tiempo llegada</th>
@@ -36,7 +36,7 @@
                 </tr>
               </thead>
               <tbody>
-              @foreach($aldeas_romanas as $aldea)
+              @foreach($aldeas_galas as $aldea)
               <tr>
                   <th>Cuenta</th>
                   <th>Aldea</th>
