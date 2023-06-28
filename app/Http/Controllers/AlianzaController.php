@@ -441,7 +441,7 @@ class AlianzaController extends Controller
         $mensaje='';
         return  view('alianza.PlanDeff')->with('mensaje',$mensaje)->with('aldeas',$aldeas);
     }
-    public function deffdisponible(request $info){
+    public function  deffdisponibleAtaque(request $info){
         $idUsu =auth()->id();
 
         $query = "select users.raza, users.nombre_cuenta as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea_tropas.tropa_1,aldea_tropas.tropa_2, aldea_tropas.tropa_3,aldea_tropas.tropa_4,aldea_tropas.tropa_5,aldea_tropas.tropa_6,aldea_tropas.tropa_7,aldea_tropas.tropa_8,aldea_tropas.tropa_9,aldea_tropas.tropa_10,aldea_tropas.tropa_11 from aldea_tropas, users, aldea where aldea.id_usuario = users.id and alianza = (select alianza from users where id =  ".$idUsu.")   and aldea_tropas.id_aldea = aldea.id and users.raza = 1 order by raza asc;";
@@ -467,7 +467,7 @@ class AlianzaController extends Controller
         return  view('aldeas_deff')->with('aldeas_romanas',$aldeas_romanas)->with('tropas_romanas',$tropas_romanas)->with('aldeas_germanas',$aldeas_germanas)->with('tropas_germanas',$tropas_germanas)->with('aldeas_galas',$aldeas_galas)->with('tropas_galas',$tropas_galas);
     }
     
-    public function deffdisponibleAtaque(request $info){
+    public function deffdisponible(request $info){
         $idUsu =auth()->id();
 
         $query = "select users.raza, users.login as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea.tropa_1,aldea.tropa_2, aldea.tropa_3,aldea.tropa_4,aldea.tropa_5,aldea.tropa_6,aldea.tropa_7,aldea.tropa_8,aldea.tropa_9,aldea.tropa_10,aldea.tropa_11 from users, aldea where aldea.id_cuenta = users.id and  alianza = (select alianza from users where id = ".$idUsu.") and aldea.tipo in (select valor from parametrizaciones where lista = 'Aldeas_deff') and users.raza = 1 order by raza asc;";
