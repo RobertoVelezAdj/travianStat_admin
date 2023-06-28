@@ -463,9 +463,9 @@ class AlianzaController extends Controller
         $query = "select nombre_tropa from tropas  where raza = 2 order by raza ,orden";
         $tropas_germanas=DB::select($query);
 
+        $mensaje ="";
         //print_r($encole);
-        return  view('aldeas_deff')->with('aldeas_romanas',$aldeas_romanas)->with('tropas_romanas',$tropas_romanas)->with('aldeas_germanas',$aldeas_germanas)->with('tropas_germanas',$tropas_germanas)->with('aldeas_galas',$aldeas_galas)->with('tropas_galas',$tropas_galas);
-    }
+        return  view('alianza.DeffDisponibleAta')->with('mensaje',$mensaje)->with('tropas_romanas',$tropas_romanas)->with('aldeas_germanas',$aldeas_germanas)->with('tropas_germanas',$tropas_germanas)->with('aldeas_galas',$aldeas_galas)->with('tropas_galas',$tropas_galas);    }
     
     public function deffdisponible(request $info){
         $idUsu =auth()->id();
