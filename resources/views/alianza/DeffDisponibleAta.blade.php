@@ -27,24 +27,16 @@
                   <th>Cuenta</th>
                   <th>Aldea</th>
                   <th>PT</th>
-                  <th>Tropa 1</th>
-                  <th>Tropa 2</th>
-                  <th>Tropa 3</th>
-                  <th>Tropa 4</th>
-                  <th>Tropa 5</th>
-                  <th>Tropa 6</th>
-                  <th>Tropa 7</th>
-                  <th>Tropa 8</th>
-                  <th>Tropa 9</th>
-                  <th>Tropa 10</th>
-                  <th>Tropa 11</th>
+                  @foreach($tropas_romanas as $tropas)
+                  <th>{{@tropas->nombre_tropa}}</th>
+                  @endforeach
                   <th>Tiempo llegada</th>
                   <th>Tiempo restante para enviar</th> 
                   <th>Opciones</th>       
                 </tr>
               </thead>
               <tbody>
-              @foreach($aldeas as $aldea)
+              @foreach($aldeas_romanas as $aldea)
               <tr>
                   <th>Cuenta</th>
                   <th>Aldea</th>
