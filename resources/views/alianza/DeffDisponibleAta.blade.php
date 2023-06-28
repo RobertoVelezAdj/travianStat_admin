@@ -16,71 +16,54 @@
               <h1>Push pendientes</h1>
                
         </div>
-       
+        <div class= "m-3">
+              <h2>Aleas romanas</h2>
+               
+        </div>
         <div class="col table-responsive">
               <table id="example1" class="table table-bordered table-striped ">
               <thead class="table-dark">
                 <tr>
-                  <th>Cuenta atacada</th>
-                  <th>Aldea atacada </th>
-                  <th>Tipo aldea</th>
-                  <th>Cuenta atacante</th>
-                  <th>Aldea atacante</th>
-                  <th>Alianza atacante</th> 
-                  <th>Cambio Heroe </th> 
-                  <th>Posibilidad de intercalada</th> 
-                  <th>Fecha llegada ataque</th> 
-                  <th>Fecha visto ataque</th> 
-                  <th>Vagones</th>
-                  <th>¿Posibles catas?
-                  </th>  
+                  <th>Cuenta</th>
+                  <th>Aldea</th>
+                  <th>PT</th>
+                  <th>Tropa 1</th>
+                  <th>Tropa 2</th>
+                  <th>Tropa 3</th>
+                  <th>Tropa 4</th>
+                  <th>Tropa 5</th>
+                  <th>Tropa 6</th>
+                  <th>Tropa 7</th>
+                  <th>Tropa 8</th>
+                  <th>Tropa 9</th>
+                  <th>Tropa 10</th>
+                  <th>Tropa 11</th>
+                  <th>Tiempo llegada</th>
+                  <th>Tiempo restante para enviar</th> 
                   <th>Opciones</th>       
                 </tr>
               </thead>
               <tbody>
               @foreach($aldeas as $aldea)
               <tr>
-                  <th>{{$aldea->n_cuenta_atacada}} </th>
-                  <th>{{$aldea->aldea_atacada}} </th>
-                  <th>{{$aldea->tipo}} </th>
-                  <th>{{$aldea->nombreCuentaLanza}}</th>
-                  <th>{{$aldea->aldea_atante}}</th>
-                  <th>{{$aldea->nombreAlianza}}</th> 
-                  <th>@if($aldea->visto>$aldea->fecha_cambio)
-                    {{__('NO')}}
-                    @else
-                      {{__('SI')}}
-                    @endif
-                  </th>
-                  <th>{{$aldea->intercalada}}</th>
-                  <th>{{$aldea->llegada}}</th>
-                  <th>{{$aldea->visto}}</th>
-                  <th>{{$aldea->vagones}}</th>
-                  <th>
-                    @if($aldea->catas>0)
-                      {{__('SI')}}
-                    @else
-                      {{__('NO')}}
-                    @endif
-                  </th>
-                  <th> 
-                      <div class="margin">
-                        <div class="btn-group  ">
-                          <button type="button" class="btn   btn-info btn-info">Acciones</button>
-                          <button type="button " class="btn   dropdown-toggle dropdown-icon btn-info" data-toggle="dropdown">
-                          <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" role="menu">  
-                          <form action="/alianza/defensasdisponibles"method="POST">
-                                    @method('PUT')
-                                    @csrf
-                             <button class="dropdown-item btn-info" data-toggle="modal" data-target="#defensas-{{$aldea->id_ataque}}">Defensas disponibles</button>
-                          </form>
-                        
-                        </div>
-                      </div>
-                    </th>
-               </tr>    
+                  <th>Cuenta</th>
+                  <th>Aldea</th>
+                  <th>PT</th>
+                  <th>Tropa 1</th>
+                  <th>Tropa 2</th>
+                  <th>Tropa 3</th>
+                  <th>Tropa 4</th>
+                  <th>Tropa 5</th>
+                  <th>Tropa 6</th>
+                  <th>Tropa 7</th>
+                  <th>Tropa 8</th>
+                  <th>Tropa 9</th>
+                  <th>Tropa 10</th>
+                  <th>Tropa 11</th>
+                  <th>Tiempo llegada</th>
+                  <th>Tiempo restante para enviar</th> 
+                  <th>Opciones</th>       
+                </tr>
               @endforeach
               </tbody>
             </table>
