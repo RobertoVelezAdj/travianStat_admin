@@ -148,6 +148,7 @@ Route::put('/datosalianza/eliminarPeticionCOA', [App\Http\Controllers\AlianzaCon
 Route::put('/datosalianza/AceptarPeticionCOA', [App\Http\Controllers\AlianzaController::class, 'AceptarPeticionCOA'])->middleware('can:lider_alianza')->name('datosalianza.eliminarPeticion');
 
 Route::get('/alianza/Plandeff', [App\Http\Controllers\AlianzaController::class, 'plan_Deff'])->middleware('can:lider_alianza')->name('datosalianza.eliminarPeticion');
+Route::put('/alianza/defensasdisponibles', [App\Http\Controllers\AlianzaController::class, 'deffdisponibleAtaque'])->middleware('can:lider_alianza')->name('datosalianza.eliminarPeticion');
 
 
 

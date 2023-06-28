@@ -435,7 +435,7 @@ class AlianzaController extends Controller
           
         }
         $date = Carbon::now();
-        $query = "select  u.nombre_cuenta as n_cuenta_atacada, concat(a.nombre ,' (', a.coord_x ,'/', a.coord_y,')') as aldea_atacada, ci.NombreCuenta as nombreCuentaLanza,concat(ai.NombreAldea ,' (', ai.coord_x ,'/', ai.coord_y,')') as aldea_atante, ali.NombreAlianza as nombreAlianza,ata.intercalada, ata.llegada, ata.visto, ata.vagones, ata.catas, ata.visto, h.fecha_cambio, p.nombre as tipo from parametrizaciones p, ataque ata, aldea a, users u, servidor s, aldea_inac ai, cuenta_inac ci, alianza_inac ali,  users user_ali, heroe h  where ata.id_aldea_deff = a.id and a.id_usuario = u.id and s.id = u.servidor and ai.idAldea = ata.id_aldea_at and ai.id_server = s.id and ai.created_at = s.fch_mod and ci.IdServer = s.id and ci.IdCuenta = ai.IdCuenta and ali.IdAlianza = ci.IdAlianza and ali.id_Server = s.id  and u.alianza = user_ali.alianza and user_ali.id = 3 and  h.id_cuenta = ci.IdCuenta and h.id_server = s.id and h.id_alianza = ata.id_alianza and p.valor = a.tipo and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and user_ali.id = ".$idUsu;
+        $query = "select  ata.id_ataque as id_ataque, u.nombre_cuenta as n_cuenta_atacada, concat(a.nombre ,' (', a.coord_x ,'/', a.coord_y,')') as aldea_atacada, ci.NombreCuenta as nombreCuentaLanza,concat(ai.NombreAldea ,' (', ai.coord_x ,'/', ai.coord_y,')') as aldea_atante, ali.NombreAlianza as nombreAlianza,ata.intercalada, ata.llegada, ata.visto, ata.vagones, ata.catas, ata.visto, h.fecha_cambio, p.nombre as tipo from parametrizaciones p, ataque ata, aldea a, users u, servidor s, aldea_inac ai, cuenta_inac ci, alianza_inac ali,  users user_ali, heroe h  where ata.id_aldea_deff = a.id and a.id_usuario = u.id and s.id = u.servidor and ai.idAldea = ata.id_aldea_at and ai.id_server = s.id and ai.created_at = s.fch_mod and ci.IdServer = s.id and ci.IdCuenta = ai.IdCuenta and ali.IdAlianza = ci.IdAlianza and ali.id_Server = s.id  and u.alianza = user_ali.alianza and user_ali.id = 3 and  h.id_cuenta = ci.IdCuenta and h.id_server = s.id and h.id_alianza = ata.id_alianza and p.valor = a.tipo and p.lista = 'TiposAldea'  and p.nombre not in ('TITULO') and user_ali.id = ".$idUsu;
         $aldeas=DB::select($query); 
         //echo $query;
         $mensaje='';
@@ -465,6 +465,32 @@ class AlianzaController extends Controller
 
         //print_r($encole);
         return  view('aldeas_deff')->with('aldeas_romanas',$aldeas_romanas)->with('tropas_romanas',$tropas_romanas)->with('aldeas_germanas',$aldeas_germanas)->with('tropas_germanas',$tropas_germanas)->with('aldeas_galas',$aldeas_galas)->with('tropas_galas',$tropas_galas);
+    }
+    
+    public function deffdisponibleAtaque(request $info){
+        $idUsu =auth()->id();
+
+        $query = "select users.raza, users.login as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea.tropa_1,aldea.tropa_2, aldea.tropa_3,aldea.tropa_4,aldea.tropa_5,aldea.tropa_6,aldea.tropa_7,aldea.tropa_8,aldea.tropa_9,aldea.tropa_10,aldea.tropa_11 from users, aldea where aldea.id_cuenta = users.id and  alianza = (select alianza from users where id = ".$idUsu.") and aldea.tipo in (select valor from parametrizaciones where lista = 'Aldeas_deff') and users.raza = 1 order by raza asc;";
+        $aldeas_romanas=DB::select($query);
+
+        $query = "select nombre_tropa from tropas  where raza = 1 order by raza ,orden";
+        $tropas_romanas=DB::select($query);
+        //////////////////////////////
+        $query = "select users.raza, users.login as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea.tropa_1,aldea.tropa_2, aldea.tropa_3,aldea.tropa_4,aldea.tropa_5,aldea.tropa_6,aldea.tropa_7,aldea.tropa_8,aldea.tropa_9,aldea.tropa_10,aldea.tropa_11 from users, aldea where aldea.id_cuenta = users.id and  alianza = (select alianza from users where id = ".$idUsu.") and aldea.tipo in (select valor from parametrizaciones where lista = 'Aldeas_deff') and users.raza = 3 order by raza asc;";
+        $aldeas_galas=DB::select($query);
+
+        $query = "select nombre_tropa from tropas  where raza = 3 order by raza ,orden";
+        $tropas_galas=DB::select($query);
+
+        //////////////////////////////
+        $query = "select users.raza, users.login as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea.tropa_1,aldea.tropa_2, aldea.tropa_3,aldea.tropa_4,aldea.tropa_5,aldea.tropa_6,aldea.tropa_7,aldea.tropa_8,aldea.tropa_9,aldea.tropa_10,aldea.tropa_11 from users, aldea where aldea.id_cuenta = users.id and  alianza = (select alianza from users where id = ".$idUsu.") and aldea.tipo in (select valor from parametrizaciones where lista = 'Aldeas_deff') and users.raza = 2 order by raza asc;";
+        $aldeas_germanas=DB::select($query);
+
+        $query = "select nombre_tropa from tropas  where raza = 2 order by raza ,orden";
+        $tropas_germanas=DB::select($query);
+        $mensaje ="";
+        //print_r($encole);
+        return  view('alianza.DeffDisponibleAta')->with('mensaje',$mensaje)->with('tropas_romanas',$tropas_romanas)->with('aldeas_germanas',$aldeas_germanas)->with('tropas_germanas',$tropas_germanas)->with('aldeas_galas',$aldeas_galas)->with('tropas_galas',$tropas_galas);
     }
     public function generarPush(request $info){
         

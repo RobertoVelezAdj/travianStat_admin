@@ -217,7 +217,7 @@
                 }
 
 
-                $pc_alianza = round($filosofia*$aldea->puntos_cultura)-$aldea->puntos_cultura);
+                $pc_alianza = round(($filosofia*$aldea->puntos_cultura)-$aldea->puntos_cultura);
                 $pc_totales_aldea = $pc_aldea_fiesta+$aldea->puntos_cultura;
                 $pc_todos = $pc_todos + $aldea->puntos_cultura+$pc_aldea_fiesta+$pc_alianza;
                 $suma_puntosc_total =$suma_puntosc_total + $aldea->puntos_cultura;
