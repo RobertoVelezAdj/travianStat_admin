@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+
+ 
 class AlianzaController extends Controller
 {
     public function __construct()
@@ -443,6 +445,37 @@ class AlianzaController extends Controller
     }
     public function  deffdisponibleAtaque(request $info){
         $idUsu =auth()->id();
+        //se calcula diferencia de tiempos
+
+        date_default_timezone_set('Europe/London');
+        $fecha_actual = Carbon::now();
+
+        $query = " select * FROM ataque where `id_ataque` = ".$info->idAldea;
+        $t=DB::select($query);
+        foreach($t as $s)
+        {
+          //todas las aldeas y tropas disponibles
+          $aux = $s->llegada;
+        }
+
+        $fecha_llegada = new Carbon($aux);
+        $diferencia = $fecha_llegada->diffInSeconds($fecha_actual);
+        if($fecha_actual>$fecha_llegada){
+            $diferencia=$diferencia*-1;
+        }else{
+            $query = "select nombre_tropa from tropas  where raza = 3 order by raza ,orden";
+            $tropas_galas=DB::select($query);
+            $query = "select users.raza, users.nombre_cuenta as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea_tropas.tropa_1,aldea_tropas.tropa_2, aldea_tropas.tropa_3,aldea_tropas.tropa_4,aldea_tropas.tropa_5,aldea_tropas.tropa_6,aldea_tropas.tropa_7,aldea_tropas.tropa_8,aldea_tropas.tropa_9,aldea_tropas.tropa_10,aldea_tropas.tropa_11 from aldea_tropas, users, aldea where aldea.id_usuario = users.id and alianza = (select alianza from users where id =  ".$idUsu.")  and aldea_tropas.id_aldea = aldea.id and users.raza = 3 order by raza asc;";
+            $t=DB::select($query);
+            foreach($t as $s)
+            {
+              //todas las aldeas y tropas disponibles
+              
+            }
+            $aldeas_galas=[];
+    
+        }
+        echo $diferencia;
 
         $query = "select users.raza, users.nombre_cuenta as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea_tropas.tropa_1,aldea_tropas.tropa_2, aldea_tropas.tropa_3,aldea_tropas.tropa_4,aldea_tropas.tropa_5,aldea_tropas.tropa_6,aldea_tropas.tropa_7,aldea_tropas.tropa_8,aldea_tropas.tropa_9,aldea_tropas.tropa_10,aldea_tropas.tropa_11 from aldea_tropas, users, aldea where aldea.id_usuario = users.id and alianza = (select alianza from users where id =  ".$idUsu.")   and aldea_tropas.id_aldea = aldea.id and users.raza = 1 order by raza asc;";
         $aldeas_romanas=DB::select($query);
@@ -450,12 +483,9 @@ class AlianzaController extends Controller
         $query = "select nombre_tropa from tropas  where raza = 1 order by raza ,orden";
         $tropas_romanas=DB::select($query);
         //////////////////////////////
-        $query = "select users.raza, users.nombre_cuenta as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea_tropas.tropa_1,aldea_tropas.tropa_2, aldea_tropas.tropa_3,aldea_tropas.tropa_4,aldea_tropas.tropa_5,aldea_tropas.tropa_6,aldea_tropas.tropa_7,aldea_tropas.tropa_8,aldea_tropas.tropa_9,aldea_tropas.tropa_10,aldea_tropas.tropa_11 from aldea_tropas, users, aldea where aldea.id_usuario = users.id and alianza = (select alianza from users where id =  ".$idUsu.")  and aldea_tropas.id_aldea = aldea.id and users.raza = 3 order by raza asc;";
-        $aldeas_galas=DB::select($query);
+        
 
-        $query = "select nombre_tropa from tropas  where raza = 3 order by raza ,orden";
-        $tropas_galas=DB::select($query);
-
+       
         //////////////////////////////
         $query = "select users.raza, users.nombre_cuenta as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea_tropas.tropa_1,aldea_tropas.tropa_2, aldea_tropas.tropa_3,aldea_tropas.tropa_4,aldea_tropas.tropa_5,aldea_tropas.tropa_6,aldea_tropas.tropa_7,aldea_tropas.tropa_8,aldea_tropas.tropa_9,aldea_tropas.tropa_10,aldea_tropas.tropa_11 from aldea_tropas, users, aldea where aldea.id_usuario = users.id and alianza = (select alianza from users where id =  ".$idUsu.") and aldea_tropas.id_aldea = aldea.id and users.raza = 2 order by raza asc;";
         $aldeas_germanas=DB::select($query);
@@ -465,14 +495,15 @@ class AlianzaController extends Controller
 
         $mensaje ="";
         //print_r($encole);
-        return  view('alianza.DeffDisponibleAta')->with('mensaje',$mensaje)->with('tropas_romanas',$tropas_romanas)->with('aldeas_germanas',$aldeas_germanas)->with('tropas_germanas',$tropas_germanas)->with('aldeas_galas',$aldeas_galas)->with('tropas_galas',$tropas_galas);    }
-    
+       // return  view('alianza.DeffDisponibleAta')->with('mensaje',$mensaje)->with('tropas_romanas',$tropas_romanas)->with('aldeas_germanas',$aldeas_germanas)->with('tropas_germanas',$tropas_germanas)->with('aldeas_galas',$aldeas_galas)->with('tropas_galas',$tropas_galas);    
+    }
     public function deffdisponible(request $info){
         $idUsu =auth()->id();
 
         $query = "select users.raza, users.login as cuenta, aldea.nombre,aldea.tipo, aldea.coord_x, aldea.coord_y, aldea.tropa_1,aldea.tropa_2, aldea.tropa_3,aldea.tropa_4,aldea.tropa_5,aldea.tropa_6,aldea.tropa_7,aldea.tropa_8,aldea.tropa_9,aldea.tropa_10,aldea.tropa_11 from users, aldea where aldea.id_cuenta = users.id and  alianza = (select alianza from users where id = ".$idUsu.") and aldea.tipo in (select valor from parametrizaciones where lista = 'Aldeas_deff') and users.raza = 1 order by raza asc;";
         $aldeas_romanas=DB::select($query);
 
+        
         $query = "select nombre_tropa from tropas  where raza = 1 order by raza ,orden";
         $tropas_romanas=DB::select($query);
         //////////////////////////////

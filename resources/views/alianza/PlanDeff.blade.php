@@ -74,7 +74,8 @@
                           <form action="/alianza/defensasdisponibles"method="POST">
                                     @method('PUT')
                                     @csrf
-                                    <input  name="idAldea" type="hidden" value="{{$aldea->id_ataque}}">        
+                            <input  name="idAldea" type="hidden" value="{{$aldea->id_ataque}}">    
+                            <input  name="llegada" type="hidden" value="{{$aldea->llegada}}">            
                              <button class="dropdown-item btn-info" >Defensas disponibles</button>
                           </form>
                         

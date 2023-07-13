@@ -43,6 +43,17 @@
                       @endif    
                   @endforeach    
                 </select> 
+                <div>
+                  <h1>Artículo heroe</h1>  
+                  <label for="aldeas_interes">Botas heroe</label>  
+                  <select  name="heroe_botas" class="form-control" id ="heroe_botas">
+                      <option value='0'>Sin botas</option>
+                      <option value='0.25'>Botas del Mercenario (25%)</option>
+                      <option value='0.5'>Botas del guerrero (50%)</option>
+                      <option value='0.75'>Botas del Arconte (75%)</option>
+                      
+                  </select>
+                  </div>
                 <label for="nombreParam">Nombre de la alianza</label>
                 <input type="text" name="alianza" class="form-control" id ="nombre" value=" " disable>
                 <label for="nombreParam">ID de telegram</label>

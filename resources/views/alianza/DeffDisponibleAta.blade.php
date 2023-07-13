@@ -17,7 +17,7 @@
                
         </div>
         <div class= "m-3">
-              <h2>Aleas romanas</h2>
+              <h2>Aleas galas</h2>
                
         </div>
         <div class="col table-responsive">
@@ -27,8 +27,8 @@
                   <th>Cuenta</th>
                   <th>Aldea</th>
                   <th>PT</th>
-                  @foreach($tropas_galas as $tropas)
-                  <th>{{@tropas->nombre_tropa}}</th>
+                  @foreach($tropas_galas as $tropa)
+                  <th>{{$tropa->nombre_tropa}}</th>
                   @endforeach
                   <th>Tiempo llegada</th>
                   <th>Tiempo restante para enviar</th> 
@@ -38,20 +38,20 @@
               <tbody>
               @foreach($aldeas_galas as $aldea)
               <tr>
-                  <th>Cuenta</th>
-                  <th>Aldea</th>
+                  <th>{{$aldea->cuenta}}</th>
+                  <th>{{$aldea->nombre}} ({{$aldea->coord_x}}/{{$aldea->coord_y}})</th>
                   <th>PT</th>
-                  <th>Tropa 1</th>
-                  <th>Tropa 2</th>
-                  <th>Tropa 3</th>
-                  <th>Tropa 4</th>
-                  <th>Tropa 5</th>
-                  <th>Tropa 6</th>
-                  <th>Tropa 7</th>
-                  <th>Tropa 8</th>
-                  <th>Tropa 9</th>
-                  <th>Tropa 10</th>
-                  <th>Tropa 11</th>
+                  <th>{{$aldea->tropa_1 }}</th>
+                  <th>{{$aldea->tropa_2 }} </th>
+                  <th>{{$aldea->tropa_3 }} </th>
+                  <th>{{$aldea->tropa_4 }} </th>
+                  <th>{{$aldea->tropa_5 }} </th>
+                  <th>{{$aldea->tropa_6 }} </th>
+                  <th>{{$aldea->tropa_7 }} </th>
+                  <th>{{$aldea->tropa_8 }} </th>
+                  <th>{{$aldea->tropa_9 }} </th>
+                  <th>{{$aldea->tropa_10 }} </th>
+                  <th>{{$aldea->tropa_11 }} </th>
                   <th>Tiempo llegada</th>
                   <th>Tiempo restante para enviar</th> 
                   <th>Opciones</th>       
