@@ -43,6 +43,10 @@
                       @endif    
                   @endforeach    
                 </select> 
+                <label for="nombreParam">Nombre de la alianza</label>
+                <input type="text" name="alianza" class="form-control" id ="nombre" value=" " disable>
+                <label for="nombreParam">ID de telegram</label>
+                <input type="text" name="telegram" class="form-control" id ="telegram" value="{{$a->id_telegram}}">              
                 <div>
                   <h1>Artículo heroe</h1>  
                   <label for="aldeas_interes">Botas heroe</label>  
@@ -54,10 +58,7 @@
                       
                   </select>
                   </div>
-                <label for="nombreParam">Nombre de la alianza</label>
-                <input type="text" name="alianza" class="form-control" id ="nombre" value=" " disable>
-                <label for="nombreParam">ID de telegram</label>
-                <input type="text" name="telegram" class="form-control" id ="telegram" value="{{$a->id_telegram}}">                
+                 
                 <button type="submit" class="btn btn-outline-ligh bg-black m-3">Guardar datos</button>
             </form>
           @endforeach    
